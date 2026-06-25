@@ -336,6 +336,16 @@
         else if (sort === "food_desc") d.sort(function(a, b) { return (b.food == null ? -1  : b.food) - (a.food == null ? -1  : a.food); });
         else if (sort === "labour")    d.sort(function(a, b) { return (b.lab  == null ? -1  : b.lab)  - (a.lab  == null ? -1  : a.lab); });
         else if (sort === "ticket")    d.sort(function(a, b) { return (b.tick == null ? -1  : b.tick) - (a.tick == null ? -1  : a.tick); });
+        else if (sort === "reviews_desc") d.sort(function(a, b) {
+          var ra = REVIEWS[a.n] ? REVIEWS[a.n].rating : -1;
+          var rb = REVIEWS[b.n] ? REVIEWS[b.n].rating : -1;
+          return rb - ra;
+        });
+        else if (sort === "reviews_asc") d.sort(function(a, b) {
+          var ra = REVIEWS[a.n] ? REVIEWS[a.n].rating : 999;
+          var rb = REVIEWS[b.n] ? REVIEWS[b.n].rating : 999;
+          return ra - rb;
+        });
         else if (sort === "status") {
           var ord = { red: 0, yellow: 1, green: 2 };
           d.sort(function(a, b) { return ord[a.status] - ord[b.status]; });
@@ -616,8 +626,10 @@
             e('option', { value: "food_asc"   }, "Food cost % ↑ (best first)"),
             e('option', { value: "food_desc"  }, "Food cost % ↓ (worst first)"),
             e('option', { value: "labour"     }, "Labour % ↓"),
-            e('option', { value: "ticket"     }, "Avg ticket ↓"),
-            e('option', { value: "alpha"      }, "Name A–Z")
+            e('option', { value: "ticket"       }, "Avg ticket ↓"),
+            e('option', { value: "reviews_desc"}, "Google rating ↓ (best first)"),
+            e('option', { value: "reviews_asc" }, "Google rating ↑ (worst first)"),
+            e('option', { value: "alpha"       }, "Name A–Z")
           ),
           e('span', { style: { fontSize: 12, color: "#6B7280", marginLeft: 8 } }, "Filter"),
           [["all","All stores"],["red","🔴 Needs attention"],["yellow","🟡 Watch"],["green","🟢 On track"]].map(function(pair) {
