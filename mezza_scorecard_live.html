@@ -27,9 +27,9 @@
     var Fragment  = React.Fragment;
 
     // ─────────────────────────────────────────────────────────────────────────
-    // CONFIG — paste your Google Apps Script URL here after deploying
+    // CONFIG — Google Sheet ID (from the URL of your Google Sheet)
     // ─────────────────────────────────────────────────────────────────────────
-    var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxO8EpFu5AYar_a3RdmGnbsWwjjLCY6MUXvDsiwpqVJRUz2Xurw678yQU3Ow-K-GlVA/exec';
+    var SHEET_ID = '1aurNzSaaQ17snGq5fmTyLpQsCg9vGK80DECypQJPOzY';
 
     // ─────────────────────────────────────────────────────────────────────────
     // DAILY TALLY — update manually each Monday morning for the current week
@@ -47,68 +47,114 @@
     ];
 
     // ─────────────────────────────────────────────────────────────────────────
-    // DATA FETCHING — transforms Google Sheets rows into the scorecard format
+    // DATA FETCHING — uses Google Sheets gviz API (no CORS issues)
     // ─────────────────────────────────────────────────────────────────────────
-    function fetchScorecardData() {
-      return fetch(SCRIPT_URL)
+    function parseGviz(text) {
+      // Strip the JSONP wrapper Google adds: /*O_o*/\ngoogle.visualization.Query.setResponse({...});
+      var start = text.indexOf('{');
+      var end   = text.lastIndexOf('}');
+      var json  = JSON.parse(text.substring(start, end + 1));
+      var table = json.table;
+      var headers = (table.cols || []).map(function(c) { return c.label || c.id; });
+      return (table.rows || []).map(function(row) {
+        var obj = {};
+        headers.forEach(function(h, i) {
+          var cell = row.c ? row.c[i] : null;
+          obj[h] = (cell && cell.v !== undefined && cell.v !== null) ? cell.v : null;
+        });
+        return obj;
+      });
+    }
+
+    function fetchSheet(sheetName) {
+      var url = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID +
+        '/gviz/tq?sheet=' + encodeURIComponent(sheetName) + '&tqx=out:json&headers=1';
+      return fetch(url, { credentials: 'omit' })
         .then(function(r) {
           if (!r.ok) throw new Error('Network error ' + r.status);
-          return r.json();
+          return r.text();
         })
-        .then(function(data) {
-          var weeks = {};
+        .then(parseGviz);
+    }
 
-          // Build week summaries
-          (data.weekly || []).forEach(function(row) {
-            var wn = Number(row.Week_Number);
-            if (!wn) return;
-            weeks[wn] = {
-              label:        String(row.Week_Label  || ('Week ' + wn)),
-              dates:        String(row.Week_Dates  || ''),
-              systemSales:  row.System_Sales  != null && row.System_Sales  !== '' ? Number(row.System_Sales)  : null,
-              systemOrders: row.System_Orders != null && row.System_Orders !== '' ? Number(row.System_Orders) : null,
-              systemTicket: row.System_Ticket != null && row.System_Ticket !== '' ? Number(row.System_Ticket) : null,
-              pyChange:     row.YOY_Change_Pct != null && row.YOY_Change_Pct !== '' ? Number(row.YOY_Change_Pct) : null,
-              corp: [],
-              fran: [],
-            };
-          });
+    function fetchScorecardData() {
+      return Promise.all([
+        fetchSheet('Weekly_Summary'),
+        fetchSheet('Store_Data'),
+        fetchSheet('Reviews').catch(function() { return []; })   // optional — graceful if tab doesn't exist yet
+      ]).then(function(results) {
+        var weeklyRows = results[0];
+        var storeRows  = results[1];
+        var reviewRows = results[2];
+        var weeks = {};
+        var n = function(v) { return (v != null && v !== '') ? Number(v) : null; };
 
-          // Attach store rows
-          (data.stores || []).forEach(function(row) {
-            var wn = Number(row.Week_Number);
-            if (!wn || !weeks[wn]) return;
-            var n = function(v) { return (v != null && v !== '') ? Number(v) : null; };
-            if (row.Location_Type === 'Corp') {
-              weeks[wn].corp.push({
-                n:    row.Location_Name,
-                ts:   n(row.Total_Sales),
-                is:   n(row.InStore_Sales),
-                os:   n(row.Online_Sales),
-                ord:  n(row.Orders),
-                tick: n(row.Avg_Ticket),
-                food: n(row.Food_Cost_Pct),
-                fvar: n(row.Food_Variance),
-                lab:  n(row.Labour_Pct),
-                slh:  n(row.Sales_Per_Labour_Hr),
-                py:   n(row.VS_PY_Pct),
-              });
-            } else {
-              weeks[wn].fran.push({
-                n:    row.Location_Name,
-                ts:   n(row.Total_Sales),
-                is:   n(row.InStore_Sales),
-                os:   n(row.Online_Sales),
-                ord:  n(row.Orders),
-                tick: n(row.Avg_Ticket),
-                food: n(row.Food_Cost_Pct),
-                py:   n(row.VS_PY_Pct),
-              });
-            }
-          });
-
-          return weeks;
+        // Build week summaries — skip notes row (Week_Number null/empty)
+        weeklyRows.filter(function(row) {
+          return row.Week_Number != null && String(row.Week_Number).trim() !== '';
+        }).forEach(function(row) {
+          var wn = Number(row.Week_Number);
+          if (!wn) return;
+          weeks[wn] = {
+            label:        String(row.Week_Label  || ('Week ' + wn)),
+            dates:        String(row.Week_Dates  || ''),
+            systemSales:  n(row.System_Sales),
+            systemOrders: n(row.System_Orders),
+            systemTicket: n(row.System_Ticket),
+            pyChange:     n(row.YOY_Change_Pct),
+            corp: [],
+            fran: [],
+          };
         });
+
+        // Attach store rows — skip notes row and rows with no location
+        storeRows.filter(function(row) {
+          return row.Week_Number != null && String(row.Week_Number).trim() !== '' &&
+                 row.Location_Name != null && String(row.Location_Name).trim() !== '';
+        }).forEach(function(row) {
+          var wn = Number(row.Week_Number);
+          if (!wn || !weeks[wn]) return;
+          if (row.Location_Type === 'Corp') {
+            weeks[wn].corp.push({
+              n:    row.Location_Name,
+              ts:   n(row.Total_Sales),
+              is:   n(row.InStore_Sales),
+              os:   n(row.Online_Sales),
+              ord:  n(row.Orders),
+              tick: n(row.Avg_Ticket),
+              food: n(row.Food_Cost_Pct),
+              fvar: n(row.Food_Variance),
+              lab:  n(row.Labour_Pct),
+              slh:  n(row.Sales_Per_Labour_Hr),
+              py:   n(row.VS_PY_Pct),
+            });
+          } else {
+            weeks[wn].fran.push({
+              n:    row.Location_Name,
+              ts:   n(row.Total_Sales),
+              is:   n(row.InStore_Sales),
+              os:   n(row.Online_Sales),
+              ord:  n(row.Orders),
+              tick: n(row.Avg_Ticket),
+              food: n(row.Food_Cost_Pct),
+              py:   n(row.VS_PY_Pct),
+            });
+          }
+        });
+
+        // Build reviews lookup: { "Clayton Park": { rating: 4.3, count: 187 } }
+        var reviews = {};
+        (reviewRows || []).forEach(function(row) {
+          if (row.Location_Name && row.Rating != null && row.Rating !== '') {
+            reviews[String(row.Location_Name).trim()] = {
+              rating: Number(row.Rating),
+              count:  (row.Review_Count != null && row.Review_Count !== '') ? Number(row.Review_Count) : null,
+            };
+          }
+        });
+
+        return { weeks: weeks, reviews: reviews };
+      });
     }
 
     // ─────────────────────────────────────────────────────────────────────────
@@ -186,7 +232,7 @@
       return e('div', { style: { maxWidth: 560, margin: "80px auto", padding: "24px 28px", border: "1px solid #FCA5A5", borderRadius: 12, background: "#FEF2F2" } },
         e('div', { style: { fontSize: 16, fontWeight: 700, color: "#991B1B", marginBottom: 8 } }, "Could not load scorecard data"),
         e('div', { style: { fontSize: 13, color: "#7F1D1D", lineHeight: 1.6, marginBottom: 16 } }, props.message),
-        e('div', { style: { fontSize: 12, color: "#9CA3AF" } }, "Check that the SCRIPT_URL in the HTML file has been replaced with your Google Apps Script deployment URL, and that the script is deployed as a public web app.")
+        e('div', { style: { fontSize: 12, color: "#9CA3AF" } }, "Check that the Google Sheet is shared as 'Anyone with the link can view' (Share button → change access). The Sheet ID in the file is: " + SHEET_ID)
       );
     }
 
@@ -197,6 +243,9 @@
       var weeksState   = useState(null);
       var WEEKS        = weeksState[0];
       var setWEEKS     = weeksState[1];
+      var reviewsState = useState({});
+      var REVIEWS      = reviewsState[0];
+      var setREVIEWS   = reviewsState[1];
       var loadingState = useState(true);
       var loading      = loadingState[0];
       var setLoading   = loadingState[1];
@@ -205,14 +254,10 @@
       var setError     = errorState[1];
 
       useEffect(function() {
-        if (SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
-          setError("SCRIPT_URL has not been set. Open the HTML file, find the SCRIPT_URL line near the top, and replace 'YOUR_APPS_SCRIPT_URL_HERE' with your Google Apps Script deployment URL.");
-          setLoading(false);
-          return;
-        }
         fetchScorecardData()
-          .then(function(weeks) {
-            setWEEKS(weeks);
+          .then(function(data) {
+            setWEEKS(data.weeks);
+            setREVIEWS(data.reviews);
             setLoading(false);
           })
           .catch(function(err) {
@@ -228,7 +273,7 @@
       var weekNums     = Object.keys(WEEKS).map(Number).sort(function(a, b) { return b - a; });
       var defaultWeek  = weekNums[0];
 
-      return e(Scorecard, { WEEKS: WEEKS, weekNums: weekNums, defaultWeek: defaultWeek });
+      return e(Scorecard, { WEEKS: WEEKS, weekNums: weekNums, defaultWeek: defaultWeek, REVIEWS: REVIEWS });
     }
 
     // ─────────────────────────────────────────────────────────────────────────
@@ -237,6 +282,7 @@
     function Scorecard(props) {
       var WEEKS    = props.WEEKS;
       var weekNums = props.weekNums;
+      var REVIEWS  = props.REVIEWS || {};
 
       var weekState        = useState(props.defaultWeek);
       var week             = weekState[0];
@@ -313,6 +359,7 @@
       function TableSection(props) {
         var rows      = props.rows;
         var isCorp    = props.isCorp;
+        var REVIEWS   = props.REVIEWS || {};
         var sortedRows = sorted(rows);
         var total     = rows.reduce(function(s, r) { return s + (r.ts || 0); }, 0);
         var headerBar = e('div', { style: { background: MP, padding: "9px 14px", display: "flex", justifyContent: "space-between", alignItems: "center" } },
@@ -328,6 +375,7 @@
         var theadRow = e('tr', { style: { background: "#F9FAFB" } },
           e('th', { style: THL }, "Status"),
           e('th', { style: THL }, "Location"),
+          e('th', { style: THR }, "Google ★"),
           e('th', { style: THR }, "Total sales"),
           hasInlineDetail && e(Fragment, null, e('th', { style: THR }, "In-store"), e('th', { style: THR }, "Online")),
           e('th', { style: THR }, "Online %"),
@@ -352,6 +400,16 @@
             e('td', { style: TD  },
               e('span', { style: { fontWeight: 600, color: "#111", fontSize: 12 } }, r.n),
               r.isCorp && e('span', { style: { marginLeft: 6, fontSize: 9, fontWeight: 700, background: "#EDE9FE", color: "#5B21B6", padding: "1px 5px", borderRadius: 3 } }, "CORP")
+            ),
+            e('td', { style: TDR },
+              (function() {
+                var rev = REVIEWS[r.n];
+                if (!rev) return e('span', { style: { color: "#9CA3AF" } }, "—");
+                return e('span', { style: { whiteSpace: "nowrap" } },
+                  e('span', { style: { color: "#F59E0B", fontWeight: 700, fontSize: 12 } }, "★ " + rev.rating.toFixed(1)),
+                  rev.count != null ? e('span', { style: { color: "#9CA3AF", fontSize: 11, marginLeft: 3 } }, "(" + rev.count.toLocaleString() + ")") : null
+                );
+              })()
             ),
             e('td', { style: Object.assign({}, TDR, { fontWeight: 600, color: "#111" }) }, cad(r.ts)),
             hasInlineDetail && e(Fragment, null,
@@ -574,8 +632,8 @@
         ),
 
         // Tables
-        (view === "both" || view === "corp") && e(TableSection, { rows: enrichedCorp, isCorp: true }),
-        (view === "both" || view === "fran") && e(TableSection, { rows: enrichedFran, isCorp: false }),
+        (view === "both" || view === "corp") && e(TableSection, { rows: enrichedCorp, isCorp: true,  REVIEWS: REVIEWS }),
+        (view === "both" || view === "fran") && e(TableSection, { rows: enrichedFran, isCorp: false, REVIEWS: REVIEWS }),
 
         // Footer
         e('div', { style: { fontSize: 11, color: "#6B7280", background: "#F9FAFB", border: "1px solid #E5E7EB", borderRadius: 8, padding: "10px 14px", lineHeight: 1.8 } },
