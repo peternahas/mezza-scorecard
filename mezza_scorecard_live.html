@@ -408,7 +408,7 @@
         var sortedRows = sorted(rows);
         var total     = rows.reduce(function(s, r) { return s + (r.ts || 0); }, 0);
         var headerBar = e('div', { style: { background: MP, padding: "9px 14px", display: "flex", justifyContent: "space-between", alignItems: "center" } },
-          e('span', { style: { color: "#fff", fontSize: 12, fontWeight: 700, letterSpacing: 0.6, textTransform: "uppercase" } }, isCorp ? "Corporate Stores" : "Franchisee Stores"),
+          e('span', { style: { color: "#fff", fontSize: 12, fontWeight: 700, letterSpacing: 0.6, textTransform: "uppercase" } }, props.title || "All Stores"),
           sortedRows.length > 0 && e('span', { style: { color: "rgba(255,255,255,0.65)", fontSize: 11 } }, sortedRows.length + " locations")
         );
         if (sortedRows.length === 0) {
@@ -420,19 +420,17 @@
         var theadRow = e('tr', { style: { background: "#F9FAFB" } },
           e('th', { style: THL }, "Status"),
           e('th', { style: THL }, "Location"),
-          e('th', { style: THR }, "Google ★"),
           e('th', { style: THR }, "Total sales"),
           hasInlineDetail && e(Fragment, null, e('th', { style: THR }, "In-store"), e('th', { style: THR }, "Online")),
           e('th', { style: THR }, "Online %"),
           e('th', { style: THR }, "Orders"),
           e('th', { style: THR }, "Avg ticket"),
           e('th', { style: THR }, "Food cost %"),
-          isCorp && e(Fragment, null,
-            e('th', { style: THR }, "Food var"),
-            e('th', { style: THR }, "Labour %"),
-            e('th', { style: THR }, "$/labour hr")
-          ),
-          e('th', { style: THR }, "vs PY")
+          e('th', { style: THR }, "Food var"),
+          e('th', { style: THR }, "Labour %"),
+          e('th', { style: THR }, "$/labour hr"),
+          e('th', { style: THR }, "vs PY"),
+          e('th', { style: THR }, "Google ★")
         );
         var bodyRows = sortedRows.map(function(r, i) {
           var onlinePct = (r.ts > 0 && r.os != null) ? (r.os / r.ts * 100).toFixed(1) + "%" : "—";
@@ -445,16 +443,6 @@
             e('td', { style: TD  },
               e('span', { style: { fontWeight: 600, color: "#111", fontSize: 12 } }, r.n),
               r.isCorp && e('span', { style: { marginLeft: 6, fontSize: 9, fontWeight: 700, background: "#EDE9FE", color: "#5B21B6", padding: "1px 5px", borderRadius: 3 } }, "CORP")
-            ),
-            e('td', { style: TDR },
-              (function() {
-                var rev = REVIEWS[r.n];
-                if (!rev) return e('span', { style: { color: "#9CA3AF" } }, "—");
-                return e('span', { style: { whiteSpace: "nowrap" } },
-                  e('span', { style: { color: "#F59E0B", fontWeight: 700, fontSize: 12 } }, "★ " + rev.rating.toFixed(1)),
-                  rev.count != null ? e('span', { style: { color: "#9CA3AF", fontSize: 11, marginLeft: 3 } }, "(" + rev.count.toLocaleString() + ")") : null
-                );
-              })()
             ),
             e('td', { style: Object.assign({}, TDR, { fontWeight: 600, color: "#111" }) }, cad(r.ts)),
             hasInlineDetail && e(Fragment, null,
@@ -469,28 +457,36 @@
                 ? e('span', { style: { background: fbg, color: ftx, fontSize: 11, fontWeight: 700, padding: "2px 8px", borderRadius: 4 } }, r.food.toFixed(1) + "%")
                 : e('span', { style: { color: "#9CA3AF" } }, "—")
             ),
-            isCorp && e(Fragment, null,
-              e('td', { style: TDR },
-                r.fvar != null
-                  ? e('span', { style: { color: r.fvar < 0 ? "#166534" : r.fvar > 1 ? "#991B1B" : "#374151", fontWeight: 600 } }, (r.fvar >= 0 ? "+" : "") + r.fvar.toFixed(2) + "pp")
-                  : e('span', { style: { color: "#9CA3AF" } }, "—")
-              ),
-              e('td', { style: TDR },
-                r.lab != null
-                  ? e('span', { style: { background: lbg, color: ltx, fontSize: 11, fontWeight: 700, padding: "2px 8px", borderRadius: 4 } }, r.lab.toFixed(1) + "%")
-                  : e('span', { style: { color: "#9CA3AF" } }, "—")
-              ),
-              e('td', { style: Object.assign({}, TDR, { color: "#374151" }) }, r.slh != null ? cad(r.slh, 0) : "—")
+            e('td', { style: TDR },
+              r.isCorp && r.fvar != null
+                ? e('span', { style: { color: r.fvar < 0 ? "#166534" : r.fvar > 1 ? "#991B1B" : "#374151", fontWeight: 600 } }, (r.fvar >= 0 ? "+" : "") + r.fvar.toFixed(2) + "pp")
+                : e('span', { style: { color: "#9CA3AF" } }, "—")
             ),
+            e('td', { style: TDR },
+              r.isCorp && r.lab != null
+                ? e('span', { style: { background: lbg, color: ltx, fontSize: 11, fontWeight: 700, padding: "2px 8px", borderRadius: 4 } }, r.lab.toFixed(1) + "%")
+                : e('span', { style: { color: "#9CA3AF" } }, "—")
+            ),
+            e('td', { style: Object.assign({}, TDR, { color: "#374151" }) }, r.isCorp && r.slh != null ? cad(r.slh, 0) : "—"),
             e('td', { style: TDR },
               r.py != null
                 ? e('span', { style: { color: pyColor, fontWeight: 700 } }, (r.py >= 0 ? "+" : "") + r.py.toFixed(1) + "%")
                 : e('span', { style: { color: "#9CA3AF", fontSize: 10 } }, "New")
+            ),
+            e('td', { style: TDR },
+              (function() {
+                var rev = REVIEWS[r.n];
+                if (!rev) return e('span', { style: { color: "#9CA3AF" } }, "—");
+                return e('span', { style: { whiteSpace: "nowrap" } },
+                  e('span', { style: { color: "#F59E0B", fontWeight: 700, fontSize: 12 } }, "★ " + rev.rating.toFixed(1)),
+                  rev.count != null ? e('span', { style: { color: "#9CA3AF", fontSize: 11, marginLeft: 3 } }, "(" + rev.count.toLocaleString() + ")") : null
+                );
+              })()
             )
           );
         });
         var totalRow = e('tr', null,
-          e('td', { colSpan: 2, style: { padding: "9px 12px", fontWeight: 700, color: "#111", background: "#F9FAFB", borderTop: "2px solid #E5E7EB" } }, isCorp ? "Corporate total" : "Franchisee total"),
+          e('td', { colSpan: 2, style: { padding: "9px 12px", fontWeight: 700, color: "#111", background: "#F9FAFB", borderTop: "2px solid #E5E7EB" } }, (props.title || "All Stores").replace("Stores", "total")),
           e('td', { style: { padding: "9px 12px", textAlign: "right", fontWeight: 700, color: "#111", background: "#F9FAFB", borderTop: "2px solid #E5E7EB" } }, cad(total)),
           e('td', { colSpan: 20, style: { background: "#F9FAFB", borderTop: "2px solid #E5E7EB" } })
         );
@@ -519,20 +515,22 @@
             )
           ),
           e('div', { style: { fontSize: 11, color: "#9CA3AF", textAlign: "right", lineHeight: 1.6 } },
-            "Source: Cody Stead weekly report",
-            e('br', null),
-            e('span', { style: { color: MP, fontWeight: 600 } }, "Food & labour: corporate stores only")
+            "Source: Cody Stead weekly report"
           )
         ),
 
-        // Week tabs — dynamic, built from fetched data
-        e('div', { style: { display: "flex", gap: 6, marginBottom: 16, flexWrap: "wrap" } },
-          weekNums.map(function(w) {
-            return e('button', {
-              key: w, onClick: function() { setWeek(w); },
-              style: { fontSize: 12, padding: "6px 14px", borderRadius: 20, cursor: "pointer", border: w === week ? ("2px solid " + MP) : "1px solid #E5E7EB", background: w === week ? MP : "#fff", color: w === week ? "#fff" : "#374151", fontWeight: w === week ? 700 : 400 }
-            }, WEEKS[w].label + " · " + WEEKS[w].dates);
-          })
+        // Week selector — dropdown for easy navigation as weeks accumulate
+        e('div', { style: { display: "flex", alignItems: "center", gap: 10, marginBottom: 16 } },
+          e('span', { style: { fontSize: 12, color: "#6B7280", fontWeight: 600, textTransform: "uppercase", letterSpacing: 0.5 } }, "Week"),
+          e('select', {
+            value: week,
+            onChange: function(ev) { setWeek(Number(ev.target.value)); },
+            style: { fontSize: 13, fontWeight: 700, padding: "7px 14px", borderRadius: 8, border: "2px solid " + MP, background: "#fff", color: "#111", cursor: "pointer", fontFamily: "inherit", outline: "none" }
+          },
+            weekNums.map(function(w) {
+              return e('option', { key: w, value: w }, WEEKS[w].label + "  ·  " + WEEKS[w].dates);
+            })
+          )
         ),
 
         // KPI strip
@@ -679,8 +677,11 @@
         ),
 
         // Tables
-        (view === "both" || view === "corp") && e(TableSection, { rows: enrichedCorp, isCorp: true,  REVIEWS: REVIEWS }),
-        (view === "both" || view === "fran") && e(TableSection, { rows: enrichedFran, isCorp: false, REVIEWS: REVIEWS }),
+        e(TableSection, {
+          rows:    view === "corp" ? enrichedCorp : view === "fran" ? enrichedFran : enrichedCorp.concat(enrichedFran),
+          title:   view === "corp" ? "Corporate Stores" : view === "fran" ? "Franchisee Stores" : "All Stores",
+          REVIEWS: REVIEWS,
+        }),
 
         // Footer
         e('div', { style: { fontSize: 11, color: "#6B7280", background: "#F9FAFB", border: "1px solid #E5E7EB", borderRadius: 8, padding: "10px 14px", lineHeight: 1.8 } },
