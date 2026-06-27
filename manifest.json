@@ -1,0 +1,24 @@
+{
+  "name": "Mezza Scorecard",
+  "short_name": "Scorecard",
+  "description": "Mezza Lebanese Kitchen weekly performance scorecard",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#54274D",
+  "theme_color": "#54274D",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
