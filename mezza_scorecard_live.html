@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mezza Monday Scorecard</title>
+  <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #FAF8F4; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+    button, select { font-family: inherit; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner { width: 32px; height: 32px; border: 3px solid #E5E7EB; border-top-color: #54274D; border-radius: 50%; animation: spin 0.8s linear infinite; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script>
+  (function () {
+
+    var useState  = React.useState;
+    var useMemo   = React.useMemo;
+    var useEffect = React.useEffect;
+    var e         = React.createElement;
+    var Fragment  = React.Fragment;
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // CONFIG — Google Sheet ID (from the URL of your Google Sheet)
+    // ─────────────────────────────────────────────────────────────────────────
+    var SHEET_ID = '1aurNzSaaQ17snGq5fmTyLpQsCg9vGK80DECypQJPOzY';
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // DAILY TALLY — update manually each Monday morning for the current week
+    // ─────────────────────────────────────────────────────────────────────────
+    var DAILY_WEEK_LABEL = "Week 25 daily tally";
+    var DAILY_DATES      = "Jun 22–28, 2026";
+    var DAILY = [
+      { day: "Mon", date: "Jun 22", val: null },
+      { day: "Tue", date: "Jun 23", val: null },
+      { day: "Wed", date: "Jun 24", val: null },
+      { day: "Thu", date: "Jun 25", val: null },
+      { day: "Fri", date: "Jun 26", val: null },
+      { day: "Sat", date: "Jun 27", val: null },
+      { day: "Sun", date: "Jun 28", val: null },
+    ];
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // DATA FETCHING — uses Google Sheets gviz API (no CORS issues)
+    // ─────────────────────────────────────────────────────────────────────────
+    function parseGviz(text) {
+      // Strip the JSONP wrapper Google adds: /*O_o*/\ngoogle.visualization.Query.setResponse({...});
+      var start = text.indexOf('{');
+      var end   = text.lastIndexOf('}');
+      var json  = JSON.parse(text.substring(start, end + 1));
+      var table = json.table;
+      var headers = (table.cols || []).map(function(c) { return c.label || c.id; });
+      return (table.rows || []).map(function(row) {
+        var obj = {};
+        headers.forEach(function(h, i) {
+          var cell = row.c ? row.c[i] : null;
+          obj[h] = (cell && cell.v !== undefined && cell.v !== null) ? cell.v : null;
+        });
+        return obj;
+      });
+    }
+
+    function fetchSheet(sheetName) {
+      var url = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID +
+        '/gviz/tq?sheet=' + encodeURIComponent(sheetName) + '&tqx=out:json&headers=1';
+      return fetch(url, { credentials: 'omit' })
+        .then(function(r) {
+          if (!r.ok) throw new Error('Network error ' + r.status);
+          return r.text();
+        })
+        .then(parseGviz);
+    }
+
+    function fetchScorecardData() {
+      return Promise.all([
+        fetchSheet('Weekly_Summary'),
+        fetchSheet('Store_Data'),
+        fetchSheet('Reviews').catch(function() { return []; })   // optional — graceful if tab doesn't exist yet
+      ]).then(function(results) {
+        var weeklyRows = results[0];
+        var storeRows  = results[1];
+        var reviewRows = results[2];
+        var weeks = {};
+        var n = function(v) { return (v != null && v !== '') ? Number(v) : null; };
+
+        // Build week summaries — skip notes row (Week_Number null/empty)
+        weeklyRows.filter(function(row) {
+          return row.Week_Number != null && String(row.Week_Number).trim() !== '';
+        }).forEach(function(row) {
+          var wn = Number(row.Week_Number);
+          if (!wn) return;
+          weeks[wn] = {
+            label:        String(row.Week_Label  || ('Week ' + wn)),
+            dates:        String(row.Week_Dates  || ''),
+            systemSales:  n(row.System_Sales),
+            systemOrders: n(row.System_Orders),
+            systemTicket: n(row.System_Ticket),
+            pyChange:     n(row.YOY_Change_Pct),
+            corp: [],
+            fran: [],
+          };
+        });
+
+        // Attach store rows — skip notes row and rows with no location
+        storeRows.filter(function(row) {
+          return row.Week_Number != null && String(row.Week_Number).trim() !== '' &&
+                 row.Location_Name != null && String(row.Location_Name).trim() !== '';
+        }).forEach(function(row) {
+          var wn = Number(row.Week_Number);
+          if (!wn || !weeks[wn]) return;
+          if (row.Location_Type === 'Corp') {
+            weeks[wn].corp.push({
+              n:    row.Location_Name,
+              ts:   n(row.Total_Sales),
+              is:   n(row.InStore_Sales),
+              os:   n(row.Online_Sales),
+              ord:  n(row.Orders),
+              tick: n(row.Avg_Ticket),
+              food: n(row.Food_Cost_Pct),
+              fvar: n(row.Food_Variance),
+              lab:  n(row.Labour_Pct),
+              slh:  n(row.Sales_Per_Labour_Hr),
+              py:   n(row.VS_PY_Pct),
+            });
+          } else {
+            weeks[wn].fran.push({
+              n:    row.Location_Name,
+              ts:   n(row.Total_Sales),
+              is:   n(row.InStore_Sales),
+              os:   n(row.Online_Sales),
+              ord:  n(row.Orders),
+              tick: n(row.Avg_Ticket),
+              food: n(row.Food_Cost_Pct),
+              py:   n(row.VS_PY_Pct),
+            });
+          }
+        });
+
+        // Build reviews lookup: { "Clayton Park": { rating: 4.3, count: 187 } }
+        var reviews = {};
+        (reviewRows || []).forEach(function(row) {
+          if (row.Location_Name && row.Rating != null && row.Rating !== '') {
+            reviews[String(row.Location_Name).trim()] = {
+              rating: Number(row.Rating),
+              count:  (row.Review_Count != null && row.Review_Count !== '') ? Number(row.Review_Count) : null,
+            };
+          }
+        });
+
+        return { weeks: weeks, reviews: reviews };
+      });
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // HELPERS
+    // ─────────────────────────────────────────────────────────────────────────
+    function getStoreStatus(r, isCorp) {
+      var redFlags = [], yellowFlags = [];
+      if (r.food != null) {
+        if (r.food > 41)       redFlags.push("Food cost " + r.food.toFixed(1) + "% (>41%)");
+        else if (r.food >= 37) yellowFlags.push("Food cost " + r.food.toFixed(1) + "% (37–41%)");
+      }
+      if (isCorp && r.lab != null) {
+        if (r.lab > 25)       redFlags.push("Labour " + r.lab.toFixed(1) + "% (>25%)");
+        else if (r.lab >= 22) yellowFlags.push("Labour " + r.lab.toFixed(1) + "% (22–25%)");
+      }
+      if (r.py != null) {
+        if (r.py < -10)      redFlags.push("Sales " + r.py.toFixed(1) + "% vs PY");
+        else if (r.py < -3)  yellowFlags.push("Sales " + r.py.toFixed(1) + "% vs PY");
+      }
+      var status, flags;
+      if (redFlags.length > 0)          { status = "red";    flags = redFlags; }
+      else if (yellowFlags.length >= 2) { status = "red";    flags = yellowFlags; }
+      else if (yellowFlags.length === 1){ status = "yellow"; flags = yellowFlags; }
+      else                              { status = "green";  flags = []; }
+      return { status: status, flags: flags };
+    }
+
+    var STATUS_CFG = {
+      red:    { dot: "#DC2626", label: "Needs attention", labelBg: "#FEE2E2", labelTx: "#991B1B" },
+      yellow: { dot: "#D97706", label: "Watch",           labelBg: "#FEF3C7", labelTx: "#92400E" },
+      green:  { dot: "#16A34A", label: "On track",        labelBg: "#DCFCE7", labelTx: "#166534" },
+    };
+
+    function cad(n, dec) {
+      dec = dec === undefined ? 0 : dec;
+      if (n == null) return "—";
+      return "$" + n.toLocaleString("en-CA", { minimumFractionDigits: dec, maximumFractionDigits: dec });
+    }
+
+    function foodBg(f) {
+      if (f == null) return ["#F3F4F6", "#6B7280"];
+      if (f < 33)    return ["#DCFCE7", "#166534"];
+      if (f < 37)    return ["#FEF9C3", "#854D0E"];
+      if (f < 41)    return ["#FFEDD5", "#9A3412"];
+      return                ["#FEE2E2", "#991B1B"];
+    }
+
+    function labBg(l) {
+      if (l == null) return ["#F3F4F6", "#6B7280"];
+      if (l < 19)    return ["#DCFCE7", "#166534"];
+      if (l < 22)    return ["#FEF9C3", "#854D0E"];
+      if (l < 25)    return ["#FFEDD5", "#9A3412"];
+      return                ["#FEE2E2", "#991B1B"];
+    }
+
+    var MP = "#54274D";
+
+    var TH  = { padding: "8px 12px", fontWeight: 600, fontSize: 11, color: "#9B7A8F", background: "#F5EFF3", borderBottom: "1px solid #E8D8E5", whiteSpace: "nowrap" };
+    var THL = Object.assign({}, TH, { textAlign: "left" });
+    var THR = Object.assign({}, TH, { textAlign: "right" });
+    var TD  = { padding: "8px 12px", borderBottom: "1px solid #F0E8EE", whiteSpace: "nowrap" };
+    var TDR = Object.assign({}, TD, { textAlign: "right" });
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // LOADING SCREEN
+    // ─────────────────────────────────────────────────────────────────────────
+    function LoadingScreen() {
+      return e('div', { style: { display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "60vh", gap: 20 } },
+        e('div', { className: "spinner" }),
+        e('div', { style: { fontSize: 14, color: "#6B7280" } }, "Loading scorecard data…")
+      );
+    }
+
+    function ErrorScreen(props) {
+      return e('div', { style: { maxWidth: 560, margin: "80px auto", padding: "24px 28px", border: "1px solid #FCA5A5", borderRadius: 12, background: "#FEF2F2" } },
+        e('div', { style: { fontSize: 16, fontWeight: 700, color: "#991B1B", marginBottom: 8 } }, "Could not load scorecard data"),
+        e('div', { style: { fontSize: 13, color: "#7F1D1D", lineHeight: 1.6, marginBottom: 16 } }, props.message),
+        e('div', { style: { fontSize: 12, color: "#9CA3AF" } }, "Check that the Google Sheet is shared as 'Anyone with the link can view' (Share button → change access). The Sheet ID in the file is: " + SHEET_ID)
+      );
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // MAIN APP
+    // ─────────────────────────────────────────────────────────────────────────
+    function App() {
+      var weeksState   = useState(null);
+      var WEEKS        = weeksState[0];
+      var setWEEKS     = weeksState[1];
+      var reviewsState = useState({});
+      var REVIEWS      = reviewsState[0];
+      var setREVIEWS   = reviewsState[1];
+      var loadingState = useState(true);
+      var loading      = loadingState[0];
+      var setLoading   = loadingState[1];
+      var errorState   = useState(null);
+      var error        = errorState[0];
+      var setError     = errorState[1];
+
+      useEffect(function() {
+        fetchScorecardData()
+          .then(function(data) {
+            setWEEKS(data.weeks);
+            setREVIEWS(data.reviews);
+            setLoading(false);
+          })
+          .catch(function(err) {
+            setError(err.message || "Unknown error");
+            setLoading(false);
+          });
+      }, []);
+
+      if (loading) return e(LoadingScreen, null);
+      if (error)   return e(ErrorScreen, { message: error });
+      if (!WEEKS || Object.keys(WEEKS).length === 0) return e(ErrorScreen, { message: "No data was returned from the Google Sheet. Check that Cody has entered data in the Weekly_Summary and Store_Data tabs." });
+
+      var weekNums     = Object.keys(WEEKS).map(Number).sort(function(a, b) { return b - a; });
+      var defaultWeek  = weekNums[0];
+
+      return e(Scorecard, { WEEKS: WEEKS, weekNums: weekNums, defaultWeek: defaultWeek, REVIEWS: REVIEWS });
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // SCORECARD (renders once data is loaded)
+    // ─────────────────────────────────────────────────────────────────────────
+    function Scorecard(props) {
+      var WEEKS    = props.WEEKS;
+      var weekNums = props.weekNums;
+      var REVIEWS  = props.REVIEWS || {};
+
+      var weekState        = useState(props.defaultWeek);
+      var week             = weekState[0];
+      var setWeek          = weekState[1];
+      var sortState        = useState("sales");
+      var sort             = sortState[0];
+      var setSort          = sortState[1];
+      var viewState        = useState("both");
+      var view             = viewState[0];
+      var setView          = viewState[1];
+      var sfState          = useState("all");
+      var statusFilter     = sfState[0];
+      var setStatusFilter  = sfState[1];
+      var weState          = useState(true);
+      var watchExpanded    = weState[0];
+      var setWatchExpanded = weState[1];
+
+      var wd     = WEEKS[week];
+      var prevWd = WEEKS[week - 1] || null;
+      var wowChg = prevWd ? ((wd.systemSales - prevWd.systemSales) / prevWd.systemSales * 100) : null;
+      var dailyTotal = DAILY.reduce(function(s, d) { return s + (d.val || 0); }, 0);
+
+      var corpFoodAvg = useMemo(function() {
+        var vals = wd.corp.filter(function(r) { return r.food != null; }).map(function(r) { return r.food; });
+        return vals.length ? vals.reduce(function(a, b) { return a + b; }, 0) / vals.length : null;
+      }, [wd]);
+
+      var corpLabAvg = useMemo(function() {
+        var vals = wd.corp.filter(function(r) { return r.lab != null; }).map(function(r) { return r.lab; });
+        return vals.length ? vals.reduce(function(a, b) { return a + b; }, 0) / vals.length : null;
+      }, [wd]);
+
+      var enrichedCorp = useMemo(function() {
+        return wd.corp.map(function(r) { var s = getStoreStatus(r, true);  return Object.assign({}, r, { isCorp: true,  status: s.status, flags: s.flags }); });
+      }, [wd]);
+      var enrichedFran = useMemo(function() {
+        return wd.fran.map(function(r) { var s = getStoreStatus(r, false); return Object.assign({}, r, { isCorp: false, status: s.status, flags: s.flags }); });
+      }, [wd]);
+      var allStores    = enrichedCorp.concat(enrichedFran);
+      var redStores    = allStores.filter(function(s) { return s.status === "red"; });
+      var yellowStores = allStores.filter(function(s) { return s.status === "yellow"; });
+      var greenStores  = allStores.filter(function(s) { return s.status === "green"; });
+
+      var hasInlineDetail = wd.corp.length > 0 && wd.corp[0].is != null;
+
+      function sorted(arr) {
+        var d = arr.slice();
+        if (statusFilter !== "all") d = d.filter(function(r) { return r.status === statusFilter; });
+        if (sort === "sales")          d.sort(function(a, b) { return b.ts - a.ts; });
+        else if (sort === "food_asc")  d.sort(function(a, b) { return (a.food == null ? 999 : a.food) - (b.food == null ? 999 : b.food); });
+        else if (sort === "food_desc") d.sort(function(a, b) { return (b.food == null ? -1  : b.food) - (a.food == null ? -1  : a.food); });
+        else if (sort === "labour")    d.sort(function(a, b) { return (b.lab  == null ? -1  : b.lab)  - (a.lab  == null ? -1  : a.lab); });
+        else if (sort === "ticket")    d.sort(function(a, b) { return (b.tick == null ? -1  : b.tick) - (a.tick == null ? -1  : a.tick); });
+        else if (sort === "reviews_desc") d.sort(function(a, b) {
+          var ra = REVIEWS[a.n] ? REVIEWS[a.n].rating : -1;
+          var rb = REVIEWS[b.n] ? REVIEWS[b.n].rating : -1;
+          return rb - ra;
+        });
+        else if (sort === "reviews_asc") d.sort(function(a, b) {
+          var ra = REVIEWS[a.n] ? REVIEWS[a.n].rating : 999;
+          var rb = REVIEWS[b.n] ? REVIEWS[b.n].rating : 999;
+          return ra - rb;
+        });
+        else if (sort === "status") {
+          var ord = { red: 0, yellow: 1, green: 2 };
+          d.sort(function(a, b) { return ord[a.status] - ord[b.status]; });
+        } else {
+          d.sort(function(a, b) { return a.n.localeCompare(b.n); });
+        }
+        return d;
+      }
+
+      function StatusDot(props) {
+        var cfg = STATUS_CFG[props.status];
+        return e('span', {
+          title: props.flags.length ? props.flags.join(" · ") : cfg.label,
+          style: { display: "inline-flex", alignItems: "center", gap: 4, background: cfg.labelBg, color: cfg.labelTx, fontSize: 10, fontWeight: 700, padding: "2px 7px", borderRadius: 10, whiteSpace: "nowrap", cursor: props.flags.length ? "help" : "default" }
+        },
+          e('span', { style: { width: 6, height: 6, borderRadius: "50%", background: cfg.dot, display: "inline-block", flexShrink: 0 } }),
+          cfg.label
+        );
+      }
+
+      function TableSection(props) {
+        var rows      = props.rows;
+        var isCorp    = props.isCorp;
+        var REVIEWS   = props.REVIEWS || {};
+        var sortedRows = sorted(rows);
+        var total     = rows.reduce(function(s, r) { return s + (r.ts || 0); }, 0);
+        var headerBar = e('div', { style: { background: MP, padding: "9px 14px", display: "flex", justifyContent: "space-between", alignItems: "center" } },
+          e('span', { style: { color: "#fff", fontSize: 12, fontWeight: 700, letterSpacing: 0.6, textTransform: "uppercase" } }, props.title || "All Stores"),
+          sortedRows.length > 0 && e('span', { style: { color: "rgba(255,255,255,0.65)", fontSize: 11 } }, sortedRows.length + " locations")
+        );
+        if (sortedRows.length === 0) {
+          return e('div', { style: { marginBottom: 16, borderRadius: 10, overflow: "hidden", border: "1px solid #E8D8E5" } },
+            headerBar,
+            e('div', { style: { padding: 24, textAlign: "center", color: "#9CA3AF", fontSize: 13 } }, "No stores match the current filter.")
+          );
+        }
+        var theadRow = e('tr', { style: { background: "#F5EFF3" } },
+          e('th', { style: THL }, "Status"),
+          e('th', { style: THL }, "Location"),
+          e('th', { style: THR }, "Total sales"),
+          hasInlineDetail && e(Fragment, null, e('th', { style: THR }, "In-store"), e('th', { style: THR }, "Online")),
+          e('th', { style: THR }, "Online %"),
+          e('th', { style: THR }, "Orders"),
+          e('th', { style: THR }, "Avg ticket"),
+          e('th', { style: THR }, "Food cost %"),
+          e('th', { style: THR }, "Food var"),
+          e('th', { style: THR }, "Labour %"),
+          e('th', { style: THR }, "$/labour hr"),
+          e('th', { style: THR }, "vs PY"),
+          e('th', { style: THR }, "Google ★")
+        );
+        var bodyRows = sortedRows.map(function(r, i) {
+          var onlinePct = (r.ts > 0 && r.os != null) ? (r.os / r.ts * 100).toFixed(1) + "%" : "—";
+          var fArr = foodBg(r.food); var fbg = fArr[0]; var ftx = fArr[1];
+          var lArr = labBg(r.lab);   var lbg = lArr[0]; var ltx = lArr[1];
+          var pyColor = r.py == null ? "#6B7280" : r.py >= 0 ? "#166534" : "#991B1B";
+          var rowBg   = r.status === "red" ? (i % 2 === 0 ? "#FFF9F9" : "#FFF5F5") : (i % 2 === 0 ? "#fff" : "#FAF8F4");
+          return e('tr', { key: i, style: { background: rowBg } },
+            e('td', { style: TD  }, e(StatusDot, { status: r.status, flags: r.flags })),
+            e('td', { style: TD  },
+              e('span', { style: { fontWeight: 600, color: "#2D1A2B", fontSize: 12 } }, r.n),
+              r.isCorp && e('span', { style: { marginLeft: 6, fontSize: 9, fontWeight: 700, background: "#EDE0EB", color: "#54274D", padding: "1px 5px", borderRadius: 3 } }, "CORP")
+            ),
+            e('td', { style: Object.assign({}, TDR, { fontWeight: 600, color: "#2D1A2B" }) }, cad(r.ts)),
+            hasInlineDetail && e(Fragment, null,
+              e('td', { style: Object.assign({}, TDR, { color: "#374151" }) }, cad(r.is)),
+              e('td', { style: Object.assign({}, TDR, { color: "#374151" }) }, cad(r.os))
+            ),
+            e('td', { style: Object.assign({}, TDR, { color: "#374151" }) }, onlinePct),
+            e('td', { style: Object.assign({}, TDR, { color: "#374151" }) }, r.ord != null ? r.ord.toLocaleString() : "—"),
+            e('td', { style: Object.assign({}, TDR, { color: "#374151" }) }, r.tick != null ? cad(r.tick, 2) : "—"),
+            e('td', { style: TDR },
+              r.food != null
+                ? e('span', { style: { background: fbg, color: ftx, fontSize: 11, fontWeight: 700, padding: "2px 8px", borderRadius: 4 } }, r.food.toFixed(1) + "%")
+                : e('span', { style: { color: "#9CA3AF" } }, "—")
+            ),
+            e('td', { style: TDR },
+              r.isCorp && r.fvar != null
+                ? e('span', { style: { color: r.fvar < 0 ? "#166534" : r.fvar > 1 ? "#991B1B" : "#374151", fontWeight: 600 } }, (r.fvar >= 0 ? "+" : "") + r.fvar.toFixed(2) + "pp")
+                : e('span', { style: { color: "#9CA3AF" } }, "—")
+            ),
+            e('td', { style: TDR },
+              r.isCorp && r.lab != null
+                ? e('span', { style: { background: lbg, color: ltx, fontSize: 11, fontWeight: 700, padding: "2px 8px", borderRadius: 4 } }, r.lab.toFixed(1) + "%")
+                : e('span', { style: { color: "#9CA3AF" } }, "—")
+            ),
+            e('td', { style: Object.assign({}, TDR, { color: "#374151" }) }, r.isCorp && r.slh != null ? cad(r.slh, 0) : "—"),
+            e('td', { style: TDR },
+              r.py != null
+                ? e('span', { style: { color: pyColor, fontWeight: 700 } }, (r.py >= 0 ? "+" : "") + r.py.toFixed(1) + "%")
+                : e('span', { style: { color: "#9CA3AF", fontSize: 10 } }, "New")
+            ),
+            e('td', { style: TDR },
+              (function() {
+                var rev = REVIEWS[r.n];
+                if (!rev) return e('span', { style: { color: "#9CA3AF" } }, "—");
+                return e('span', { style: { whiteSpace: "nowrap" } },
+                  e('span', { style: { color: "#F59E0B", fontWeight: 700, fontSize: 12 } }, "★ " + rev.rating.toFixed(1)),
+                  rev.count != null ? e('span', { style: { color: "#9CA3AF", fontSize: 11, marginLeft: 3 } }, "(" + rev.count.toLocaleString() + ")") : null
+                );
+              })()
+            )
+          );
+        });
+        var totalRow = e('tr', null,
+          e('td', { colSpan: 2, style: { padding: "9px 12px", fontWeight: 700, color: "#2D1A2B", background: "#F5EFF3", borderTop: "2px solid #E8D8E5" } }, (props.title || "All Stores").replace("Stores", "total")),
+          e('td', { style: { padding: "9px 12px", textAlign: "right", fontWeight: 700, color: "#2D1A2B", background: "#F5EFF3", borderTop: "2px solid #E8D8E5" } }, cad(total)),
+          e('td', { colSpan: 20, style: { background: "#F5EFF3", borderTop: "2px solid #E8D8E5" } })
+        );
+        return e('div', { style: { marginBottom: 16, borderRadius: 10, overflow: "hidden", border: "1px solid #E8D8E5" } },
+          headerBar,
+          e('div', { style: { overflowX: "auto" } },
+            e('table', { style: { width: "100%", borderCollapse: "collapse", fontSize: 12 } },
+              e('thead', null, theadRow),
+              e('tbody', null, bodyRows, totalRow)
+            )
+          )
+        );
+      }
+
+      return e('div', { style: { fontFamily: "'Inter',-apple-system,BlinkMacSystemFont,sans-serif", background: "#FAF8F4", minHeight: "100vh" } },
+
+        // Full-width purple header bar with real Mezza logo
+        e('div', { style: { background: MP, padding: "14px 24px", display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" } },
+          e('img', { src: "https://images.squarespace-cdn.com/content/v1/6272b45a3197ec4398631b6e/a334496d-3ade-4204-adfe-1d3a7c3fc8c6/Mezza-Logo.png?format=300w", alt: "Mezza Lebanese Kitchen", style: { height: 30, objectFit: "contain", filter: "brightness(0) invert(1)" } }),
+          e('div', { style: { width: 1, height: 24, background: "rgba(255,255,255,0.3)", flexShrink: 0 } }),
+          e('span', { style: { fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,0.85)", letterSpacing: 0.3 } }, "Weekly Scorecard"),
+          e('span', { style: { fontSize: 12, color: "rgba(255,255,255,0.6)", marginLeft: "auto" } }, wd.label + " · " + wd.dates)
+        ),
+
+        // Content area
+        e('div', { style: { padding: "20px 16px 48px", maxWidth: 1400, margin: "0 auto" } },
+
+        // Week selector — dropdown for easy navigation as weeks accumulate
+        e('div', { style: { display: "flex", alignItems: "center", gap: 10, marginBottom: 16 } },
+          e('span', { style: { fontSize: 12, color: "#9B7A8F", fontWeight: 600, textTransform: "uppercase", letterSpacing: 0.5 } }, "Week"),
+          e('select', {
+            value: week,
+            onChange: function(ev) { setWeek(Number(ev.target.value)); },
+            style: { fontSize: 13, fontWeight: 700, padding: "7px 14px", borderRadius: 8, border: "2px solid " + MP, background: "#fff", color: "#111", cursor: "pointer", fontFamily: "inherit", outline: "none" }
+          },
+            weekNums.map(function(w) {
+              return e('option', { key: w, value: w }, WEEKS[w].label + "  ·  " + WEEKS[w].dates);
+            })
+          )
+        ),
+
+        // KPI strip
+        e('div', { style: { display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 10, marginBottom: 16 } },
+          [
+            { label: "System sales",   value: cad(wd.systemSales),
+              sub: e(Fragment, null,
+                wowChg != null && e('span', { style: { color: wowChg >= 0 ? "#166534" : "#991B1B", fontWeight: 700, marginRight: 6 } }, (wowChg >= 0 ? "▲" : "▼") + Math.abs(wowChg).toFixed(1) + "% WoW"),
+                wd.pyChange != null && e('span', { style: { color: wd.pyChange >= 0 ? "#166534" : "#991B1B", fontWeight: 700 } }, (wd.pyChange >= 0 ? "▲" : "▼") + Math.abs(wd.pyChange).toFixed(1) + "% YoY")
+              )
+            },
+            { label: "Total orders",   value: wd.systemOrders ? wd.systemOrders.toLocaleString() : "—", sub: e('span', { style: { color: "#9B7A8F" } }, allStores.length + " locations") },
+            { label: "Avg ticket",     value: wd.systemTicket ? cad(wd.systemTicket, 2) : "—",           sub: e('span', { style: { color: "#9B7A8F" } }, "System-wide") },
+            { label: "Corp food cost", value: corpFoodAvg != null ? corpFoodAvg.toFixed(1) + "%" : "—",
+              valueColor: corpFoodAvg > 40 ? "#991B1B" : corpFoodAvg > 37 ? "#9A3412" : "#2D1A2B",
+              sub: e('span', { style: { color: "#9B7A8F" } }, wd.corp.length + "-store avg") },
+            { label: "Corp labour",    value: corpLabAvg != null ? corpLabAvg.toFixed(1) + "%" : "—",
+              valueColor: corpLabAvg > 24 ? "#991B1B" : corpLabAvg > 21 ? "#9A3412" : "#2D1A2B",
+              sub: e('span', { style: { color: "#9B7A8F" } }, wd.corp.length + "-store avg") },
+          ].map(function(kpi, i) {
+            return e('div', { key: i, style: { background: "#fff", border: "0.5px solid #E8D8E5", borderLeft: "3px solid " + MP, borderRadius: 10, padding: "12px 14px" } },
+              e('div', { style: { fontSize: 11, color: "#9B7A8F", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 4 } }, kpi.label),
+              e('div', { style: { fontSize: 22, fontWeight: 800, color: kpi.valueColor || "#2D1A2B", lineHeight: 1.1 } }, kpi.value),
+              e('div', { style: { fontSize: 11, marginTop: 4 } }, kpi.sub)
+            );
+          })
+        ),
+
+        // Watch List Panel
+        e('div', { style: { border: "1px solid #E8D8E5", borderRadius: 10, marginBottom: 16, overflow: "hidden" } },
+          e('button', {
+            onClick: function() { setWatchExpanded(function(x) { return !x; }); },
+            style: { width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 14px", background: "#fff", border: "none", borderBottom: watchExpanded ? "1px solid #E8D8E5" : "none", cursor: "pointer", textAlign: "left" }
+          },
+            e('div', { style: { display: "flex", alignItems: "center", gap: 10 } },
+              e('span', { style: { fontSize: 13, fontWeight: 700, color: "#2D1A2B" } }, "Store Watch List"),
+              e('span', { style: { fontSize: 11, color: "#9B7A8F" } }, wd.label + " · " + allStores.length + " stores scored")
+            ),
+            e('div', { style: { display: "flex", alignItems: "center", gap: 8 } },
+              redStores.length > 0    && e('span', { style: { background: "#FEE2E2", color: "#991B1B", fontSize: 11, fontWeight: 700, padding: "2px 10px", borderRadius: 10 } }, redStores.length + " needs attention"),
+              yellowStores.length > 0 && e('span', { style: { background: "#FEF3C7", color: "#92400E", fontSize: 11, fontWeight: 700, padding: "2px 10px", borderRadius: 10 } }, yellowStores.length + " watch"),
+              e('span', { style: { background: "#DCFCE7", color: "#166534", fontSize: 11, fontWeight: 700, padding: "2px 10px", borderRadius: 10 } }, greenStores.length + " on track"),
+              e('span', { style: { fontSize: 16, color: "#9CA3AF", marginLeft: 4 } }, watchExpanded ? "▲" : "▼")
+            )
+          ),
+          watchExpanded && e('div', { style: { display: "grid", gridTemplateColumns: "1fr 1fr 1fr" } },
+            e('div', { style: { background: "#FEF2F2", borderRight: "1px solid #FECACA", padding: "14px 16px" } },
+              e('div', { style: { display: "flex", alignItems: "center", gap: 6, marginBottom: 10 } },
+                e('span', { style: { width: 8, height: 8, borderRadius: "50%", background: "#DC2626", display: "inline-block" } }),
+                e('span', { style: { fontSize: 12, fontWeight: 700, color: "#991B1B", textTransform: "uppercase", letterSpacing: 0.5 } }, "Needs Attention — " + redStores.length)
+              ),
+              redStores.length === 0
+                ? e('p', { style: { fontSize: 12, color: "#9CA3AF", margin: 0 } }, "No stores flagged this week.")
+                : redStores.map(function(s, i) {
+                    return e('div', { key: i, style: { marginBottom: 10, paddingBottom: 10, borderBottom: i < redStores.length - 1 ? "1px solid #FECACA" : "none" } },
+                      e('div', { style: { fontSize: 12, fontWeight: 700, color: "#2D1A2B", marginBottom: 3 } },
+                        s.n,
+                        s.isCorp && e('span', { style: { marginLeft: 5, fontSize: 9, fontWeight: 700, background: "#EDE0EB", color: "#54274D", padding: "1px 4px", borderRadius: 3 } }, "CORP")
+                      ),
+                      s.flags.map(function(f, j) { return e('div', { key: j, style: { fontSize: 11, color: "#991B1B", marginTop: 2 } }, "▸ " + f); })
+                    );
+                  })
+            ),
+            e('div', { style: { background: "#FFFBEB", borderRight: "1px solid #FDE68A", padding: "14px 16px" } },
+              e('div', { style: { display: "flex", alignItems: "center", gap: 6, marginBottom: 10 } },
+                e('span', { style: { width: 8, height: 8, borderRadius: "50%", background: "#D97706", display: "inline-block" } }),
+                e('span', { style: { fontSize: 12, fontWeight: 700, color: "#92400E", textTransform: "uppercase", letterSpacing: 0.5 } }, "Watch — " + yellowStores.length)
+              ),
+              yellowStores.length === 0
+                ? e('p', { style: { fontSize: 12, color: "#9CA3AF", margin: 0 } }, "No stores in watch zone.")
+                : yellowStores.map(function(s, i) {
+                    return e('div', { key: i, style: { marginBottom: 10, paddingBottom: 10, borderBottom: i < yellowStores.length - 1 ? "1px solid #FDE68A" : "none" } },
+                      e('div', { style: { fontSize: 12, fontWeight: 700, color: "#2D1A2B", marginBottom: 3 } },
+                        s.n,
+                        s.isCorp && e('span', { style: { marginLeft: 5, fontSize: 9, fontWeight: 700, background: "#EDE0EB", color: "#54274D", padding: "1px 4px", borderRadius: 3 } }, "CORP")
+                      ),
+                      s.flags.map(function(f, j) { return e('div', { key: j, style: { fontSize: 11, color: "#92400E", marginTop: 2 } }, "▸ " + f); })
+                    );
+                  })
+            ),
+            e('div', { style: { background: "#F0FDF4", padding: "14px 16px" } },
+              e('div', { style: { display: "flex", alignItems: "center", gap: 6, marginBottom: 10 } },
+                e('span', { style: { width: 8, height: 8, borderRadius: "50%", background: "#16A34A", display: "inline-block" } }),
+                e('span', { style: { fontSize: 12, fontWeight: 700, color: "#166534", textTransform: "uppercase", letterSpacing: 0.5 } }, "On Track — " + greenStores.length)
+              ),
+              e('div', { style: { display: "flex", flexWrap: "wrap", gap: 6 } },
+                greenStores.map(function(s, i) {
+                  return e('span', { key: i, style: { background: "#DCFCE7", color: "#166534", border: "1px solid #BBF7D0", fontSize: 11, fontWeight: 600, padding: "3px 9px", borderRadius: 8 } }, s.n);
+                })
+              )
+            )
+          )
+        ),
+
+        // Daily tally
+        e('div', { style: { border: "1px solid #E8D8E5", borderRadius: 10, marginBottom: 16, overflow: "hidden" } },
+          e('div', { style: { background: "#fff", padding: "10px 14px", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid #E8D8E5" } },
+            e('div', null,
+              e('span', { style: { fontSize: 13, fontWeight: 700, color: "#2D1A2B" } }, DAILY_WEEK_LABEL),
+              e('span', { style: { fontSize: 11, color: "#9B7A8F", marginLeft: 8 } }, DAILY_DATES + " · Givex ~6am daily · directional until Tuesday report")
+            ),
+            e('div', { style: { fontSize: 18, fontWeight: 800, color: dailyTotal > 0 ? "#166534" : "#9CA3AF" } }, dailyTotal > 0 ? cad(dailyTotal) + " running" : "Pending")
+          ),
+          e('div', { style: { padding: "12px 14px" } },
+            e('div', { style: { display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 8 } },
+              DAILY.map(function(d, i) {
+                return e('div', { key: i, style: { background: d.val ? "#F0FDF4" : "#FAF8F4", border: "1px solid " + (d.val ? "#BBF7D0" : "#E8D8E5"), borderRadius: 8, padding: "10px 8px", textAlign: "center" } },
+                  e('div', { style: { fontSize: 11, fontWeight: 600, color: "#374151" } }, d.day),
+                  e('div', { style: { fontSize: 10, color: "#9CA3AF", marginBottom: 6 } }, d.date),
+                  e('div', { style: { fontSize: 13, fontWeight: d.val ? 800 : 400, color: d.val ? "#166534" : "#9CA3AF" } }, d.val != null ? cad(d.val) : "—")
+                );
+              })
+            )
+          )
+        ),
+
+        // Controls
+        e('div', { style: { display: "flex", gap: 8, alignItems: "center", marginBottom: 14, flexWrap: "wrap" } },
+          e('span', { style: { fontSize: 12, color: "#9B7A8F" } }, "Sort by"),
+          e('select', {
+            value: sort, onChange: function(ev) { setSort(ev.target.value); },
+            style: { fontSize: 12, padding: "5px 10px", borderRadius: 8, border: "1px solid #E8D8E5", background: "#fff", color: "#4A2B43" }
+          },
+            e('option', { value: "sales"      }, "Total sales ↓"),
+            e('option', { value: "status"     }, "Status (worst first)"),
+            e('option', { value: "food_asc"   }, "Food cost % ↑ (best first)"),
+            e('option', { value: "food_desc"  }, "Food cost % ↓ (worst first)"),
+            e('option', { value: "labour"     }, "Labour % ↓"),
+            e('option', { value: "ticket"       }, "Avg ticket ↓"),
+            e('option', { value: "reviews_desc"}, "Google rating ↓ (best first)"),
+            e('option', { value: "reviews_asc" }, "Google rating ↑ (worst first)"),
+            e('option', { value: "alpha"       }, "Name A–Z")
+          ),
+          e('span', { style: { fontSize: 12, color: "#9B7A8F", marginLeft: 8 } }, "Filter"),
+          [["all","All stores"],["red","🔴 Needs attention"],["yellow","🟡 Watch"],["green","🟢 On track"]].map(function(pair) {
+            var v = pair[0]; var label = pair[1];
+            return e('button', { key: v, onClick: function() { setStatusFilter(v); }, style: { fontSize: 11, padding: "5px 11px", borderRadius: 8, cursor: "pointer", border: statusFilter === v ? "2px solid " + MP : "1px solid #E8D8E5", background: statusFilter === v ? MP : "#fff", color: statusFilter === v ? "#fff" : "#4A2B43", fontWeight: statusFilter === v ? 600 : 400 } }, label);
+          }),
+          e('span', { style: { fontSize: 12, color: "#9B7A8F", marginLeft: 8 } }, "View"),
+          [["both","All"],["corp","Corporate"],["fran","Franchisee"]].map(function(pair) {
+            var v = pair[0]; var label = pair[1];
+            return e('button', { key: v, onClick: function() { setView(v); }, style: { fontSize: 12, padding: "5px 12px", borderRadius: 8, cursor: "pointer", border: view === v ? ("2px solid " + MP) : "1px solid #E8D8E5", background: view === v ? MP : "#fff", color: view === v ? "#fff" : "#4A2B43", fontWeight: view === v ? 600 : 400 } }, label);
+          })
+        ),
+
+        // Tables
+        e(TableSection, {
+          rows:    view === "corp" ? enrichedCorp : view === "fran" ? enrichedFran : enrichedCorp.concat(enrichedFran),
+          title:   view === "corp" ? "Corporate Stores" : view === "fran" ? "Franchisee Stores" : "All Stores",
+          REVIEWS: REVIEWS,
+        }),
+
+        // Footer
+        e('div', { style: { fontSize: 11, color: "#9B7A8F", background: "#F5EFF3", border: "1px solid #E8D8E5", borderRadius: 8, padding: "10px 14px", lineHeight: 1.8 } },
+          e('strong', { style: { color: "#4A2B43" } }, "Watch list:"), " Red = food >41% OR labour >25% OR PY <–10%, or two yellow flags together · Yellow = food 37–41% OR labour 22–25% OR PY –3% to –10% · Green = all in range  ·  ",
+          e('strong', { style: { color: "#4A2B43" } }, "Food cost:"), " Green <33% · Yellow 33–37% · Orange 37–41% · Red >41%  ·  ",
+          e('strong', { style: { color: "#4A2B43" } }, "Labour:"), " Green <19% · Yellow 19–22% · Orange 22–25% · Red >25%  ·  ",
+          e('strong', { style: { color: "#4A2B43" } }, "Daily tally:"), " Givex ~6am — directional until Cody's Tuesday report"
+        )
+        ) // closes content area
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(e(App, null));
+  })();
+  </script>
+</body>
+</html>
