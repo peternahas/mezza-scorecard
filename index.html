@@ -20,6 +20,19 @@
     button, select { font-family: inherit; }
     @keyframes spin { to { transform: rotate(360deg); } }
     .spinner { width: 32px; height: 32px; border: 3px solid #E5E7EB; border-top-color: #54274D; border-radius: 50%; animation: spin 0.8s linear infinite; }
+
+    /* ── Responsive layout ── */
+    .kpi-grid        { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 16px; }
+    .watchlist-cols  { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+    .daily-container { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .daily-grid      { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; min-width: 380px; }
+
+    @media (max-width: 640px) {
+      .kpi-grid       { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .watchlist-cols { grid-template-columns: 1fr; }
+      .watchlist-cols > div { border-right: none !important; }
+      .watchlist-cols > div:not(:last-child) { border-bottom: 1px solid #E8D8E5; }
+    }
   </style>
 </head>
 <body>
@@ -501,7 +514,7 @@
         ),
 
         // KPI strip
-        e('div', { style: { display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 10, marginBottom: 16 } },
+        e('div', { className: "kpi-grid" },
           [
             { label: "System sales",   value: cad(wd.systemSales),
               sub: e(Fragment, null,
@@ -543,7 +556,7 @@
               e('span', { style: { fontSize: 16, color: "#9CA3AF", marginLeft: 4 } }, watchExpanded ? "▲" : "▼")
             )
           ),
-          watchExpanded && e('div', { style: { display: "grid", gridTemplateColumns: "1fr 1fr 1fr" } },
+          watchExpanded && e('div', { className: "watchlist-cols" },
             e('div', { style: { background: "#FEF2F2", borderRight: "1px solid #FECACA", padding: "14px 16px" } },
               e('div', { style: { display: "flex", alignItems: "center", gap: 6, marginBottom: 10 } },
                 e('span', { style: { width: 8, height: 8, borderRadius: "50%", background: "#DC2626", display: "inline-block" } }),
@@ -601,8 +614,8 @@
             ),
             e('div', { style: { fontSize: 18, fontWeight: 800, color: dailyTotal > 0 ? "#166534" : "#9CA3AF" } }, dailyTotal > 0 ? cad(dailyTotal) + " running" : "Pending")
           ),
-          e('div', { style: { padding: "12px 14px" } },
-            e('div', { style: { display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 8 } },
+          e('div', { style: { padding: "12px 14px" }, className: "daily-container" },
+            e('div', { className: "daily-grid" },
               DAILY.map(function(d, i) {
                 return e('div', { key: i, style: { background: d.val ? "#F0FDF4" : "#FAF8F4", border: "1px solid " + (d.val ? "#BBF7D0" : "#E8D8E5"), borderRadius: 8, padding: "10px 8px", textAlign: "center" } },
                   e('div', { style: { fontSize: 11, fontWeight: 600, color: "#374151" } }, d.day),
