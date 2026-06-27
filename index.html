@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #fff; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+    body { background: #FAF8F4; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
     button, select { font-family: inherit; }
     @keyframes spin { to { transform: rotate(360deg); } }
     .spinner { width: 32px; height: 32px; border: 3px solid #E5E7EB; border-top-color: #54274D; border-radius: 50%; animation: spin 0.8s linear infinite; }
@@ -21,7 +21,7 @@
   <script>
   (function () {
 
-        var useState  = React.useState;
+    var useState  = React.useState;
     var useMemo   = React.useMemo;
     var useEffect = React.useEffect;
     var e         = React.createElement;
@@ -213,10 +213,10 @@
 
     var MP = "#54274D";
 
-    var TH  = { padding: "8px 12px", fontWeight: 600, fontSize: 11, color: "#6B7280", borderBottom: "1px solid #E5E7EB", whiteSpace: "nowrap" };
+    var TH  = { padding: "8px 12px", fontWeight: 600, fontSize: 11, color: "#9B7A8F", background: "#F5EFF3", borderBottom: "1px solid #E8D8E5", whiteSpace: "nowrap" };
     var THL = Object.assign({}, TH, { textAlign: "left" });
     var THR = Object.assign({}, TH, { textAlign: "right" });
-    var TD  = { padding: "8px 12px", borderBottom: "1px solid #F3F4F6", whiteSpace: "nowrap" };
+    var TD  = { padding: "8px 12px", borderBottom: "1px solid #F0E8EE", whiteSpace: "nowrap" };
     var TDR = Object.assign({}, TD, { textAlign: "right" });
 
     // ─────────────────────────────────────────────────────────────────────────
@@ -378,12 +378,12 @@
           sortedRows.length > 0 && e('span', { style: { color: "rgba(255,255,255,0.65)", fontSize: 11 } }, sortedRows.length + " locations")
         );
         if (sortedRows.length === 0) {
-          return e('div', { style: { marginBottom: 16, borderRadius: 10, overflow: "hidden", border: "1px solid #E5E7EB" } },
+          return e('div', { style: { marginBottom: 16, borderRadius: 10, overflow: "hidden", border: "1px solid #E8D8E5" } },
             headerBar,
             e('div', { style: { padding: 24, textAlign: "center", color: "#9CA3AF", fontSize: 13 } }, "No stores match the current filter.")
           );
         }
-        var theadRow = e('tr', { style: { background: "#F9FAFB" } },
+        var theadRow = e('tr', { style: { background: "#F5EFF3" } },
           e('th', { style: THL }, "Status"),
           e('th', { style: THL }, "Location"),
           e('th', { style: THR }, "Total sales"),
@@ -403,14 +403,14 @@
           var fArr = foodBg(r.food); var fbg = fArr[0]; var ftx = fArr[1];
           var lArr = labBg(r.lab);   var lbg = lArr[0]; var ltx = lArr[1];
           var pyColor = r.py == null ? "#6B7280" : r.py >= 0 ? "#166534" : "#991B1B";
-          var rowBg   = r.status === "red" ? (i % 2 === 0 ? "#FFF9F9" : "#FFF5F5") : (i % 2 === 0 ? "#fff" : "#FAFAFA");
+          var rowBg   = r.status === "red" ? (i % 2 === 0 ? "#FFF9F9" : "#FFF5F5") : (i % 2 === 0 ? "#fff" : "#FAF8F4");
           return e('tr', { key: i, style: { background: rowBg } },
             e('td', { style: TD  }, e(StatusDot, { status: r.status, flags: r.flags })),
             e('td', { style: TD  },
-              e('span', { style: { fontWeight: 600, color: "#111", fontSize: 12 } }, r.n),
-              r.isCorp && e('span', { style: { marginLeft: 6, fontSize: 9, fontWeight: 700, background: "#EDE9FE", color: "#5B21B6", padding: "1px 5px", borderRadius: 3 } }, "CORP")
+              e('span', { style: { fontWeight: 600, color: "#2D1A2B", fontSize: 12 } }, r.n),
+              r.isCorp && e('span', { style: { marginLeft: 6, fontSize: 9, fontWeight: 700, background: "#EDE0EB", color: "#54274D", padding: "1px 5px", borderRadius: 3 } }, "CORP")
             ),
-            e('td', { style: Object.assign({}, TDR, { fontWeight: 600, color: "#111" }) }, cad(r.ts)),
+            e('td', { style: Object.assign({}, TDR, { fontWeight: 600, color: "#2D1A2B" }) }, cad(r.ts)),
             hasInlineDetail && e(Fragment, null,
               e('td', { style: Object.assign({}, TDR, { color: "#374151" }) }, cad(r.is)),
               e('td', { style: Object.assign({}, TDR, { color: "#374151" }) }, cad(r.os))
@@ -452,11 +452,11 @@
           );
         });
         var totalRow = e('tr', null,
-          e('td', { colSpan: 2, style: { padding: "9px 12px", fontWeight: 700, color: "#111", background: "#F9FAFB", borderTop: "2px solid #E5E7EB" } }, (props.title || "All Stores").replace("Stores", "total")),
-          e('td', { style: { padding: "9px 12px", textAlign: "right", fontWeight: 700, color: "#111", background: "#F9FAFB", borderTop: "2px solid #E5E7EB" } }, cad(total)),
-          e('td', { colSpan: 20, style: { background: "#F9FAFB", borderTop: "2px solid #E5E7EB" } })
+          e('td', { colSpan: 2, style: { padding: "9px 12px", fontWeight: 700, color: "#2D1A2B", background: "#F5EFF3", borderTop: "2px solid #E8D8E5" } }, (props.title || "All Stores").replace("Stores", "total")),
+          e('td', { style: { padding: "9px 12px", textAlign: "right", fontWeight: 700, color: "#2D1A2B", background: "#F5EFF3", borderTop: "2px solid #E8D8E5" } }, cad(total)),
+          e('td', { colSpan: 20, style: { background: "#F5EFF3", borderTop: "2px solid #E8D8E5" } })
         );
-        return e('div', { style: { marginBottom: 16, borderRadius: 10, overflow: "hidden", border: "1px solid #E5E7EB" } },
+        return e('div', { style: { marginBottom: 16, borderRadius: 10, overflow: "hidden", border: "1px solid #E8D8E5" } },
           headerBar,
           e('div', { style: { overflowX: "auto" } },
             e('table', { style: { width: "100%", borderCollapse: "collapse", fontSize: 12 } },
@@ -467,25 +467,22 @@
         );
       }
 
-      return e('div', { style: { fontFamily: "'Inter',-apple-system,BlinkMacSystemFont,sans-serif", background: "#fff", minHeight: "100vh", padding: "20px 16px 48px", maxWidth: 1400, margin: "0 auto" } },
+      return e('div', { style: { fontFamily: "'Inter',-apple-system,BlinkMacSystemFont,sans-serif", background: "#FAF8F4", minHeight: "100vh" } },
 
-        // Header
-        e('div', { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20, flexWrap: "wrap", gap: 12 } },
-          e('div', { style: { display: "flex", alignItems: "center", gap: 12 } },
-            e('div', { style: { width: 40, height: 40, background: MP, borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center" } },
-              e('span', { style: { color: "#fff", fontWeight: 900, fontSize: 16, letterSpacing: 1 } }, "M")
-            ),
-            e('div', null,
-              e('div', { style: { fontSize: 20, fontWeight: 800, color: "#111", lineHeight: 1.1 } }, "Monday Scorecard"),
-              e('div', { style: { fontSize: 12, color: "#6B7280", marginTop: 2 } }, "Mezza Lebanese Kitchen · " + wd.label + " · " + wd.dates)
-            )
-          ),
-          null
+        // Full-width purple header bar with real Mezza logo
+        e('div', { style: { background: MP, padding: "14px 24px", display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" } },
+          e('img', { src: "https://images.squarespace-cdn.com/content/v1/6272b45a3197ec4398631b6e/a334496d-3ade-4204-adfe-1d3a7c3fc8c6/Mezza-Logo.png?format=300w", alt: "Mezza Lebanese Kitchen", style: { height: 30, objectFit: "contain", filter: "brightness(0) invert(1)" } }),
+          e('div', { style: { width: 1, height: 24, background: "rgba(255,255,255,0.3)", flexShrink: 0 } }),
+          e('span', { style: { fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,0.85)", letterSpacing: 0.3 } }, "Weekly Scorecard"),
+          e('span', { style: { fontSize: 12, color: "rgba(255,255,255,0.6)", marginLeft: "auto" } }, wd.label + " · " + wd.dates)
         ),
+
+        // Content area
+        e('div', { style: { padding: "20px 16px 48px", maxWidth: 1400, margin: "0 auto" } },
 
         // Week selector — dropdown for easy navigation as weeks accumulate
         e('div', { style: { display: "flex", alignItems: "center", gap: 10, marginBottom: 16 } },
-          e('span', { style: { fontSize: 12, color: "#6B7280", fontWeight: 600, textTransform: "uppercase", letterSpacing: 0.5 } }, "Week"),
+          e('span', { style: { fontSize: 12, color: "#9B7A8F", fontWeight: 600, textTransform: "uppercase", letterSpacing: 0.5 } }, "Week"),
           e('select', {
             value: week,
             onChange: function(ev) { setWeek(Number(ev.target.value)); },
@@ -506,32 +503,32 @@
                 wd.pyChange != null && e('span', { style: { color: wd.pyChange >= 0 ? "#166534" : "#991B1B", fontWeight: 700 } }, (wd.pyChange >= 0 ? "▲" : "▼") + Math.abs(wd.pyChange).toFixed(1) + "% YoY")
               )
             },
-            { label: "Total orders",   value: wd.systemOrders ? wd.systemOrders.toLocaleString() : "—", sub: e('span', { style: { color: "#6B7280" } }, allStores.length + " locations") },
-            { label: "Avg ticket",     value: wd.systemTicket ? cad(wd.systemTicket, 2) : "—",           sub: e('span', { style: { color: "#6B7280" } }, "System-wide") },
+            { label: "Total orders",   value: wd.systemOrders ? wd.systemOrders.toLocaleString() : "—", sub: e('span', { style: { color: "#9B7A8F" } }, allStores.length + " locations") },
+            { label: "Avg ticket",     value: wd.systemTicket ? cad(wd.systemTicket, 2) : "—",           sub: e('span', { style: { color: "#9B7A8F" } }, "System-wide") },
             { label: "Corp food cost", value: corpFoodAvg != null ? corpFoodAvg.toFixed(1) + "%" : "—",
-              valueColor: corpFoodAvg > 40 ? "#991B1B" : corpFoodAvg > 37 ? "#9A3412" : "#111",
-              sub: e('span', { style: { color: "#6B7280" } }, wd.corp.length + "-store avg") },
+              valueColor: corpFoodAvg > 40 ? "#991B1B" : corpFoodAvg > 37 ? "#9A3412" : "#2D1A2B",
+              sub: e('span', { style: { color: "#9B7A8F" } }, wd.corp.length + "-store avg") },
             { label: "Corp labour",    value: corpLabAvg != null ? corpLabAvg.toFixed(1) + "%" : "—",
-              valueColor: corpLabAvg > 24 ? "#991B1B" : corpLabAvg > 21 ? "#9A3412" : "#111",
-              sub: e('span', { style: { color: "#6B7280" } }, wd.corp.length + "-store avg") },
+              valueColor: corpLabAvg > 24 ? "#991B1B" : corpLabAvg > 21 ? "#9A3412" : "#2D1A2B",
+              sub: e('span', { style: { color: "#9B7A8F" } }, wd.corp.length + "-store avg") },
           ].map(function(kpi, i) {
-            return e('div', { key: i, style: { background: "#F9FAFB", border: "1px solid #E5E7EB", borderRadius: 10, padding: "12px 14px" } },
-              e('div', { style: { fontSize: 11, color: "#6B7280", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 4 } }, kpi.label),
-              e('div', { style: { fontSize: 22, fontWeight: 800, color: kpi.valueColor || "#111", lineHeight: 1.1 } }, kpi.value),
+            return e('div', { key: i, style: { background: "#fff", border: "0.5px solid #E8D8E5", borderLeft: "3px solid " + MP, borderRadius: 10, padding: "12px 14px" } },
+              e('div', { style: { fontSize: 11, color: "#9B7A8F", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 4 } }, kpi.label),
+              e('div', { style: { fontSize: 22, fontWeight: 800, color: kpi.valueColor || "#2D1A2B", lineHeight: 1.1 } }, kpi.value),
               e('div', { style: { fontSize: 11, marginTop: 4 } }, kpi.sub)
             );
           })
         ),
 
         // Watch List Panel
-        e('div', { style: { border: "1px solid #E5E7EB", borderRadius: 10, marginBottom: 16, overflow: "hidden" } },
+        e('div', { style: { border: "1px solid #E8D8E5", borderRadius: 10, marginBottom: 16, overflow: "hidden" } },
           e('button', {
             onClick: function() { setWatchExpanded(function(x) { return !x; }); },
-            style: { width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 14px", background: "#F9FAFB", border: "none", borderBottom: watchExpanded ? "1px solid #E5E7EB" : "none", cursor: "pointer", textAlign: "left" }
+            style: { width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 14px", background: "#fff", border: "none", borderBottom: watchExpanded ? "1px solid #E8D8E5" : "none", cursor: "pointer", textAlign: "left" }
           },
             e('div', { style: { display: "flex", alignItems: "center", gap: 10 } },
-              e('span', { style: { fontSize: 13, fontWeight: 700, color: "#111" } }, "Store Watch List"),
-              e('span', { style: { fontSize: 11, color: "#6B7280" } }, wd.label + " · " + allStores.length + " stores scored")
+              e('span', { style: { fontSize: 13, fontWeight: 700, color: "#2D1A2B" } }, "Store Watch List"),
+              e('span', { style: { fontSize: 11, color: "#9B7A8F" } }, wd.label + " · " + allStores.length + " stores scored")
             ),
             e('div', { style: { display: "flex", alignItems: "center", gap: 8 } },
               redStores.length > 0    && e('span', { style: { background: "#FEE2E2", color: "#991B1B", fontSize: 11, fontWeight: 700, padding: "2px 10px", borderRadius: 10 } }, redStores.length + " needs attention"),
@@ -550,9 +547,9 @@
                 ? e('p', { style: { fontSize: 12, color: "#9CA3AF", margin: 0 } }, "No stores flagged this week.")
                 : redStores.map(function(s, i) {
                     return e('div', { key: i, style: { marginBottom: 10, paddingBottom: 10, borderBottom: i < redStores.length - 1 ? "1px solid #FECACA" : "none" } },
-                      e('div', { style: { fontSize: 12, fontWeight: 700, color: "#111", marginBottom: 3 } },
+                      e('div', { style: { fontSize: 12, fontWeight: 700, color: "#2D1A2B", marginBottom: 3 } },
                         s.n,
-                        s.isCorp && e('span', { style: { marginLeft: 5, fontSize: 9, fontWeight: 700, background: "#EDE9FE", color: "#5B21B6", padding: "1px 4px", borderRadius: 3 } }, "CORP")
+                        s.isCorp && e('span', { style: { marginLeft: 5, fontSize: 9, fontWeight: 700, background: "#EDE0EB", color: "#54274D", padding: "1px 4px", borderRadius: 3 } }, "CORP")
                       ),
                       s.flags.map(function(f, j) { return e('div', { key: j, style: { fontSize: 11, color: "#991B1B", marginTop: 2 } }, "▸ " + f); })
                     );
@@ -567,9 +564,9 @@
                 ? e('p', { style: { fontSize: 12, color: "#9CA3AF", margin: 0 } }, "No stores in watch zone.")
                 : yellowStores.map(function(s, i) {
                     return e('div', { key: i, style: { marginBottom: 10, paddingBottom: 10, borderBottom: i < yellowStores.length - 1 ? "1px solid #FDE68A" : "none" } },
-                      e('div', { style: { fontSize: 12, fontWeight: 700, color: "#111", marginBottom: 3 } },
+                      e('div', { style: { fontSize: 12, fontWeight: 700, color: "#2D1A2B", marginBottom: 3 } },
                         s.n,
-                        s.isCorp && e('span', { style: { marginLeft: 5, fontSize: 9, fontWeight: 700, background: "#EDE9FE", color: "#5B21B6", padding: "1px 4px", borderRadius: 3 } }, "CORP")
+                        s.isCorp && e('span', { style: { marginLeft: 5, fontSize: 9, fontWeight: 700, background: "#EDE0EB", color: "#54274D", padding: "1px 4px", borderRadius: 3 } }, "CORP")
                       ),
                       s.flags.map(function(f, j) { return e('div', { key: j, style: { fontSize: 11, color: "#92400E", marginTop: 2 } }, "▸ " + f); })
                     );
@@ -590,18 +587,18 @@
         ),
 
         // Daily tally
-        e('div', { style: { border: "1px solid #E5E7EB", borderRadius: 10, marginBottom: 16, overflow: "hidden" } },
-          e('div', { style: { background: "#F9FAFB", padding: "10px 14px", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid #E5E7EB" } },
+        e('div', { style: { border: "1px solid #E8D8E5", borderRadius: 10, marginBottom: 16, overflow: "hidden" } },
+          e('div', { style: { background: "#fff", padding: "10px 14px", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid #E8D8E5" } },
             e('div', null,
-              e('span', { style: { fontSize: 13, fontWeight: 700, color: "#111" } }, DAILY_WEEK_LABEL),
-              e('span', { style: { fontSize: 11, color: "#6B7280", marginLeft: 8 } }, DAILY_DATES + " · Givex ~6am daily · directional until Tuesday report")
+              e('span', { style: { fontSize: 13, fontWeight: 700, color: "#2D1A2B" } }, DAILY_WEEK_LABEL),
+              e('span', { style: { fontSize: 11, color: "#9B7A8F", marginLeft: 8 } }, DAILY_DATES + " · Givex ~6am daily · directional until Tuesday report")
             ),
             e('div', { style: { fontSize: 18, fontWeight: 800, color: dailyTotal > 0 ? "#166534" : "#9CA3AF" } }, dailyTotal > 0 ? cad(dailyTotal) + " running" : "Pending")
           ),
           e('div', { style: { padding: "12px 14px" } },
             e('div', { style: { display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 8 } },
               DAILY.map(function(d, i) {
-                return e('div', { key: i, style: { background: d.val ? "#F0FDF4" : "#F9FAFB", border: "1px solid " + (d.val ? "#BBF7D0" : "#E5E7EB"), borderRadius: 8, padding: "10px 8px", textAlign: "center" } },
+                return e('div', { key: i, style: { background: d.val ? "#F0FDF4" : "#FAF8F4", border: "1px solid " + (d.val ? "#BBF7D0" : "#E8D8E5"), borderRadius: 8, padding: "10px 8px", textAlign: "center" } },
                   e('div', { style: { fontSize: 11, fontWeight: 600, color: "#374151" } }, d.day),
                   e('div', { style: { fontSize: 10, color: "#9CA3AF", marginBottom: 6 } }, d.date),
                   e('div', { style: { fontSize: 13, fontWeight: d.val ? 800 : 400, color: d.val ? "#166534" : "#9CA3AF" } }, d.val != null ? cad(d.val) : "—")
@@ -613,10 +610,10 @@
 
         // Controls
         e('div', { style: { display: "flex", gap: 8, alignItems: "center", marginBottom: 14, flexWrap: "wrap" } },
-          e('span', { style: { fontSize: 12, color: "#6B7280" } }, "Sort by"),
+          e('span', { style: { fontSize: 12, color: "#9B7A8F" } }, "Sort by"),
           e('select', {
             value: sort, onChange: function(ev) { setSort(ev.target.value); },
-            style: { fontSize: 12, padding: "5px 10px", borderRadius: 8, border: "1px solid #E5E7EB", background: "#fff", color: "#374151" }
+            style: { fontSize: 12, padding: "5px 10px", borderRadius: 8, border: "1px solid #E8D8E5", background: "#fff", color: "#4A2B43" }
           },
             e('option', { value: "sales"      }, "Total sales ↓"),
             e('option', { value: "status"     }, "Status (worst first)"),
@@ -628,15 +625,15 @@
             e('option', { value: "reviews_asc" }, "Google rating ↑ (worst first)"),
             e('option', { value: "alpha"       }, "Name A–Z")
           ),
-          e('span', { style: { fontSize: 12, color: "#6B7280", marginLeft: 8 } }, "Filter"),
+          e('span', { style: { fontSize: 12, color: "#9B7A8F", marginLeft: 8 } }, "Filter"),
           [["all","All stores"],["red","🔴 Needs attention"],["yellow","🟡 Watch"],["green","🟢 On track"]].map(function(pair) {
             var v = pair[0]; var label = pair[1];
-            return e('button', { key: v, onClick: function() { setStatusFilter(v); }, style: { fontSize: 11, padding: "5px 11px", borderRadius: 8, cursor: "pointer", border: statusFilter === v ? "2px solid #374151" : "1px solid #E5E7EB", background: statusFilter === v ? "#374151" : "#fff", color: statusFilter === v ? "#fff" : "#374151", fontWeight: statusFilter === v ? 600 : 400 } }, label);
+            return e('button', { key: v, onClick: function() { setStatusFilter(v); }, style: { fontSize: 11, padding: "5px 11px", borderRadius: 8, cursor: "pointer", border: statusFilter === v ? "2px solid " + MP : "1px solid #E8D8E5", background: statusFilter === v ? MP : "#fff", color: statusFilter === v ? "#fff" : "#4A2B43", fontWeight: statusFilter === v ? 600 : 400 } }, label);
           }),
-          e('span', { style: { fontSize: 12, color: "#6B7280", marginLeft: 8 } }, "View"),
+          e('span', { style: { fontSize: 12, color: "#9B7A8F", marginLeft: 8 } }, "View"),
           [["both","All"],["corp","Corporate"],["fran","Franchisee"]].map(function(pair) {
             var v = pair[0]; var label = pair[1];
-            return e('button', { key: v, onClick: function() { setView(v); }, style: { fontSize: 12, padding: "5px 12px", borderRadius: 8, cursor: "pointer", border: view === v ? ("2px solid " + MP) : "1px solid #E5E7EB", background: view === v ? MP : "#fff", color: view === v ? "#fff" : "#374151", fontWeight: view === v ? 600 : 400 } }, label);
+            return e('button', { key: v, onClick: function() { setView(v); }, style: { fontSize: 12, padding: "5px 12px", borderRadius: 8, cursor: "pointer", border: view === v ? ("2px solid " + MP) : "1px solid #E8D8E5", background: view === v ? MP : "#fff", color: view === v ? "#fff" : "#4A2B43", fontWeight: view === v ? 600 : 400 } }, label);
           })
         ),
 
@@ -648,12 +645,13 @@
         }),
 
         // Footer
-        e('div', { style: { fontSize: 11, color: "#6B7280", background: "#F9FAFB", border: "1px solid #E5E7EB", borderRadius: 8, padding: "10px 14px", lineHeight: 1.8 } },
-          e('strong', { style: { color: "#374151" } }, "Watch list:"), " Red = food >41% OR labour >25% OR PY <–10%, or two yellow flags together · Yellow = food 37–41% OR labour 22–25% OR PY –3% to –10% · Green = all in range  ·  ",
-          e('strong', { style: { color: "#374151" } }, "Food cost:"), " Green <33% · Yellow 33–37% · Orange 37–41% · Red >41%  ·  ",
-          e('strong', { style: { color: "#374151" } }, "Labour:"), " Green <19% · Yellow 19–22% · Orange 22–25% · Red >25%  ·  ",
-          e('strong', { style: { color: "#374151" } }, "Daily tally:"), " Givex ~6am — directional until Cody's Tuesday report"
+        e('div', { style: { fontSize: 11, color: "#9B7A8F", background: "#F5EFF3", border: "1px solid #E8D8E5", borderRadius: 8, padding: "10px 14px", lineHeight: 1.8 } },
+          e('strong', { style: { color: "#4A2B43" } }, "Watch list:"), " Red = food >41% OR labour >25% OR PY <–10%, or two yellow flags together · Yellow = food 37–41% OR labour 22–25% OR PY –3% to –10% · Green = all in range  ·  ",
+          e('strong', { style: { color: "#4A2B43" } }, "Food cost:"), " Green <33% · Yellow 33–37% · Orange 37–41% · Red >41%  ·  ",
+          e('strong', { style: { color: "#4A2B43" } }, "Labour:"), " Green <19% · Yellow 19–22% · Orange 22–25% · Red >25%  ·  ",
+          e('strong', { style: { color: "#4A2B43" } }, "Daily tally:"), " Givex ~6am — directional until Cody's Tuesday report"
         )
+        ) // closes content area
       );
     }
 
