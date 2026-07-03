@@ -419,6 +419,17 @@
         var rows      = props.rows;
         var isCorp    = props.isCorp;
         var REVIEWS   = props.REVIEWS || {};
+
+        // GBP expand / collapse state
+        var expandedState = useState({});
+        var expanded      = expandedState[0];
+        var setExpanded   = expandedState[1];
+        function toggleGbp(name) {
+          setExpanded(function(prev) {
+            var n = Object.assign({}, prev); n[name] = !prev[name]; return n;
+          });
+        }
+
         var sortedRows = sorted(rows);
         var total     = rows.reduce(function(s, r) { return s + (r.ts || 0); }, 0);
         var headerBar = e('div', { style: { background: MP, padding: "9px 14px", display: "flex", justifyContent: "space-between", alignItems: "center" } },
@@ -445,15 +456,17 @@
           e('th', { style: THR }, "$/labour hr"),
           e('th', { style: THR }, "vs PY"),
           e('th', { style: THR }, "Google ★"),
-          e('th', { style: THR }, "GBP Activity")
+          e('th', { style: TH }, "GBP")
         );
-        var bodyRows = sortedRows.map(function(r, i) {
+        var bodyRows = sortedRows.reduce(function(acc, r, i) {
           var onlinePct = (r.ts > 0 && r.os != null) ? (r.os / r.ts * 100).toFixed(1) + "%" : "—";
           var fArr = foodBg(r.food); var fbg = fArr[0]; var ftx = fArr[1];
           var lArr = labBg(r.lab);   var lbg = lArr[0]; var ltx = lArr[1];
           var pyColor = r.py == null ? "#6B7280" : r.py >= 0 ? "#166534" : "#991B1B";
           var rowBg   = r.status === "red" ? (i % 2 === 0 ? "#FFF9F9" : "#FFF5F5") : (i % 2 === 0 ? "#fff" : "#FAF8F4");
-          return e('tr', { key: i, style: { background: rowBg } },
+          var hasGbp  = r.gv != null || r.gcal != null || r.gdir != null || r.gweb != null;
+          var isOpen  = !!expanded[r.n];
+          var mainRow = e('tr', { key: 'r-' + i, style: { background: rowBg } },
             e('td', { style: TD  }, e(StatusDot, { status: r.status, flags: r.flags })),
             e('td', { style: TD  },
               e('span', { style: { fontWeight: 600, color: "#2D1A2B", fontSize: 12 } }, r.n),
@@ -498,22 +511,52 @@
                 );
               })()
             ),
-            e('td', { style: TDR },
-              (function() {
-                if (r.gv == null && r.gcal == null && r.gdir == null) return e('span', { style: { color: "#9CA3AF" } }, "—");
-                var tip = "Profile views: " + (r.gv != null ? r.gv.toLocaleString() : "—")
-                  + " · Calls: " + (r.gcal != null ? r.gcal.toLocaleString() : "—")
-                  + " · Direction requests: " + (r.gdir != null ? r.gdir.toLocaleString() : "—")
-                  + (r.gweb != null ? " · Website clicks: " + r.gweb.toLocaleString() : "");
-                return e('span', { title: tip, style: { whiteSpace: "nowrap", cursor: "help", fontSize: 11, color: "#374151" } },
-                  e('span', { style: { color: "#6B7280" } }, "👁 "), (r.gv != null ? r.gv.toLocaleString() : "—"),
-                  e('span', { style: { color: "#6B7280", marginLeft: 6 } }, "📞 "), (r.gcal != null ? r.gcal : "—"),
-                  e('span', { style: { color: "#6B7280", marginLeft: 6 } }, "🧭 "), (r.gdir != null ? r.gdir : "—")
-                );
-              })()
+            e('td', { style: Object.assign({}, TD, { textAlign: "center", width: 70 }) },
+              hasGbp
+                ? e('button', {
+                    onClick: (function(nm) { return function() { toggleGbp(nm); }; })(r.n),
+                    title: "Show Google Business Profile data",
+                    style: {
+                      background: isOpen ? MP : "#F5EFF3",
+                      border: "1px solid " + (isOpen ? MP : "#E8D8E5"),
+                      borderRadius: 6, padding: "3px 9px", cursor: "pointer",
+                      fontSize: 11, color: isOpen ? "#fff" : "#54274D",
+                      fontWeight: 600, fontFamily: "inherit", lineHeight: "1.4"
+                    }
+                  }, isOpen ? "▼ GBP" : "▶ GBP")
+                : e('span', { style: { color: "#D1D5DB" } }, "—")
             )
           );
-        });
+          acc.push(mainRow);
+          if (hasGbp && isOpen) {
+            var gbpMetrics = [
+              { icon: "👁",  label: "Profile Views",  val: r.gv   },
+              { icon: "🧭",  label: "Directions",     val: r.gdir },
+              { icon: "📞",  label: "Call Clicks",    val: r.gcal },
+              { icon: "🌐",  label: "Website Clicks", val: r.gweb },
+            ];
+            acc.push(e('tr', { key: 'gbp-' + i },
+              e('td', { colSpan: 99, style: { padding: 0, background: "#EDE0EB", borderBottom: "2px solid #D4B8CF" } },
+                e('div', { style: { padding: "10px 16px 12px 40px", display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" } },
+                  e('div', { style: { fontSize: 10, fontWeight: 700, color: "#7C3B6D", textTransform: "uppercase", letterSpacing: 0.8, marginRight: 10, whiteSpace: "nowrap" } }, "📊 Google Business Profile"),
+                  gbpMetrics.map(function(m, j) {
+                    return e('div', { key: j, style: {
+                      display: "flex", flexDirection: "column", alignItems: "center",
+                      background: "#fff", border: "1px solid #D4B8CF",
+                      borderRadius: 8, padding: "7px 18px", minWidth: 84
+                    } },
+                      e('div', { style: { fontSize: 18, fontWeight: 800, color: "#2D1A2B", lineHeight: "1.1" } },
+                        m.val != null ? m.val.toLocaleString() : "—"),
+                      e('div', { style: { fontSize: 10, color: "#9B7A8F", marginTop: 3, whiteSpace: "nowrap" } },
+                        m.icon + " " + m.label)
+                    );
+                  })
+                )
+              )
+            ));
+          }
+          return acc;
+        }, []);
         var totalRow = e('tr', null,
           e('td', { colSpan: 2, style: { padding: "9px 12px", fontWeight: 700, color: "#2D1A2B", background: "#F5EFF3", borderTop: "2px solid #E8D8E5" } }, (props.title || "All Stores").replace("Stores", "total")),
           e('td', { style: { padding: "9px 12px", textAlign: "right", fontWeight: 700, color: "#2D1A2B", background: "#F5EFF3", borderTop: "2px solid #E8D8E5" } }, cad(total)),
