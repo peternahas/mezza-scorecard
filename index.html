@@ -101,11 +101,13 @@
       return Promise.all([
         fetchSheet('Weekly_Summary'),
         fetchSheet('Store_Data'),
-        fetchSheet('Reviews').catch(function() { return []; })   // optional — graceful if tab doesn't exist yet
+        fetchSheet('Reviews').catch(function() { return []; }),        // optional — graceful if tab doesn't exist yet
+        fetchSheet('GBP_Performance').catch(function() { return []; }) // optional — graceful if tab doesn't exist yet
       ]).then(function(results) {
         var weeklyRows = results[0];
         var storeRows  = results[1];
         var reviewRows = results[2];
+        var gbpRows    = results[3];
         var weeks = {};
         var n = function(v) { return (v != null && v !== '') ? Number(v) : null; };
 
@@ -127,6 +129,23 @@
           };
         });
 
+        // Build GBP performance lookup, keyed by "Week_Number|Location_Name":
+        // { "25|Clayton Park": { views: 2143, dir: 58, calls: 34, web: 21, food: 0, menu: 112 } }
+        var gbpMap = {};
+        (gbpRows || []).forEach(function(row) {
+          if (row.Week_Number == null || String(row.Week_Number).trim() === '' ||
+              !row.Location_Name) return;
+          var key = Number(row.Week_Number) + '|' + String(row.Location_Name).trim();
+          gbpMap[key] = {
+            views: n(row.Profile_Views),
+            dir:   n(row.Direction_Requests),
+            calls: n(row.Call_Clicks),
+            web:   n(row.Website_Clicks),
+            food:  n(row.Food_Order_Clicks),
+            menu:  n(row.Menu_Clicks),
+          };
+        });
+
         // Attach store rows — skip notes row and rows with no location
         storeRows.filter(function(row) {
           return row.Week_Number != null && String(row.Week_Number).trim() !== '' &&
@@ -134,6 +153,7 @@
         }).forEach(function(row) {
           var wn = Number(row.Week_Number);
           if (!wn || !weeks[wn]) return;
+          var gbp = gbpMap[wn + '|' + String(row.Location_Name).trim()] || null;
           if (row.Location_Type === 'Corp') {
             weeks[wn].corp.push({
               n:    row.Location_Name,
@@ -147,6 +167,10 @@
               lab:  n(row.Labour_Pct),
               slh:  n(row.Sales_Per_Labour_Hr),
               py:   n(row.VS_PY_Pct),
+              gv:   gbp ? gbp.views : null,
+              gdir: gbp ? gbp.dir   : null,
+              gcal: gbp ? gbp.calls : null,
+              gweb: gbp ? gbp.web   : null,
             });
           } else {
             weeks[wn].fran.push({
@@ -158,6 +182,10 @@
               tick: n(row.Avg_Ticket),
               food: n(row.Food_Cost_Pct),
               py:   n(row.VS_PY_Pct),
+              gv:   gbp ? gbp.views : null,
+              gdir: gbp ? gbp.dir   : null,
+              gcal: gbp ? gbp.calls : null,
+              gweb: gbp ? gbp.web   : null,
             });
           }
         });
@@ -366,6 +394,7 @@
           var rb = REVIEWS[b.n] ? REVIEWS[b.n].rating : 999;
           return ra - rb;
         });
+        else if (sort === "gbp_desc") d.sort(function(a, b) { return (b.gv == null ? -1 : b.gv) - (a.gv == null ? -1 : a.gv); });
         else if (sort === "status") {
           var ord = { red: 0, yellow: 1, green: 2 };
           d.sort(function(a, b) { return ord[a.status] - ord[b.status]; });
@@ -415,7 +444,8 @@
           e('th', { style: THR }, "Labour %"),
           e('th', { style: THR }, "$/labour hr"),
           e('th', { style: THR }, "vs PY"),
-          e('th', { style: THR }, "Google ★")
+          e('th', { style: THR }, "Google ★"),
+          e('th', { style: THR }, "GBP Activity")
         );
         var bodyRows = sortedRows.map(function(r, i) {
           var onlinePct = (r.ts > 0 && r.os != null) ? (r.os / r.ts * 100).toFixed(1) + "%" : "—";
@@ -465,6 +495,20 @@
                 return e('span', { style: { whiteSpace: "nowrap" } },
                   e('span', { style: { color: "#F59E0B", fontWeight: 700, fontSize: 12 } }, "★ " + rev.rating.toFixed(1)),
                   rev.count != null ? e('span', { style: { color: "#9CA3AF", fontSize: 11, marginLeft: 3 } }, "(" + rev.count.toLocaleString() + ")") : null
+                );
+              })()
+            ),
+            e('td', { style: TDR },
+              (function() {
+                if (r.gv == null && r.gcal == null && r.gdir == null) return e('span', { style: { color: "#9CA3AF" } }, "—");
+                var tip = "Profile views: " + (r.gv != null ? r.gv.toLocaleString() : "—")
+                  + " · Calls: " + (r.gcal != null ? r.gcal.toLocaleString() : "—")
+                  + " · Direction requests: " + (r.gdir != null ? r.gdir.toLocaleString() : "—")
+                  + (r.gweb != null ? " · Website clicks: " + r.gweb.toLocaleString() : "");
+                return e('span', { title: tip, style: { whiteSpace: "nowrap", cursor: "help", fontSize: 11, color: "#374151" } },
+                  e('span', { style: { color: "#6B7280" } }, "👁 "), (r.gv != null ? r.gv.toLocaleString() : "—"),
+                  e('span', { style: { color: "#6B7280", marginLeft: 6 } }, "📞 "), (r.gcal != null ? r.gcal : "—"),
+                  e('span', { style: { color: "#6B7280", marginLeft: 6 } }, "🧭 "), (r.gdir != null ? r.gdir : "—")
                 );
               })()
             )
@@ -642,6 +686,7 @@
             e('option', { value: "ticket"       }, "Avg ticket ↓"),
             e('option', { value: "reviews_desc"}, "Google rating ↓ (best first)"),
             e('option', { value: "reviews_asc" }, "Google rating ↑ (worst first)"),
+            e('option', { value: "gbp_desc"    }, "GBP profile views ↓"),
             e('option', { value: "alpha"       }, "Name A–Z")
           ),
           e('span', { style: { fontSize: 12, color: "#9B7A8F", marginLeft: 8 } }, "Filter"),
