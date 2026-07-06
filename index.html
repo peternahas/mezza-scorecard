@@ -47,9 +47,12 @@
     var Fragment  = React.Fragment;
 
     // ─────────────────────────────────────────────────────────────────────────
-    // CONFIG — Google Sheet ID (from the URL of your Google Sheet)
+    // CONFIG — path to the data file kept in sync from Excel by the
+    // "Sync scorecard data from Excel" GitHub Action (see /scripts and
+    // /.github/workflows in this repo). Relative so it resolves correctly
+    // whether the site is served from mezzascorecard.com or GitHub Pages.
     // ─────────────────────────────────────────────────────────────────────────
-    var SHEET_ID = '1aurNzSaaQ17snGq5fmTyLpQsCg9vGK80DECypQJPOzY';
+    var DATA_URL = 'data/scorecard-data.json';
 
     // ─────────────────────────────────────────────────────────────────────────
     // DAILY TALLY — update manually each Monday morning for the current week
@@ -67,47 +70,21 @@
     ];
 
     // ─────────────────────────────────────────────────────────────────────────
-    // DATA FETCHING — uses Google Sheets gviz API (no CORS issues)
+    // DATA FETCHING — reads the JSON file the GitHub Action keeps in sync
+    // from the Excel workbook (via Microsoft Graph). No live Google Sheets
+    // calls anymore.
     // ─────────────────────────────────────────────────────────────────────────
-    function parseGviz(text) {
-      // Strip the JSONP wrapper Google adds: /*O_o*/\ngoogle.visualization.Query.setResponse({...});
-      var start = text.indexOf('{');
-      var end   = text.lastIndexOf('}');
-      var json  = JSON.parse(text.substring(start, end + 1));
-      var table = json.table;
-      var headers = (table.cols || []).map(function(c) { return c.label || c.id; });
-      return (table.rows || []).map(function(row) {
-        var obj = {};
-        headers.forEach(function(h, i) {
-          var cell = row.c ? row.c[i] : null;
-          obj[h] = (cell && cell.v !== undefined && cell.v !== null) ? cell.v : null;
-        });
-        return obj;
-      });
-    }
-
-    function fetchSheet(sheetName) {
-      var url = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID +
-        '/gviz/tq?sheet=' + encodeURIComponent(sheetName) + '&tqx=out:json&headers=1';
-      return fetch(url, { credentials: 'omit' })
-        .then(function(r) {
-          if (!r.ok) throw new Error('Network error ' + r.status);
-          return r.text();
-        })
-        .then(parseGviz);
-    }
-
     function fetchScorecardData() {
-      return Promise.all([
-        fetchSheet('Weekly_Summary'),
-        fetchSheet('Store_Data'),
-        fetchSheet('Reviews').catch(function() { return []; }),        // optional — graceful if tab doesn't exist yet
-        fetchSheet('GBP_Performance').catch(function() { return []; }) // optional — graceful if tab doesn't exist yet
-      ]).then(function(results) {
-        var weeklyRows = results[0];
-        var storeRows  = results[1];
-        var reviewRows = results[2];
-        var gbpRows    = results[3];
+      return fetch(DATA_URL, { cache: 'no-store' })
+        .then(function(r) {
+          if (!r.ok) throw new Error('Network error ' + r.status + ' loading ' + DATA_URL);
+          return r.json();
+        })
+        .then(function(json) {
+        var weeklyRows = json.Weekly_Summary || [];
+        var storeRows  = json.Store_Data || [];
+        var reviewRows = json.Reviews || [];
+        var gbpRows    = json.GBP_Performance || [];
         var weeks = {};
         var n = function(v) { return (v != null && v !== '') ? Number(v) : null; };
 
@@ -280,7 +257,7 @@
       return e('div', { style: { maxWidth: 560, margin: "80px auto", padding: "24px 28px", border: "1px solid #FCA5A5", borderRadius: 12, background: "#FEF2F2" } },
         e('div', { style: { fontSize: 16, fontWeight: 700, color: "#991B1B", marginBottom: 8 } }, "Could not load scorecard data"),
         e('div', { style: { fontSize: 13, color: "#7F1D1D", lineHeight: 1.6, marginBottom: 16 } }, props.message),
-        e('div', { style: { fontSize: 12, color: "#9CA3AF" } }, "Check that the Google Sheet is shared as 'Anyone with the link can view' (Share button → change access). The Sheet ID in the file is: " + SHEET_ID)
+        e('div', { style: { fontSize: 12, color: "#9CA3AF" } }, "Check that the \"Sync scorecard data from Excel\" GitHub Action has run successfully and that " + DATA_URL + " exists in the repo.")
       );
     }
 
@@ -316,7 +293,7 @@
 
       if (loading) return e(LoadingScreen, null);
       if (error)   return e(ErrorScreen, { message: error });
-      if (!WEEKS || Object.keys(WEEKS).length === 0) return e(ErrorScreen, { message: "No data was returned from the Google Sheet. Check that Cody has entered data in the Weekly_Summary and Store_Data tabs." });
+      if (!WEEKS || Object.keys(WEEKS).length === 0) return e(ErrorScreen, { message: "No data was returned from " + DATA_URL + ". Check that Cody has entered data in the Weekly_Summary and Store_Data tabs of the Excel workbook, and that the sync Action has run since." });
 
       var weekNums     = Object.keys(WEEKS).map(Number).sort(function(a, b) { return b - a; });
       var defaultWeek  = weekNums[0];
