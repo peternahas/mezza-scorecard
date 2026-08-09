@@ -1,0 +1,30 @@
+{
+  "_comment": "Maps Givex outlet_id (once real production IDs are known) and/or Givex store_name to the exact Location_Name used in Store_Data. Edit this file directly as real outlet_ids come in from production Get Store List calls or from real webhook traffic. byOutletId is checked first, then byStoreName as a fallback so this works even before every outlet_id is known.",
+  "byOutletId": {
+    "65659": "Beta Lanner (Givex certification/test store — NOT a real Mezza location, exclude from Store_Data)"
+  },
+  "byStoreName": {
+    "Barrington": "Barrington",
+    "Bedford (Larry Uteck)": "Larry Uteck",
+    "Burnside": "Burnside",
+    "Clayton Park": "Clayton Park",
+    "Cole Harbour": "Cole Harbour",
+    "Fredericton": "Fredericton",
+    "Halifax Shopping Centre": "Halifax Shopping Centre",
+    "Herring Cove (Spryfield)": "Herring Cove (Spryfield)",
+    "Lower Sackville": "Lower Sackville",
+    "Morton Ave": "Morton Ave",
+    "Scotia Square": "Scotia Square",
+    "Tantallon": "Tantallon",
+    "Truro": "Truro",
+    "Antigonish": "Antigonish",
+    "Plaza Blvd": "Plaza",
+    "Fall River": "Fall River",
+    "Stratford": "Stratford",
+    "Penhorn": "Penhorn",
+    "New Minas": "New Minas",
+    "Bridgewater": "Bridgewater",
+    "Mount Pearl": "Mount Pearl",
+    "Charlottetown": "Charlottetown"
+  }
+}
