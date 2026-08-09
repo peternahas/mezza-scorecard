@@ -1,0 +1,50 @@
+{
+  "generated_at": "2026-08-09T02:33:59.208Z",
+  "source": "givex-webhook-kv",
+  "payloads_processed": 164,
+  "payloads_skipped": 0,
+  "weeks": [
+    {
+      "Location_Name": "Beta Lanner (Givex certification/test store — NOT a real Mezza location, exclude from Store_Data)",
+      "Year": 2026,
+      "Week_Number": 32,
+      "Week_Start": "2026-08-03",
+      "Total_Sales": 1795.76,
+      "InStore_Sales": 136.93,
+      "Online_Sales": 1658.83,
+      "Orders": 89,
+      "Avg_Ticket": 20.18
+    }
+  ],
+  "department_breakdown": [
+    {
+      "department_name": "Dine-In main",
+      "classified_as": "in-store",
+      "net_sales": 109.95,
+      "line_items": 5,
+      "order_types_seen": {
+        "Dine-In": 5
+      }
+    },
+    {
+      "department_name": "Online Orders",
+      "classified_as": "online",
+      "net_sales": 1658.83,
+      "line_items": 543,
+      "order_types_seen": {
+        "Take-Out": 533,
+        "Delivery": 10
+      }
+    },
+    {
+      "department_name": "Take-Out",
+      "classified_as": "in-store",
+      "net_sales": 26.98,
+      "line_items": 5,
+      "order_types_seen": {
+        "Take-Out": 5
+      }
+    }
+  ],
+  "unmapped_outlets": {}
+}
