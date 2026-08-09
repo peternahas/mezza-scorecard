@@ -1,0 +1,261 @@
+#!/usr/bin/env node
+/**
+ * Pulls every stored Givex Order Details webhook payload out of the
+ * Cloudflare KV-backed Worker (givex-webhook), splits sales into
+ * InStore_Sales / Online_Sales, rolls it up per store per week, and
+ * writes the result to data/givex-sales-data.json in this repo.
+ *
+ * This is a SEPARATE output file from data/scorecard-data.json (the
+ * Excel-sync pipeline's output) on purpose -- the two pipelines run on
+ * independent schedules and shouldn't race to overwrite the same file.
+ * Whoever wires the scorecard's index.html to read live JSON should
+ * merge these two sources client-side or in a later build step.
+ *
+ * How channel (in-store vs. online) is determined:
+ *   Verified against real webhook payloads (not just the API docs) --
+ *   each order line item carries a `department_name` field, and that's
+ *   the reliable signal for channel. `order_type` (Dine-In/Take-Out/
+ *   Delivery) describes fulfillment, NOT channel -- a real sample showed
+ *   a "Take-Out" order_type filed under the "Online Orders" department,
+ *   meaning it was placed online for pickup, not ordered at the counter.
+ *   `OnlineOrderID` (top-level field) was empty on every one of the
+ *   first 164 real orders received, so it is NOT a usable signal here --
+ *   don't be tempted to switch to it without re-checking real data first.
+ *
+ * ONLINE_DEPARTMENTS below is therefore the actual classification rule.
+ * Edit it if Mezza's real department list differs from what showed up
+ * in the certification sandbox (Eat In, Take-Out, Bar, Patio, Dine-In
+ * main = in-store; Online Orders, Online Ordering, Uber Eats, Delivery,
+ * Delivery1, UEAT, RITUAL, FLYT = online) -- confirm with Peter/Cody once
+ * real production department names are visible.
+ *
+ * Required environment variables (set as GitHub Actions repo secrets):
+ *   GIVEX_WEBHOOK_URL    - e.g. https://givex-webhook.mezzascorecard.com
+ *   GIVEX_SHARED_SECRET  - the same secret the Worker checks on /list and /get
+ *                           (already exists from setting up the webhook --
+ *                           no new Cloudflare credential needed)
+ */
+
+import { writeFile, mkdir, readFile } from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const { GIVEX_WEBHOOK_URL, GIVEX_SHARED_SECRET } = process.env;
+
+const OUTPUT_PATH = "data/givex-sales-data.json";
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const STORE_MAPPING_PATH = path.join(__dirname, "store-mapping.json");
+
+const ONLINE_DEPARTMENTS = new Set([
+  "Online Orders",
+  "Online Ordering",
+  "Uber Eats",
+  "Delivery",
+  "Delivery1",
+  "UEAT",
+  "RITUAL",
+  "FLYT",
+]);
+
+function requireEnv(name, value) {
+  if (!value) throw new Error(`Missing required environment variable: ${name}`);
+  return value;
+}
+
+async function authedGet(pathAndQuery) {
+  const url = `${GIVEX_WEBHOOK_URL.replace(/\/$/, "")}${pathAndQuery}`;
+  const res = await fetch(url, { headers: { Authorization: GIVEX_SHARED_SECRET } });
+  if (!res.ok) {
+    throw new Error(`Request failed: ${url} -> ${res.status} ${await res.text()}`);
+  }
+  return res;
+}
+
+async function listAllKeys() {
+  const keys = [];
+  let cursor = null;
+  do {
+    const qs = new URLSearchParams({ prefix: "orders/" });
+    if (cursor) qs.set("cursor", cursor);
+    const res = await authedGet(`/list?${qs.toString()}`);
+    const data = await res.json();
+    keys.push(...data.keys);
+    cursor = data.cursor || null;
+  } while (cursor);
+  return keys;
+}
+
+async function getPayload(key) {
+  const res = await authedGet(`/get?key=${encodeURIComponent(key)}`);
+  return res.json();
+}
+
+// ISO 8601 week number + the Monday date that starts that week.
+function isoWeekInfo(dateStr) {
+  const d = new Date(dateStr + "T00:00:00Z");
+  const dayNum = (d.getUTCDay() + 6) % 7; // Mon=0..Sun=6
+  d.setUTCDate(d.getUTCDate() - dayNum + 3); // nearest Thursday
+  const firstThursday = new Date(Date.UTC(d.getUTCFullYear(), 0, 4));
+  const weekNumber =
+    1 + Math.round(((d - firstThursday) / 86400000 - 3 + ((firstThursday.getUTCDay() + 6) % 7)) / 7);
+  const monday = new Date(dateStr + "T00:00:00Z");
+  monday.setUTCDate(monday.getUTCDate() - ((monday.getUTCDay() + 6) % 7));
+  return { year: d.getUTCFullYear(), weekNumber, weekStart: monday.toISOString().slice(0, 10) };
+}
+
+function resolveLocationName(mapping, outletId, storeName) {
+  const byId = mapping.byOutletId[String(outletId)];
+  if (byId) return { locationName: byId, matchedBy: "outlet_id" };
+  const byName = mapping.byStoreName[storeName];
+  if (byName) return { locationName: byName, matchedBy: "store_name" };
+  return { locationName: null, matchedBy: "unmapped" };
+}
+
+async function main() {
+  requireEnv("GIVEX_WEBHOOK_URL", GIVEX_WEBHOOK_URL);
+  requireEnv("GIVEX_SHARED_SECRET", GIVEX_SHARED_SECRET);
+
+  const mapping = JSON.parse(await readFile(STORE_MAPPING_PATH, "utf8"));
+
+  console.log("Listing stored order keys...");
+  const keys = await listAllKeys();
+  console.log(`Found ${keys.length} stored payloads.`);
+
+  // buckets keyed by `${locationKey}|${year}-W${weekNumber}`
+  const buckets = new Map();
+  const deptBreakdown = new Map(); // department_name -> { netSales, lineItems, orderTypes: Map }
+  const unmappedOutlets = new Map(); // outletId|storeName -> count
+  let processed = 0;
+  let skipped = 0;
+
+  for (const key of keys) {
+    let payload;
+    try {
+      payload = await getPayload(key);
+    } catch (err) {
+      console.warn(`  [!] Failed to read ${key}: ${err.message}`);
+      skipped++;
+      continue;
+    }
+
+    const orders = payload.payload?.[0] || [];
+    const lineItems = payload.payload?.[1] || [];
+    if (orders.length === 0 || lineItems.length === 0) {
+      skipped++;
+      continue;
+    }
+
+    const orderTypeByVxlId = new Map();
+    const outletByVxlId = new Map();
+    const storeNameByVxlId = new Map();
+    for (const o of orders) {
+      orderTypeByVxlId.set(o.vxl_order_id, o.order_type);
+      outletByVxlId.set(o.vxl_order_id, o.outlet_id ?? payload.OutletID);
+      storeNameByVxlId.set(o.vxl_order_id, o.store_name);
+    }
+
+    const businessDate = payload.BusinessDate;
+    if (!businessDate) {
+      skipped++;
+      continue;
+    }
+    const { year, weekNumber, weekStart } = isoWeekInfo(businessDate);
+
+    for (const li of lineItems) {
+      const outletId = outletByVxlId.get(li.vxl_order_id) ?? payload.OutletID;
+      const storeName = storeNameByVxlId.get(li.vxl_order_id);
+      const { locationName, matchedBy } = resolveLocationName(mapping, outletId, storeName);
+      const deptName = li.department_name || "(none)";
+      const isOnline = ONLINE_DEPARTMENTS.has(deptName);
+      const netSales = li.net_sales || 0;
+      const vxlOrderId = li.vxl_order_id;
+
+      if (matchedBy === "unmapped") {
+        const unmappedKey = `outlet_id=${outletId} store_name=${storeName}`;
+        unmappedOutlets.set(unmappedKey, (unmappedOutlets.get(unmappedKey) || 0) + 1);
+        continue; // don't silently attribute sales to a guessed location
+      }
+
+      const bucketKey = `${locationName}|${year}-W${String(weekNumber).padStart(2, "0")}`;
+      if (!buckets.has(bucketKey)) {
+        buckets.set(bucketKey, {
+          Location_Name: locationName,
+          Year: year,
+          Week_Number: weekNumber,
+          Week_Start: weekStart,
+          Total_Sales: 0,
+          InStore_Sales: 0,
+          Online_Sales: 0,
+          orderIds: new Set(),
+        });
+      }
+      const bucket = buckets.get(bucketKey);
+      bucket.Total_Sales += netSales;
+      if (isOnline) bucket.Online_Sales += netSales;
+      else bucket.InStore_Sales += netSales;
+      bucket.orderIds.add(vxlOrderId);
+
+      if (!deptBreakdown.has(deptName)) {
+        deptBreakdown.set(deptName, { netSales: 0, lineItems: 0, orderTypes: new Map() });
+      }
+      const db = deptBreakdown.get(deptName);
+      db.netSales += netSales;
+      db.lineItems += 1;
+      const ot = orderTypeByVxlId.get(vxlOrderId) || "(unknown)";
+      db.orderTypes.set(ot, (db.orderTypes.get(ot) || 0) + 1);
+    }
+
+    processed++;
+  }
+
+  const weeks = [...buckets.values()]
+    .map((b) => {
+      const orders = b.orderIds.size;
+      return {
+        Location_Name: b.Location_Name,
+        Year: b.Year,
+        Week_Number: b.Week_Number,
+        Week_Start: b.Week_Start,
+        Total_Sales: round2(b.Total_Sales),
+        InStore_Sales: round2(b.InStore_Sales),
+        Online_Sales: round2(b.Online_Sales),
+        Orders: orders,
+        Avg_Ticket: orders ? round2(b.Total_Sales / orders) : 0,
+      };
+    })
+    .sort((a, b) => a.Location_Name.localeCompare(b.Location_Name) || a.Week_Start.localeCompare(b.Week_Start));
+
+  const departments = [...deptBreakdown.entries()].map(([name, d]) => ({
+    department_name: name,
+    classified_as: ONLINE_DEPARTMENTS.has(name) ? "online" : "in-store",
+    net_sales: round2(d.netSales),
+    line_items: d.lineItems,
+    order_types_seen: Object.fromEntries(d.orderTypes),
+  }));
+
+  const output = {
+    generated_at: new Date().toISOString(),
+    source: "givex-webhook-kv",
+    payloads_processed: processed,
+    payloads_skipped: skipped,
+    weeks,
+    department_breakdown: departments,
+    unmapped_outlets: Object.fromEntries(unmappedOutlets),
+  };
+
+  await mkdir("data", { recursive: true });
+  await writeFile(OUTPUT_PATH, JSON.stringify(output, null, 2) + "\n", "utf8");
+  console.log(`Wrote ${OUTPUT_PATH} (${weeks.length} store-weeks, ${processed} payloads processed, ${skipped} skipped)`);
+  if (unmappedOutlets.size > 0) {
+    console.warn(`WARNING: ${unmappedOutlets.size} distinct unmapped outlet/store combos were skipped -- see "unmapped_outlets" in the output file. Add them to scripts/store-mapping.json.`);
+  }
+}
+
+function round2(n) {
+  return Math.round(n * 100) / 100;
+}
+
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});
