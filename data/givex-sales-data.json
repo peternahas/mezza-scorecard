@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-08-14T23:21:29.029Z",
+  "generated_at": "2026-08-14T23:50:50.617Z",
   "source": "givex-webhook-kv",
-  "payloads_processed": 1516,
+  "payloads_processed": 1642,
   "payloads_skipped": 0,
   "weeks": [
     {
@@ -47,27 +47,27 @@
     }
   ],
   "unmapped_outlets": {
-    "outlet_id=400005052 store_name=Mezza Lebanese Kitchen - Clayton Park": 200,
+    "outlet_id=400005052 store_name=Mezza Lebanese Kitchen - Clayton Park": 210,
     "outlet_id=162046 store_name=Mezza Lebanese Kitchen - Scotia Square": 26,
-    "outlet_id=400005189 store_name=Mezza Lebanese Kitchen - Penhorn": 130,
-    "outlet_id=163135 store_name=Mezza Lebanese Kitchen - Truro": 184,
-    "outlet_id=400005053 store_name=Mezza Lebanese Kitchen - Halifax Shopping Centre": 212,
-    "outlet_id=400005175 store_name=Mezza Lebanese Kitchen - Stratford": 103,
-    "outlet_id=162049 store_name=Mezza Lebanese Kitchen - Burnside": 109,
-    "outlet_id=162050 store_name=Mezza Lebanese Kitchen - Lower Sackville": 215,
-    "outlet_id=400005111 store_name=Mezza Lebanese Kitchen - Morton Ave": 103,
-    "outlet_id=400005173 store_name=Mezza Lebanese Kitchen - Fall River": 101,
-    "outlet_id=400005055 store_name=Mezza Lebanese Kitchen - Bedford (Larry Uteck)": 197,
-    "outlet_id=400005267 store_name=Mezza Lebanese Kitchen - Mount Pearl": 114,
-    "outlet_id=164559 store_name=Mezza Lebanese Kitchen - Cole Harbour": 283,
-    "outlet_id=400005153 store_name=Mezza Lebanese Kitchen - Plaza Blvd": 38,
-    "outlet_id=400005265 store_name=Mezza Lebanese Kitchen - Bridgewater": 156,
-    "outlet_id=159303 store_name=Mezza Lebanese Kitchen - Herring Cove (Spryfield)": 117,
-    "outlet_id=400005048 store_name=Mezza Lebanese Kitchen - Tantallon": 191,
-    "outlet_id=179330 store_name=Mezza Lebanese Kitchen - Antigonish": 52,
-    "outlet_id=400005207 store_name=Mezza Lebanese Kitchen - New Minas": 125,
-    "outlet_id=198587 store_name=Mezza Lebanese Kitchen - Charlottetown": 132,
-    "outlet_id=180389 store_name=Mezza Lebanese Kitchen - Fredericton": 128,
-    "outlet_id=159136 store_name=Mezza Lebanese Kitchen - Barrington": 105
+    "outlet_id=400005189 store_name=Mezza Lebanese Kitchen - Penhorn": 151,
+    "outlet_id=163135 store_name=Mezza Lebanese Kitchen - Truro": 201,
+    "outlet_id=400005053 store_name=Mezza Lebanese Kitchen - Halifax Shopping Centre": 228,
+    "outlet_id=400005175 store_name=Mezza Lebanese Kitchen - Stratford": 111,
+    "outlet_id=162049 store_name=Mezza Lebanese Kitchen - Burnside": 110,
+    "outlet_id=162050 store_name=Mezza Lebanese Kitchen - Lower Sackville": 242,
+    "outlet_id=400005111 store_name=Mezza Lebanese Kitchen - Morton Ave": 106,
+    "outlet_id=400005173 store_name=Mezza Lebanese Kitchen - Fall River": 119,
+    "outlet_id=400005055 store_name=Mezza Lebanese Kitchen - Bedford (Larry Uteck)": 211,
+    "outlet_id=400005267 store_name=Mezza Lebanese Kitchen - Mount Pearl": 117,
+    "outlet_id=164559 store_name=Mezza Lebanese Kitchen - Cole Harbour": 310,
+    "outlet_id=400005153 store_name=Mezza Lebanese Kitchen - Plaza Blvd": 40,
+    "outlet_id=400005265 store_name=Mezza Lebanese Kitchen - Bridgewater": 161,
+    "outlet_id=159303 store_name=Mezza Lebanese Kitchen - Herring Cove (Spryfield)": 138,
+    "outlet_id=400005048 store_name=Mezza Lebanese Kitchen - Tantallon": 216,
+    "outlet_id=179330 store_name=Mezza Lebanese Kitchen - Antigonish": 58,
+    "outlet_id=400005207 store_name=Mezza Lebanese Kitchen - New Minas": 135,
+    "outlet_id=198587 store_name=Mezza Lebanese Kitchen - Charlottetown": 134,
+    "outlet_id=180389 store_name=Mezza Lebanese Kitchen - Fredericton": 138,
+    "outlet_id=159136 store_name=Mezza Lebanese Kitchen - Barrington": 119
   }
 }
