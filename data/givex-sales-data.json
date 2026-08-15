@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-08-15T05:56:30.079Z",
+  "generated_at": "2026-08-15T06:37:28.337Z",
   "source": "givex-webhook-kv",
-  "payloads_processed": 1912,
+  "payloads_processed": 1917,
   "payloads_skipped": 0,
   "weeks": [
     {
@@ -68,6 +68,6 @@
     "outlet_id=400005207 store_name=Mezza Lebanese Kitchen - New Minas": 136,
     "outlet_id=198587 store_name=Mezza Lebanese Kitchen - Charlottetown": 137,
     "outlet_id=180389 store_name=Mezza Lebanese Kitchen - Fredericton": 146,
-    "outlet_id=159136 store_name=Mezza Lebanese Kitchen - Barrington": 301
+    "outlet_id=159136 store_name=Mezza Lebanese Kitchen - Barrington": 310
   }
 }
