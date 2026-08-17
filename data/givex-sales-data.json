@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-08-17T13:41:32.769Z",
+  "generated_at": "2026-08-17T14:19:07.254Z",
   "source": "givex-webhook-kv",
-  "payloads_processed": 6189,
+  "payloads_processed": 6198,
   "payloads_skipped": 0,
   "weeks": [
     {
@@ -47,13 +47,13 @@
     }
   ],
   "unmapped_outlets": {
-    "outlet_id=400005052 store_name=Mezza Lebanese Kitchen - Clayton Park": 1193,
-    "outlet_id=162046 store_name=Mezza Lebanese Kitchen - Scotia Square": 112,
+    "outlet_id=400005052 store_name=Mezza Lebanese Kitchen - Clayton Park": 1197,
+    "outlet_id=162046 store_name=Mezza Lebanese Kitchen - Scotia Square": 114,
     "outlet_id=400005189 store_name=Mezza Lebanese Kitchen - Penhorn": 576,
     "outlet_id=163135 store_name=Mezza Lebanese Kitchen - Truro": 736,
-    "outlet_id=400005053 store_name=Mezza Lebanese Kitchen - Halifax Shopping Centre": 931,
+    "outlet_id=400005053 store_name=Mezza Lebanese Kitchen - Halifax Shopping Centre": 940,
     "outlet_id=400005175 store_name=Mezza Lebanese Kitchen - Stratford": 459,
-    "outlet_id=162049 store_name=Mezza Lebanese Kitchen - Burnside": 413,
+    "outlet_id=162049 store_name=Mezza Lebanese Kitchen - Burnside": 414,
     "outlet_id=162050 store_name=Mezza Lebanese Kitchen - Lower Sackville": 775,
     "outlet_id=400005111 store_name=Mezza Lebanese Kitchen - Morton Ave": 484,
     "outlet_id=400005173 store_name=Mezza Lebanese Kitchen - Fall River": 373,
