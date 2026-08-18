@@ -1,8 +1,31 @@
 {
-  "_comment": "Maps Givex outlet_id (once real production IDs are known) and/or Givex store_name to the exact Location_Name used in Store_Data. Edit this file directly as real outlet_ids come in from production Get Store List calls or from real webhook traffic. byOutletId is checked first, then byStoreName as a fallback so this works even before every outlet_id is known.",
-  "byOutletId": {
-    "65659": "Beta Lanner (Givex certification/test store — NOT a real Mezza location, exclude from Store_Data)"
-  },
+  "_comment": "Maps Givex outlet_id and/or Givex store_name to the exact Location_Name used in Store_Data. byOutletId is checked first, then byStoreName as a fallback. excludeOutletIds lists outlet_ids that are real Givex outlets but NOT real Mezza customer locations (test/internal/unclear) -- these are dropped from the output entirely and counted separately, so their sales never silently land in a bucket. Real outlet_ids below came from a production Get Store List call on 2026-08-17.",
+
+"byOutletId": {
+  "400005048": "Tantallon",
+  "159136": "Barrington",
+  "163135": "Truro",
+  "400005052": "Clayton Park",
+  "400005111": "Morton Ave",
+  "400005053": "Halifax Shopping Centre",
+  "159303": "Herring Cove (Spryfield)",
+  "162050": "Lower Sackville",
+  "400005207": "New Minas",
+  "162046": "Scotia Square",
+  "400005153": "Plaza",
+  "180389": "Fredericton",
+  "400005189": "Penhorn",
+  "400005173": "Fall River",
+  "164559": "Cole Harbour",
+  "400005055": "Larry Uteck",
+  "198587": "Charlottetown",
+  "400005175": "Stratford",
+  "400005265": "Bridgewater",
+  "400005267": "Mount Pearl",
+  "179330": "Antigonish",
+  "162049": "Burnside"
+},
+
   "byStoreName": {
     "Barrington": "Barrington",
     "Bedford (Larry Uteck)": "Larry Uteck",
@@ -26,5 +49,13 @@
     "Bridgewater": "Bridgewater",
     "Mount Pearl": "Mount Pearl",
     "Charlottetown": "Charlottetown"
+  },
+
+  "excludeOutletIds": {
+    "65659": "Beta Lanner -- Givex certification/test store, not a real Mezza location",
+    "400005198": "Mezza Lebanese Kitchen - Test Lab -- internal test outlet, not a real customer-facing location",
+    "400005054": "Mezza - Head Office -- not a store",
+    "201541": "Mezza Lebanese Kitchen - SmoothPay Commerce Store -- unclear purpose, not a known Store_Data Location_Name; confirm with Peter before ever including",
+    "195423": "Mezza CWS store -- unclear purpose, not a known Store_Data Location_Name; confirm with Peter before ever including"
   }
 }
