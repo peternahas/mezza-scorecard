@@ -8042,7 +8042,31 @@
     "orders/2026-08-17/bill_info/1787014662-1787014662274.json",
     "orders/2026-08-17/bill_info/1787014905-1787014905403.json",
     "orders/2026-08-17/bill_info/1787014926-1787014926176.json",
-    "orders/2026-08-17/bill_info/1787014927-1787014927214.json"
+    "orders/2026-08-17/bill_info/1787014927-1787014927214.json",
+    "orders/2026-08-17/bill_info/1787015427-1787015427939.json",
+    "orders/2026-08-17/bill_info/1787015569-1787015569903.json",
+    "orders/2026-08-17/bill_info/1787015739-1787015739666.json",
+    "orders/2026-08-17/bill_info/1787015901-1787015901143.json",
+    "orders/2026-08-17/bill_info/1787016642-1787016642581.json",
+    "orders/2026-08-17/bill_info/1787017183-1787017183475.json",
+    "orders/2026-08-17/bill_info/1787017390-1787017390403.json",
+    "orders/2026-08-17/bill_info/1787017394-1787017394692.json",
+    "orders/2026-08-17/bill_info/1787017410-1787017410612.json",
+    "orders/2026-08-17/bill_info/1787017544-1787017544508.json",
+    "orders/2026-08-17/bill_info/1787017569-1787017569100.json",
+    "orders/2026-08-17/bill_info/1787017571-1787017571280.json",
+    "orders/2026-08-17/bill_info/1787017726-1787017726474.json",
+    "orders/2026-08-17/bill_info/1787017735-1787017735092.json",
+    "orders/2026-08-17/bill_info/1787017752-1787017752687.json",
+    "orders/2026-08-17/bill_info/1787018671-1787018671624.json",
+    "orders/2026-08-17/bill_info/1787019126-1787019126992.json",
+    "orders/2026-08-17/bill_info/1787019314-1787019314431.json",
+    "orders/2026-08-17/bill_info/1787019315-1787019315880.json",
+    "orders/2026-08-17/bill_info/1787019365-1787019365362.json",
+    "orders/2026-08-17/bill_info/1787019488-1787019488429.json",
+    "orders/2026-08-17/bill_info/1787019672-1787019672156.json",
+    "orders/2026-08-17/bill_info/1787019906-1787019906711.json",
+    "orders/2026-08-17/bill_info/1787020033-1787020033592.json"
   ],
   "buckets": {
     "Clayton Park|2026-W33": {
@@ -14044,9 +14068,9 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 2961.5799999999936,
-      "InStore_Sales": 2422.5199999999973,
-      "Online_Sales": 539.0600000000001,
+      "Total_Sales": 3149.849999999993,
+      "InStore_Sales": 2530.6199999999963,
+      "Online_Sales": 619.2299999999999,
       "orderIds": [
         662671,
         662672,
@@ -14166,7 +14190,14 @@
         662871,
         662872,
         662875,
-        662874
+        662874,
+        662878,
+        662880,
+        662881,
+        662883,
+        662882,
+        662885,
+        662886
       ]
     },
     "Truro|2026-W34": {
@@ -14293,9 +14324,9 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 2638.399999999998,
-      "InStore_Sales": 1334.9800000000005,
-      "Online_Sales": 1303.4199999999994,
+      "Total_Sales": 2826.869999999997,
+      "InStore_Sales": 1439.0900000000004,
+      "Online_Sales": 1387.7799999999995,
       "orderIds": [
         555124,
         555126,
@@ -14378,7 +14409,16 @@
         555266,
         555267,
         555269,
-        555273
+        555273,
+        555272,
+        555274,
+        555275,
+        555276,
+        555278,
+        555277,
+        555279,
+        555280,
+        555282
       ]
     },
     "Mount Pearl|2026-W34": {
@@ -15144,9 +15184,9 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 1589.2400000000005,
-      "InStore_Sales": 1194.16,
-      "Online_Sales": 395.08000000000004,
+      "Total_Sales": 1618.89,
+      "InStore_Sales": 1213.45,
+      "Online_Sales": 405.43999999999994,
       "orderIds": [
         303868,
         303869,
@@ -15204,7 +15244,10 @@
         303942,
         303943,
         303939,
-        303944
+        303944,
+        303945,
+        303950,
+        303951
       ]
     },
     "Fall River|2026-W34": {
@@ -15561,19 +15604,19 @@
   },
   "deptBreakdown": {
     "Eat - In": {
-      "netSales": 120503.08000000184,
-      "lineItems": 10234,
+      "netSales": 120734.58000000182,
+      "lineItems": 10252,
       "orderTypes": {
-        "QSR": 10040,
-        "Take-Out": 192,
+        "QSR": 10057,
+        "Take-Out": 193,
         "Refund": 2
       }
     },
     "Door Dash - Delivery": {
-      "netSales": 22587.930000000095,
-      "lineItems": 1408,
+      "netSales": 22690.980000000094,
+      "lineItems": 1415,
       "orderTypes": {
-        "Delivery": 1408
+        "Delivery": 1415
       }
     },
     "Take - Out": {
@@ -15591,18 +15634,18 @@
       }
     },
     "Uber Eats": {
-      "netSales": 28364.730000000014,
-      "lineItems": 1708,
+      "netSales": 28375.090000000015,
+      "lineItems": 1712,
       "orderTypes": {
-        "Delivery": 1582,
+        "Delivery": 1586,
         "Take-Out": 126
       }
     },
     "Skip The Dishes": {
-      "netSales": 7530.0699999999815,
-      "lineItems": 474,
+      "netSales": 7591.549999999979,
+      "lineItems": 482,
       "orderTypes": {
-        "Delivery": 461,
+        "Delivery": 469,
         "Take-Out": 13
       }
     },
@@ -15643,6 +15686,6 @@
       "reason": "Beta Lanner -- Givex certification/test store, not a real Mezza location"
     }
   },
-  "payloadsProcessedTotal": 8043,
+  "payloadsProcessedTotal": 8067,
   "payloadsSkippedTotal": 0
 }

@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-08-18T01:31:42.611Z",
+  "generated_at": "2026-08-18T02:36:33.582Z",
   "source": "givex-webhook-kv",
   "full_resync": false,
-  "payloads_processed_this_run": 8043,
+  "payloads_processed_this_run": 24,
   "payloads_skipped_this_run": 0,
-  "payloads_processed_total": 8043,
+  "payloads_processed_total": 8067,
   "payloads_skipped_total": 0,
   "weeks": [
     {
@@ -45,11 +45,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 2638.4,
-      "InStore_Sales": 1334.98,
-      "Online_Sales": 1303.42,
-      "Orders": 82,
-      "Avg_Ticket": 32.18
+      "Total_Sales": 2826.87,
+      "InStore_Sales": 1439.09,
+      "Online_Sales": 1387.78,
+      "Orders": 91,
+      "Avg_Ticket": 31.06
     },
     {
       "Location_Name": "Bridgewater",
@@ -133,11 +133,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 2961.58,
-      "InStore_Sales": 2422.52,
-      "Online_Sales": 539.06,
-      "Orders": 119,
-      "Avg_Ticket": 24.89
+      "Total_Sales": 3149.85,
+      "InStore_Sales": 2530.62,
+      "Online_Sales": 619.23,
+      "Orders": 126,
+      "Avg_Ticket": 25
     },
     {
       "Location_Name": "Cole Harbour",
@@ -309,11 +309,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 1589.24,
-      "InStore_Sales": 1194.16,
-      "Online_Sales": 395.08,
-      "Orders": 57,
-      "Avg_Ticket": 27.88
+      "Total_Sales": 1618.89,
+      "InStore_Sales": 1213.45,
+      "Online_Sales": 405.44,
+      "Orders": 60,
+      "Avg_Ticket": 26.98
     },
     {
       "Location_Name": "Mount Pearl",
@@ -496,21 +496,21 @@
     {
       "department_name": "Eat - In",
       "classified_as": "in-store",
-      "net_sales": 120503.08,
-      "line_items": 10234,
+      "net_sales": 120734.58,
+      "line_items": 10252,
       "order_types_seen": {
-        "QSR": 10040,
-        "Take-Out": 192,
+        "QSR": 10057,
+        "Take-Out": 193,
         "Refund": 2
       }
     },
     {
       "department_name": "Door Dash - Delivery",
       "classified_as": "online",
-      "net_sales": 22587.93,
-      "line_items": 1408,
+      "net_sales": 22690.98,
+      "line_items": 1415,
       "order_types_seen": {
-        "Delivery": 1408
+        "Delivery": 1415
       }
     },
     {
@@ -534,20 +534,20 @@
     {
       "department_name": "Uber Eats",
       "classified_as": "online",
-      "net_sales": 28364.73,
-      "line_items": 1708,
+      "net_sales": 28375.09,
+      "line_items": 1712,
       "order_types_seen": {
-        "Delivery": 1582,
+        "Delivery": 1586,
         "Take-Out": 126
       }
     },
     {
       "department_name": "Skip The Dishes",
       "classified_as": "online",
-      "net_sales": 7530.07,
-      "line_items": 474,
+      "net_sales": 7591.55,
+      "line_items": 482,
       "order_types_seen": {
-        "Delivery": 461,
+        "Delivery": 469,
         "Take-Out": 13
       }
     },
