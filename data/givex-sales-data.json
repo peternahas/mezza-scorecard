@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-08-18T11:50:59.633Z",
+  "generated_at": "2026-08-18T12:40:17.718Z",
   "source": "givex-webhook-kv",
   "full_resync": false,
-  "payloads_processed_this_run": 0,
+  "payloads_processed_this_run": 1,
   "payloads_skipped_this_run": 0,
-  "payloads_processed_total": 8067,
+  "payloads_processed_total": 8068,
   "payloads_skipped_total": 0,
   "weeks": [
     {
@@ -89,11 +89,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 4021.49,
-      "InStore_Sales": 2231.08,
+      "Total_Sales": 4390.53,
+      "InStore_Sales": 2600.12,
       "Online_Sales": 1790.41,
-      "Orders": 133,
-      "Avg_Ticket": 30.24
+      "Orders": 134,
+      "Avg_Ticket": 32.77
     },
     {
       "Location_Name": "Charlottetown",
@@ -582,10 +582,10 @@
     {
       "department_name": "Catering",
       "classified_as": "in-store",
-      "net_sales": 1775.02,
-      "line_items": 101,
+      "net_sales": 2144.06,
+      "line_items": 148,
       "order_types_seen": {
-        "Bar": 101
+        "Bar": 148
       }
     }
   ],

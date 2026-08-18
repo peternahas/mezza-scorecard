@@ -8066,7 +8066,8 @@
     "orders/2026-08-17/bill_info/1787019488-1787019488429.json",
     "orders/2026-08-17/bill_info/1787019672-1787019672156.json",
     "orders/2026-08-17/bill_info/1787019906-1787019906711.json",
-    "orders/2026-08-17/bill_info/1787020033-1787020033592.json"
+    "orders/2026-08-17/bill_info/1787020033-1787020033592.json",
+    "orders/2026-08-18/bill_info/1787055888-1787055889153.json"
   ],
   "buckets": {
     "Clayton Park|2026-W33": {
@@ -13821,8 +13822,8 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 4021.489999999994,
-      "InStore_Sales": 2231.079999999998,
+      "Total_Sales": 4390.529999999984,
+      "InStore_Sales": 2600.119999999988,
       "Online_Sales": 1790.4099999999996,
       "orderIds": [
         399519,
@@ -13957,7 +13958,8 @@
         399657,
         399659,
         399660,
-        399695
+        399695,
+        399698
       ]
     },
     "Scotia Square|2026-W34": {
@@ -15672,10 +15674,10 @@
       }
     },
     "Catering": {
-      "netSales": 1775.019999999998,
-      "lineItems": 101,
+      "netSales": 2144.0599999999963,
+      "lineItems": 148,
       "orderTypes": {
-        "Bar": 101
+        "Bar": 148
       }
     }
   },
@@ -15686,6 +15688,6 @@
       "reason": "Beta Lanner -- Givex certification/test store, not a real Mezza location"
     }
   },
-  "payloadsProcessedTotal": 8067,
+  "payloadsProcessedTotal": 8068,
   "payloadsSkippedTotal": 0
 }
