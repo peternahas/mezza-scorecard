@@ -214,7 +214,7 @@ async function main() {
   const allKeys = await listAllKeys();
   console.log(`Found ${allKeys.length} total stored payloads (list is cheap; this is not the bottleneck).`);
 
-  const newKeys = allKeys.filter((k) => !processedKeySet.has(k.name));
+  const newKeys = allKeys.filter((k) => !processedKeySet.has(k));
   console.log(`${newKeys.length} of those are new since the last run — only these will be fetched.`);
 
   let processedThisRun = 0;
@@ -223,9 +223,9 @@ async function main() {
   for (const key of newKeys) {
     let payload;
     try {
-      payload = await getPayload(key.name);
+      payload = await getPayload(key);
     } catch (err) {
-      console.warn(`  [!] Failed to read ${key.name}: ${err.message}`);
+      console.warn(`  [!] Failed to read ${key}: ${err.message}`);
       skippedThisRun++;
       continue;
     }
@@ -234,7 +234,7 @@ async function main() {
     const lineItems = payload.payload?.[1] || [];
     if (orders.length === 0 || lineItems.length === 0) {
       skippedThisRun++;
-      processedKeySet.add(key.name); // still mark as seen so we don't keep retrying an empty payload forever
+      processedKeySet.add(key); // still mark as seen so we don't keep retrying an empty payload forever
       continue;
     }
 
@@ -250,7 +250,7 @@ async function main() {
     const businessDate = payload.BusinessDate;
     if (!businessDate) {
       skippedThisRun++;
-      processedKeySet.add(key.name);
+      processedKeySet.add(key);
       continue;
     }
     const { year, weekNumber, weekStart } = isoWeekInfo(businessDate);
@@ -307,7 +307,7 @@ async function main() {
       db.orderTypes[ot] = (db.orderTypes[ot] || 0) + 1;
     }
 
-    processedKeySet.add(key.name);
+    processedKeySet.add(key);
     processedThisRun++;
   }
 
