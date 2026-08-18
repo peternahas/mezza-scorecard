@@ -54,6 +54,13 @@
     // ─────────────────────────────────────────────────────────────────────────
     var DATA_URL = 'data/scorecard-data.json';
 
+    // Givex live-sales JSON — written by the sync-givex-data.yml GitHub Action,
+    // same repo/site, so a relative fetch works. SEPARATE data source from
+    // DATA_URL above (real-time POS sales/orders only — no food cost or
+    // labour data, which still comes from the Excel-backed file). See
+    // givex-sales-sync/SETUP.md.
+    var GIVEX_DATA_URL = 'data/givex-sales-data.json';
+
     // ─────────────────────────────────────────────────────────────────────────
     // DAILY TALLY — update manually each Monday morning for the current week
     // ─────────────────────────────────────────────────────────────────────────
@@ -182,6 +189,41 @@
       });
     }
 
+    // Fetches the Givex live-sales JSON. Resolves to null (not a throw) on
+    // any failure — additive data source, a hiccup here should never take
+    // down the rest of the scorecard.
+    function fetchGivexData() {
+      return fetch(GIVEX_DATA_URL, { cache: 'no-store' })
+        .then(function(r) {
+          if (!r.ok) throw new Error('Givex data fetch failed ' + r.status);
+          return r.json();
+        })
+        .catch(function() { return null; });
+    }
+
+    // Groups the flat weeks[] array from data/givex-sales-data.json by
+    // Week_Start (the safe join key — see givex-sales-sync/SETUP.md re:
+    // Week_Number convention not yet confirmed to match the Excel file's
+    // fiscal weeks).
+    function groupGivexByWeek(givexData) {
+      if (!givexData || !Array.isArray(givexData.weeks) || givexData.weeks.length === 0) return null;
+      var byWeek = {};
+      givexData.weeks.forEach(function(row) {
+        if (!byWeek[row.Week_Start]) {
+          byWeek[row.Week_Start] = { weekStart: row.Week_Start, weekNumber: row.Week_Number, year: row.Year, stores: [] };
+        }
+        byWeek[row.Week_Start].stores.push(row);
+      });
+      var weekStarts = Object.keys(byWeek).sort(function(a, b) { return b.localeCompare(a); });
+      return { byWeek: byWeek, weekStarts: weekStarts, generatedAt: givexData.generated_at };
+    }
+
+    function formatWeekStart(iso) {
+      if (!iso) return '';
+      var d = new Date(iso + 'T00:00:00Z');
+      return d.toLocaleDateString('en-CA', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+    }
+
     // ─────────────────────────────────────────────────────────────────────────
     // HELPERS
     // ─────────────────────────────────────────────────────────────────────────
@@ -262,6 +304,108 @@
     }
 
     // ─────────────────────────────────────────────────────────────────────────
+    // GIVEX LIVE SALES PANEL — additive, clearly-labeled section showing
+    // real-time POS sales pulled directly from Givex. Deliberately kept
+    // SEPARATE from the Excel-driven weekly tables above/below (different
+    // week-numbering convention, no food-cost/labour data available here —
+    // see givex-sales-sync/SETUP.md open questions).
+    // ─────────────────────────────────────────────────────────────────────────
+    function GivexSalesPanel(props) {
+      var grouped = props.grouped;
+      var weekState = useState(grouped ? grouped.weekStarts[0] : null);
+      var selectedWeek = weekState[0];
+      var setSelectedWeek = weekState[1];
+      var expState = useState(true);
+      var expanded = expState[0];
+      var setExpanded = expState[1];
+
+      if (!grouped) {
+        return e('div', { style: { border: "1px dashed #E8D8E5", borderRadius: 10, marginBottom: 16, padding: "12px 14px", fontSize: 12, color: "#9B7A8F" } },
+          "Live Givex sales data isn't available right now (data/givex-sales-data.json didn't load) — the tables below are unaffected."
+        );
+      }
+
+      var wk = grouped.byWeek[selectedWeek];
+      var stores = wk.stores.slice().sort(function(a, b) { return b.Total_Sales - a.Total_Sales; });
+      var total = stores.reduce(function(s, r) { return s + (r.Total_Sales || 0); }, 0);
+      var totalOrders = stores.reduce(function(s, r) { return s + (r.Orders || 0); }, 0);
+      var totalOnline = stores.reduce(function(s, r) { return s + (r.Online_Sales || 0); }, 0);
+
+      return e('div', { style: { border: "1px solid #E8D8E5", borderRadius: 10, marginBottom: 16, overflow: "hidden" } },
+        e('button', {
+          onClick: function() { setExpanded(function(x) { return !x; }); },
+          style: { width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 14px", background: "#F5EFF3", border: "none", borderBottom: expanded ? "1px solid #E8D8E5" : "none", cursor: "pointer", textAlign: "left" }
+        },
+          e('div', { style: { display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" } },
+            e('span', { style: { fontSize: 13, fontWeight: 700, color: "#2D1A2B" } }, "Live POS Sales"),
+            e('span', { style: { fontSize: 10, fontWeight: 700, color: MP, background: "#EDE0EB", padding: "2px 8px", borderRadius: 10 } }, "GIVEX"),
+            e('span', { style: { fontSize: 11, color: "#9B7A8F" } }, "Week of " + formatWeekStart(selectedWeek) + " · " + stores.length + " stores")
+          ),
+          e('span', { style: { fontSize: 16, color: "#9CA3AF" } }, expanded ? "▲" : "▼")
+        ),
+        expanded && e('div', { style: { padding: "12px 14px" } },
+          e('div', { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12, flexWrap: "wrap", gap: 10 } },
+            e('div', { style: { display: "flex", alignItems: "center", gap: 8 } },
+              e('span', { style: { fontSize: 12, color: "#9B7A8F" } }, "Week"),
+              e('select', {
+                value: selectedWeek,
+                onChange: function(ev) { setSelectedWeek(ev.target.value); },
+                style: { fontSize: 12, fontWeight: 600, padding: "5px 10px", borderRadius: 8, border: "1px solid " + MP, background: "#fff", color: "#2D1A2B", cursor: "pointer", fontFamily: "inherit", outline: "none" }
+              },
+                grouped.weekStarts.map(function(ws) {
+                  return e('option', { key: ws, value: ws }, "Week of " + formatWeekStart(ws));
+                })
+              )
+            ),
+            e('div', { style: { display: "flex", gap: 16, fontSize: 11, color: "#9B7A8F" } },
+              e('span', null, e('strong', { style: { color: "#2D1A2B" } }, cad(total)), " total"),
+              e('span', null, e('strong', { style: { color: "#2D1A2B" } }, totalOrders.toLocaleString()), " orders"),
+              e('span', null, e('strong', { style: { color: "#2D1A2B" } }, total > 0 ? (totalOnline / total * 100).toFixed(0) + "%" : "—"), " online")
+            )
+          ),
+          e('div', { style: { overflowX: "auto" } },
+            e('table', { style: { width: "100%", borderCollapse: "collapse", fontSize: 12 } },
+              e('thead', null,
+                e('tr', { style: { background: "#F5EFF3" } },
+                  e('th', { style: THL }, "Location"),
+                  e('th', { style: THR }, "Total sales"),
+                  e('th', { style: THR }, "In-store"),
+                  e('th', { style: THR }, "Online"),
+                  e('th', { style: THR }, "Online %"),
+                  e('th', { style: THR }, "Orders"),
+                  e('th', { style: THR }, "Avg ticket")
+                )
+              ),
+              e('tbody', null,
+                stores.map(function(r, i) {
+                  var onlinePct = (r.Total_Sales > 0) ? (r.Online_Sales / r.Total_Sales * 100).toFixed(1) + "%" : "—";
+                  return e('tr', { key: i, style: { background: i % 2 === 0 ? "#fff" : "#FAF8F4" } },
+                    e('td', { style: TD }, e('span', { style: { fontWeight: 600, color: "#2D1A2B" } }, r.Location_Name)),
+                    e('td', { style: Object.assign({}, TDR, { fontWeight: 600, color: "#2D1A2B" }) }, cad(r.Total_Sales)),
+                    e('td', { style: Object.assign({}, TDR, { color: "#374151" }) }, cad(r.InStore_Sales)),
+                    e('td', { style: Object.assign({}, TDR, { color: "#374151" }) }, cad(r.Online_Sales)),
+                    e('td', { style: Object.assign({}, TDR, { color: "#374151" }) }, onlinePct),
+                    e('td', { style: Object.assign({}, TDR, { color: "#374151" }) }, r.Orders != null ? r.Orders.toLocaleString() : "—"),
+                    e('td', { style: Object.assign({}, TDR, { color: "#374151" }) }, r.Avg_Ticket != null ? cad(r.Avg_Ticket, 2) : "—")
+                  );
+                }),
+                e('tr', null,
+                  e('td', { style: { padding: "9px 12px", fontWeight: 700, color: "#2D1A2B", background: "#F5EFF3", borderTop: "2px solid #E8D8E5" } }, "Total"),
+                  e('td', { style: { padding: "9px 12px", textAlign: "right", fontWeight: 700, color: "#2D1A2B", background: "#F5EFF3", borderTop: "2px solid #E8D8E5" } }, cad(total)),
+                  e('td', { colSpan: 5, style: { background: "#F5EFF3", borderTop: "2px solid #E8D8E5" } })
+                )
+              )
+            )
+          ),
+          e('div', { style: { fontSize: 11, color: "#9B7A8F", marginTop: 10, lineHeight: 1.6 } },
+            "Adjusted net sales, direct from Givex POS — updates automatically every 15 minutes. Separate from the weekly operational report below (food cost, labour %, GBP, reviews still come from the Excel-backed file). Week numbering here follows ISO weeks (Mon–Sun), which may not match the fiscal week convention below — use the date range, not the week number, to compare the two.",
+            grouped.generatedAt ? (" Last updated " + new Date(grouped.generatedAt).toLocaleString('en-CA', { dateStyle: 'medium', timeStyle: 'short' }) + ".") : ""
+          )
+        )
+      );
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
     // MAIN APP
     // ─────────────────────────────────────────────────────────────────────────
     function App() {
@@ -271,6 +415,9 @@
       var reviewsState = useState({});
       var REVIEWS      = reviewsState[0];
       var setREVIEWS   = reviewsState[1];
+      var givexState   = useState(null);
+      var GIVEX        = givexState[0];
+      var setGIVEX     = givexState[1];
       var loadingState = useState(true);
       var loading      = loadingState[0];
       var setLoading   = loadingState[1];
@@ -289,6 +436,7 @@
             setError(err.message || "Unknown error");
             setLoading(false);
           });
+        fetchGivexData().then(function(data) { setGIVEX(data); });
       }, []);
 
       if (loading) return e(LoadingScreen, null);
@@ -298,7 +446,7 @@
       var weekNums     = Object.keys(WEEKS).map(Number).sort(function(a, b) { return b - a; });
       var defaultWeek  = weekNums[0];
 
-      return e(Scorecard, { WEEKS: WEEKS, weekNums: weekNums, defaultWeek: defaultWeek, REVIEWS: REVIEWS });
+      return e(Scorecard, { WEEKS: WEEKS, weekNums: weekNums, defaultWeek: defaultWeek, REVIEWS: REVIEWS, GIVEX: GIVEX });
     }
 
     // ─────────────────────────────────────────────────────────────────────────
@@ -308,6 +456,7 @@
       var WEEKS    = props.WEEKS;
       var weekNums = props.weekNums;
       var REVIEWS  = props.REVIEWS || {};
+      var givexGrouped = useMemo(function() { return groupGivexByWeek(props.GIVEX); }, [props.GIVEX]);
 
       var weekState        = useState(props.defaultWeek);
       var week             = weekState[0];
@@ -562,6 +711,9 @@
 
         // Content area
         e('div', { style: { padding: "20px 16px 48px", maxWidth: 1400, margin: "0 auto" } },
+
+        // Live Givex sales — additive panel, separate data source (see helper comment above)
+        e(GivexSalesPanel, { grouped: givexGrouped }),
 
         // Week selector — dropdown for easy navigation as weeks accumulate
         e('div', { style: { display: "flex", alignItems: "center", gap: 10, marginBottom: 16 } },
