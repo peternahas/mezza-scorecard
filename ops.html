@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mezza Ops Dashboard — Givex</title>
+<script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="manifest" href="/manifest.json" />
+<meta name="theme-color" content="#54274D" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Mezza Ops" />
+<link rel="apple-touch-icon" href="/icons/icon-192.png" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #FAF8F4; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+  button, select, input { font-family: inherit; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .spinner { width: 32px; height: 32px; border: 3px solid #E5E7EB; border-top-color: #54274D; border-radius: 50%; animation: spin 0.8s linear infinite; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 16px; }
+  .lens-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .loc-checklist { max-height: 260px; overflow-y: auto; }
+
+  @media (max-width: 900px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .lens-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+(function () {
+
+var useState  = React.useState;
+var useMemo   = React.useMemo;
+var useEffect = React.useEffect;
+var e         = React.createElement;
+var Fragment  = React.Fragment;
+
+// ─────────────────────────────────────────────────────────────────────────
+// CONFIG
+// ─────────────────────────────────────────────────────────────────────────
+var DATA_URL = 'data/givex-sales-data.json';
+var MP = '#54274D';
+
+// Fixed display order for day-parts (matches sync-givex-to-json.mjs buckets)
+var DAY_PART_ORDER = ['Breakfast', 'Lunch', 'Afternoon', 'Dinner', 'Late Night', 'Unknown'];
+
+// ─────────────────────────────────────────────────────────────────────────
+// HELPERS
+// ─────────────────────────────────────────────────────────────────────────
+function cad(n, dec) {
+  dec = dec === undefined ? 0 : dec;
+  if (n == null || isNaN(n)) return '—';
+  return '$' + n.toLocaleString('en-CA', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+}
+function pct(n, dec) {
+  dec = dec === undefined ? 1 : dec;
+  if (n == null || isNaN(n)) return '—';
+  return n.toFixed(dec) + '%';
+}
+function num(n) { return n == null || isNaN(n) ? '—' : n.toLocaleString('en-CA'); }
+function sumMap(target, src) {
+  if (!src) return;
+  Object.keys(src).forEach(function(k) { target[k] = (target[k] || 0) + (src[k] || 0); });
+}
+function addDays(iso, delta) {
+  var d = new Date(iso + 'T00:00:00Z');
+  d.setUTCDate(d.getUTCDate() + delta);
+  return d.toISOString().slice(0, 10);
+}
+function fmtDateShort(iso) {
+  if (!iso) return '';
+  var d = new Date(iso + 'T00:00:00Z');
+  return d.toLocaleDateString('en-CA', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+}
+function fmtDateFull(iso) {
+  if (!iso) return '';
+  var d = new Date(iso + 'T00:00:00Z');
+  return d.toLocaleDateString('en-CA', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+}
+function isoWeekday(iso) {
+  // 1 = Monday ... 7 = Sunday
+  var d = new Date(iso + 'T00:00:00Z');
+  var wd = d.getUTCDay();
+  return wd === 0 ? 7 : wd;
+}
+function mondayOf(iso) {
+  return addDays(iso, -(isoWeekday(iso) - 1));
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// DATA FETCH
+// ─────────────────────────────────────────────────────────────────────────
+function fetchGivexData() {
+  return fetch(DATA_URL, { cache: 'no-store' })
+    .then(function(r) {
+      if (!r.ok) throw new Error('Network error ' + r.status + ' loading ' + DATA_URL);
+      return r.json();
+    });
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// LOADING / ERROR SCREENS
+// ─────────────────────────────────────────────────────────────────────────
+function LoadingScreen() {
+  return e('div', { style: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '60vh', gap: 20 } },
+    e('div', { className: 'spinner' }),
+    e('div', { style: { fontSize: 14, color: '#6B7280' } }, 'Loading Givex data…')
+  );
+}
+function ErrorScreen(props) {
+  return e('div', { style: { maxWidth: 560, margin: '80px auto', padding: '24px 28px', border: '1px solid #FCA5A5', borderRadius: 12, background: '#FEF2F2' } },
+    e('div', { style: { fontSize: 16, fontWeight: 700, color: '#991B1B', marginBottom: 8 } }, 'Could not load Givex data'),
+    e('div', { style: { fontSize: 13, color: '#7F1D1D', lineHeight: 1.6, marginBottom: 16 } }, props.message),
+    e('div', { style: { fontSize: 12, color: '#9CA3AF' } }, 'Check that the "Sync Givex sales data from webhook KV" GitHub Action has run successfully and that ' + DATA_URL + ' exists in the repo.')
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// SMALL UI PIECES
+// ─────────────────────────────────────────────────────────────────────────
+function Card(props) {
+  return e('div', { style: Object.assign({ background: '#fff', border: '1px solid #E8D8E5', borderRadius: 10, overflow: 'hidden' }, props.style || {}) }, props.children);
+}
+function CardHeader(props) {
+  return e('div', { style: { background: MP, padding: '9px 14px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 6 } },
+    e('span', { style: { color: '#fff', fontSize: 12, fontWeight: 700, letterSpacing: 0.6, textTransform: 'uppercase' } }, props.title),
+    props.right || null
+  );
+}
+function BarRow(props) {
+  // label, value ($), pctOfMax (0-100), formatted string
+  return e('div', { style: { display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 } },
+    e('div', { style: { width: 108, fontSize: 12, color: '#4A2B43', fontWeight: 600, flexShrink: 0, textAlign: 'right' } }, props.label),
+    e('div', { style: { flex: 1, background: '#F5EFF3', borderRadius: 6, height: 18, position: 'relative', overflow: 'hidden' } },
+      e('div', { style: { width: Math.max(props.pctOfMax, 1.5) + '%', background: MP, height: '100%', borderRadius: 6 } })
+    ),
+    e('div', { style: { width: 130, fontSize: 12, color: '#2D1A2B', fontWeight: 700, flexShrink: 0, textAlign: 'right', whiteSpace: 'nowrap' } }, props.value)
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// TREND CHART — simple hand-drawn SVG stacked bar (in-store vs online) per day
+// ─────────────────────────────────────────────────────────────────────────
+function TrendChart(props) {
+  var rows = props.rows; // [{date, inStore, online, total, orders}] sorted asc
+  if (!rows.length) return e('div', { style: { padding: 24, textAlign: 'center', color: '#9CA3AF', fontSize: 13 } }, 'No data for the selected filters.');
+  var W = 900, H = 200, padL = 46, padB = 26, padT = 10, padR = 10;
+  var plotW = W - padL - padR, plotH = H - padT - padB;
+  var maxTotal = Math.max.apply(null, rows.map(function(r) { return r.total; }).concat([1]));
+  var n = rows.length;
+  var bw = Math.max(plotW / n - 4, 2);
+  var yTicks = 4;
+  var gridLines = [];
+  for (var i = 0; i <= yTicks; i++) {
+    var val = maxTotal * i / yTicks;
+    var y = padT + plotH - (plotH * i / yTicks);
+    gridLines.push(e('line', { key: 'gl' + i, x1: padL, x2: W - padR, y1: y, y2: y, stroke: '#F0E8EE', strokeWidth: 1 }));
+    gridLines.push(e('text', { key: 'gt' + i, x: padL - 6, y: y + 3, fontSize: 9, fill: '#9B7A8F', textAnchor: 'end' }, cad(val, 0)));
+  }
+  var bars = [];
+  var labelEvery = Math.max(Math.ceil(n / 10), 1);
+  rows.forEach(function(r, i) {
+    var x = padL + i * (plotW / n) + 2;
+    var isH = plotH * (r.inStore / maxTotal);
+    var osH = plotH * (r.online / maxTotal);
+    var yBaseIn = padT + plotH - isH;
+    var yBaseOn = yBaseIn - osH;
+    bars.push(e('rect', { key: 'in' + i, x: x, y: yBaseIn, width: bw, height: isH, fill: MP, rx: 1 }));
+    bars.push(e('rect', { key: 'on' + i, x: x, y: yBaseOn, width: bw, height: osH, fill: '#C9A6C0', rx: 1 }));
+    bars.push(e('title', { key: 'tt' + i }, fmtDateFull(r.date) + ': ' + cad(r.total) + ' (' + r.orders + ' orders)'));
+    if (i % labelEvery === 0 || i === n - 1) {
+      bars.push(e('text', { key: 'lb' + i, x: x + bw / 2, y: H - 6, fontSize: 9, fill: '#9B7A8F', textAnchor: 'middle' }, fmtDateShort(r.date)));
+    }
+  });
+  return e('svg', { viewBox: '0 0 ' + W + ' ' + H, style: { width: '100%', height: 200, display: 'block' } }, gridLines, bars);
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// MAIN APP
+// ─────────────────────────────────────────────────────────────────────────
+function App() {
+  var dataState = useState(null);
+  var data = dataState[0], setData = dataState[1];
+  var loadingState = useState(true);
+  var loading = loadingState[0], setLoading = loadingState[1];
+  var errorState = useState(null);
+  var error = errorState[0], setError = errorState[1];
+
+  useEffect(function() {
+    fetchGivexData()
+      .then(function(json) { setData(json); setLoading(false); })
+      .catch(function(err) { setError(err.message || 'Unknown error'); setLoading(false); });
+  }, []);
+
+  if (loading) return e(LoadingScreen, null);
+  if (error) return e(ErrorScreen, { message: error });
+  if (!data || !Array.isArray(data.days) || data.days.length === 0) {
+    return e(ErrorScreen, { message: 'No daily records were found in ' + DATA_URL + '. Run the sync workflow with "full resync" checked if this file was just restructured.' });
+  }
+  return e(Dashboard, { data: data });
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// DASHBOARD
+// ─────────────────────────────────────────────────────────────────────────
+function Dashboard(props) {
+  var data = props.data;
+  var allDays = data.days;
+
+  // ── Derived static lookups ──────────────────────────────────────────
+  var locations = useMemo(function() {
+    var map = {};
+    allDays.forEach(function(d) { map[d.Location_Name] = d.Location_Type || 'Franchisee'; });
+    return Object.keys(map).sort().map(function(n) { return { name: n, type: map[n] }; });
+  }, [allDays]);
+
+  var dateBounds = useMemo(function() {
+    var dates = allDays.map(function(d) { return d.Business_Date; }).sort();
+    return { min: dates[0], max: dates[dates.length - 1] };
+  }, [allDays]);
+
+  var orderTypeKeys = useMemo(function() {
+    var set = {};
+    allDays.forEach(function(d) { Object.keys(d.Order_Type_Sales || {}).forEach(function(k) { set[k] = true; }); });
+    return Object.keys(set).sort();
+  }, [allDays]);
+
+  var paymentKeys = useMemo(function() {
+    var set = {};
+    allDays.forEach(function(d) { Object.keys(d.Payment_Mix || {}).forEach(function(k) { set[k] = true; }); });
+    return Object.keys(set).sort();
+  }, [allDays]);
+
+  var dayPartKeys = useMemo(function() {
+    var present = {};
+    allDays.forEach(function(d) { Object.keys(d.Day_Part_Sales || {}).forEach(function(k) { present[k] = true; }); });
+    return DAY_PART_ORDER.filter(function(k) { return present[k]; });
+  }, [allDays]);
+
+  // ── Filter state ────────────────────────────────────────────────────
+  var presetState = useState('last7');
+  var preset = presetState[0], setPreset = presetState[1];
+  var fromState = useState(addDays(dateBounds.max, -6));
+  var dateFrom = fromState[0], setDateFrom = fromState[1];
+  var toState = useState(dateBounds.max);
+  var dateTo = toState[0], setDateTo = toState[1];
+  var typeFilterState = useState('all');
+  var typeFilter = typeFilterState[0], setTypeFilter = typeFilterState[1];
+  var selLocState = useState(function() {
+    var s = {}; locations.forEach(function(l) { s[l.name] = true; }); return s;
+  });
+  var selLoc = selLocState[0], setSelLoc = selLocState[1];
+  var locSearchState = useState('');
+  var locSearch = locSearchState[0], setLocSearch = locSearchState[1];
+  var lensState = useState('daypart');
+  var lens = lensState[0], setLens = lensState[1];
+  var sortState = useState({ key: 'Total_Sales', dir: -1 });
+  var tableSort = sortState[0], setTableSort = sortState[1];
+
+  function applyPreset(p) {
+    setPreset(p);
+    var max = dateBounds.max;
+    if (p === 'today') { setDateFrom(max); setDateTo(max); }
+    else if (p === 'yesterday') { var y = addDays(max, -1); setDateFrom(y); setDateTo(y); }
+    else if (p === 'last7') { setDateFrom(addDays(max, -6)); setDateTo(max); }
+    else if (p === 'last14') { setDateFrom(addDays(max, -13)); setDateTo(max); }
+    else if (p === 'last30') { setDateFrom(addDays(max, -29)); setDateTo(max); }
+    else if (p === 'thisweek') { setDateFrom(mondayOf(max)); setDateTo(max); }
+    else if (p === 'lastweek') { var lm = addDays(mondayOf(max), -7); setDateFrom(lm); setDateTo(addDays(lm, 6)); }
+    else if (p === 'all') { setDateFrom(dateBounds.min); setDateTo(max); }
+  }
+
+  function toggleLoc(name) {
+    setPreset('custom_loc');
+    setSelLoc(function(prev) { var n = Object.assign({}, prev); n[name] = !prev[name]; return n; });
+  }
+  function selectAllLoc(only) {
+    var s = {};
+    only.forEach(function(l) { s[l.name] = true; });
+    setSelLoc(s);
+  }
+
+  var visibleLocations = useMemo(function() {
+    return locations.filter(function(l) {
+      if (typeFilter === 'corp' && l.type !== 'Corp') return false;
+      if (typeFilter === 'fran' && l.type !== 'Franchisee') return false;
+      if (locSearch && l.name.toLowerCase().indexOf(locSearch.toLowerCase()) === -1) return false;
+      return true;
+    });
+  }, [locations, typeFilter, locSearch]);
+
+  // ── Filtered day-buckets ────────────────────────────────────────────
+  var filteredDays = useMemo(function() {
+    return allDays.filter(function(d) {
+      if (d.Business_Date < dateFrom || d.Business_Date > dateTo) return false;
+      if (!selLoc[d.Location_Name]) return false;
+      if (typeFilter === 'corp' && d.Location_Type !== 'Corp') return false;
+      if (typeFilter === 'fran' && d.Location_Type !== 'Franchisee') return false;
+      return true;
+    });
+  }, [allDays, dateFrom, dateTo, selLoc, typeFilter]);
+
+  // Comparable prior period of equal length, immediately before dateFrom
+  var priorTotals = useMemo(function() {
+    var d1 = new Date(dateFrom + 'T00:00:00Z'), d0 = new Date(dateTo + 'T00:00:00Z');
+    var spanDays = Math.round((d0 - d1) / 86400000) + 1;
+    var priorTo = addDays(dateFrom, -1);
+    var priorFrom = addDays(priorTo, -(spanDays - 1));
+    var rows = allDays.filter(function(d) {
+      if (d.Business_Date < priorFrom || d.Business_Date > priorTo) return false;
+      if (!selLoc[d.Location_Name]) return false;
+      if (typeFilter === 'corp' && d.Location_Type !== 'Corp') return false;
+      if (typeFilter === 'fran' && d.Location_Type !== 'Franchisee') return false;
+      return true;
+    });
+    var t = { Total_Sales: 0, Orders: 0 };
+    rows.forEach(function(r) { t.Total_Sales += r.Total_Sales || 0; t.Orders += r.Orders || 0; });
+    return t;
+  }, [allDays, dateFrom, dateTo, selLoc, typeFilter]);
+
+  // ── Aggregate totals ────────────────────────────────────────────────
+  var totals = useMemo(function() {
+    var t = { Total_Sales: 0, InStore_Sales: 0, Online_Sales: 0, Orders: 0 };
+    filteredDays.forEach(function(d) {
+      t.Total_Sales += d.Total_Sales || 0;
+      t.InStore_Sales += d.InStore_Sales || 0;
+      t.Online_Sales += d.Online_Sales || 0;
+      t.Orders += d.Orders || 0;
+    });
+    t.Avg_Ticket = t.Orders > 0 ? t.Total_Sales / t.Orders : null;
+    return t;
+  }, [filteredDays]);
+
+  var byLocation = useMemo(function() {
+    var map = {};
+    filteredDays.forEach(function(d) {
+      if (!map[d.Location_Name]) map[d.Location_Name] = { Location_Name: d.Location_Name, Location_Type: d.Location_Type, Total_Sales: 0, InStore_Sales: 0, Online_Sales: 0, Orders: 0, days: 0 };
+      var r = map[d.Location_Name];
+      r.Total_Sales += d.Total_Sales || 0;
+      r.InStore_Sales += d.InStore_Sales || 0;
+      r.Online_Sales += d.Online_Sales || 0;
+      r.Orders += d.Orders || 0;
+      r.days += 1;
+    });
+    var rows = Object.keys(map).map(function(k) {
+      var r = map[k];
+      r.Avg_Ticket = r.Orders > 0 ? r.Total_Sales / r.Orders : null;
+      r.Online_Pct = r.Total_Sales > 0 ? (r.Online_Sales / r.Total_Sales * 100) : null;
+      return r;
+    });
+    rows.sort(function(a, b) {
+      var av = a[tableSort.key], bv = b[tableSort.key];
+      if (av == null) av = -Infinity; if (bv == null) bv = -Infinity;
+      if (typeof av === 'string') return tableSort.dir === 1 ? av.localeCompare(bv) : bv.localeCompare(av);
+      return tableSort.dir === 1 ? av - bv : bv - av;
+    });
+    return rows;
+  }, [filteredDays, tableSort]);
+
+  var byDate = useMemo(function() {
+    var map = {};
+    filteredDays.forEach(function(d) {
+      if (!map[d.Business_Date]) map[d.Business_Date] = { date: d.Business_Date, total: 0, inStore: 0, online: 0, orders: 0 };
+      var r = map[d.Business_Date];
+      r.total += d.Total_Sales || 0;
+      r.inStore += d.InStore_Sales || 0;
+      r.online += d.Online_Sales || 0;
+      r.orders += d.Orders || 0;
+    });
+    return Object.keys(map).sort().map(function(k) { return map[k]; });
+  }, [filteredDays]);
+
+  var lensBreakdown = useMemo(function() {
+    var sums = {};
+    var srcField = lens === 'daypart' ? 'Day_Part_Sales' : lens === 'ordertype' ? 'Order_Type_Sales' : 'Payment_Mix';
+    filteredDays.forEach(function(d) { sumMap(sums, d[srcField]); });
+    var keys = lens === 'daypart' ? dayPartKeys : lens === 'ordertype' ? orderTypeKeys : paymentKeys;
+    var rows = keys.map(function(k) { return { key: k, value: sums[k] || 0 }; }).filter(function(r) { return r.value > 0; });
+    rows.sort(function(a, b) { return b.value - a.value; });
+    return rows;
+  }, [filteredDays, lens, dayPartKeys, orderTypeKeys, paymentKeys]);
+
+  var tipsTotal = useMemo(function() {
+    return filteredDays.reduce(function(s, d) { return s + (d.Tips_Total || 0); }, 0);
+  }, [filteredDays]);
+
+  var deptRows = useMemo(function() {
+    var rows = (data.department_breakdown || []).slice();
+    rows.sort(function(a, b) { return (b.net_sales || 0) - (a.net_sales || 0); });
+    return rows;
+  }, [data]);
+
+  var salesDelta = priorTotals.Total_Sales > 0 ? ((totals.Total_Sales - priorTotals.Total_Sales) / priorTotals.Total_Sales * 100) : null;
+  var ordersDelta = priorTotals.Orders > 0 ? ((totals.Orders - priorTotals.Orders) / priorTotals.Orders * 100) : null;
+
+  function sortBy(key) {
+    setTableSort(function(prev) {
+      if (prev.key === key) return { key: key, dir: prev.dir * -1 };
+      return { key: key, dir: -1 };
+    });
+  }
+
+  var TH = { padding: '8px 12px', fontWeight: 600, fontSize: 11, color: '#9B7A8F', background: '#F5EFF3', borderBottom: '1px solid #E8D8E5', whiteSpace: 'nowrap', cursor: 'pointer', userSelect: 'none' };
+  var TD = { padding: '8px 12px', borderBottom: '1px solid #F0E8EE', whiteSpace: 'nowrap' };
+  var TDR = Object.assign({}, TD, { textAlign: 'right' });
+  var THR = Object.assign({}, TH, { textAlign: 'right' });
+
+  var presetOptions = [
+    ['today', 'Today'], ['yesterday', 'Yesterday'], ['last7', 'Last 7 days'],
+    ['last14', 'Last 14 days'], ['last30', 'Last 30 days'], ['thisweek', 'This week'],
+    ['lastweek', 'Last week'], ['all', 'All data']
+  ];
+
+  var lensLabels = { daypart: 'Day Part', ordertype: 'Order Type', payment: 'Payment Method' };
+  var maxLensVal = Math.max.apply(null, lensBreakdown.map(function(r) { return r.value; }).concat([1]));
+
+  return e('div', { style: { fontFamily: "'Inter',-apple-system,BlinkMacSystemFont,sans-serif", background: '#FAF8F4', minHeight: '100vh' } },
+
+    // Header
+    e('div', { style: { background: MP, padding: '14px 24px', display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' } },
+      e('img', { src: 'https://images.squarespace-cdn.com/content/v1/6272b45a3197ec4398631b6e/a334496d-3ade-4204-adfe-1d3a7c3fc8c6/Mezza-Logo.png?format=300w', alt: 'Mezza Lebanese Kitchen', style: { height: 30, objectFit: 'contain', filter: 'brightness(0) invert(1)' } }),
+      e('div', { style: { width: 1, height: 24, background: 'rgba(255,255,255,0.3)', flexShrink: 0 } }),
+      e('span', { style: { fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.85)', letterSpacing: 0.3 } }, 'Ops Dashboard'),
+      e('span', { style: { fontSize: 10, fontWeight: 700, color: MP, background: '#fff', padding: '2px 8px', borderRadius: 10 } }, 'GIVEX · LIVE'),
+      e('span', { style: { fontSize: 12, color: 'rgba(255,255,255,0.6)', marginLeft: 'auto' } },
+        data.generated_at ? ('Updated ' + new Date(data.generated_at).toLocaleString('en-CA', { dateStyle: 'medium', timeStyle: 'short' })) : ''
+      )
+    ),
+
+    e('div', { style: { padding: '20px 16px 48px', maxWidth: 1400, margin: '0 auto' } },
+
+      // ── FILTER BAR ──────────────────────────────────────────────────
+      e(Card, { style: { marginBottom: 16 } },
+        e('div', { style: { padding: '14px 16px' } },
+          e('div', { style: { display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 12, alignItems: 'center' } },
+            e('span', { style: { fontSize: 11, fontWeight: 700, color: '#9B7A8F', textTransform: 'uppercase', letterSpacing: 0.5, marginRight: 4 } }, 'Date range'),
+            presetOptions.map(function(p) {
+              return e('button', {
+                key: p[0], onClick: function() { applyPreset(p[0]); },
+                style: { fontSize: 11, padding: '5px 10px', borderRadius: 8, cursor: 'pointer', border: preset === p[0] ? '2px solid ' + MP : '1px solid #E8D8E5', background: preset === p[0] ? MP : '#fff', color: preset === p[0] ? '#fff' : '#4A2B43', fontWeight: preset === p[0] ? 700 : 400 }
+              }, p[1]);
+            }),
+            e('input', { type: 'date', value: dateFrom, min: dateBounds.min, max: dateBounds.max,
+              onChange: function(ev) { setPreset('custom'); setDateFrom(ev.target.value); },
+              style: { fontSize: 11, padding: '5px 8px', borderRadius: 8, border: '1px solid #E8D8E5', color: '#4A2B43' } }),
+            e('span', { style: { fontSize: 11, color: '#9B7A8F' } }, 'to'),
+            e('input', { type: 'date', value: dateTo, min: dateBounds.min, max: dateBounds.max,
+              onChange: function(ev) { setPreset('custom'); setDateTo(ev.target.value); },
+              style: { fontSize: 11, padding: '5px 8px', borderRadius: 8, border: '1px solid #E8D8E5', color: '#4A2B43' } })
+          ),
+          e('div', { style: { display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center', marginBottom: 12 } },
+            e('span', { style: { fontSize: 11, fontWeight: 700, color: '#9B7A8F', textTransform: 'uppercase', letterSpacing: 0.5, marginRight: 4 } }, 'Ownership'),
+            [['all', 'All'], ['corp', 'Corporate'], ['fran', 'Franchisee']].map(function(p) {
+              return e('button', {
+                key: p[0], onClick: function() { setTypeFilter(p[0]); },
+                style: { fontSize: 12, padding: '5px 12px', borderRadius: 8, cursor: 'pointer', border: typeFilter === p[0] ? '2px solid ' + MP : '1px solid #E8D8E5', background: typeFilter === p[0] ? MP : '#fff', color: typeFilter === p[0] ? '#fff' : '#4A2B43', fontWeight: typeFilter === p[0] ? 600 : 400 }
+              }, p[1]);
+            })
+          ),
+          e('div', null,
+            e('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 } },
+              e('span', { style: { fontSize: 11, fontWeight: 700, color: '#9B7A8F', textTransform: 'uppercase', letterSpacing: 0.5 } }, 'Locations (' + Object.keys(selLoc).filter(function(k) { return selLoc[k]; }).length + ' of ' + locations.length + ' selected)'),
+              e('div', { style: { display: 'flex', gap: 6 } },
+                e('button', { onClick: function() { selectAllLoc(visibleLocations); }, style: { fontSize: 11, padding: '3px 9px', borderRadius: 6, border: '1px solid #E8D8E5', background: '#fff', color: '#54274D', cursor: 'pointer' } }, 'Select all shown'),
+                e('button', { onClick: function() { setSelLoc({}); }, style: { fontSize: 11, padding: '3px 9px', borderRadius: 6, border: '1px solid #E8D8E5', background: '#fff', color: '#54274D', cursor: 'pointer' } }, 'Clear')
+              )
+            ),
+            e('input', { type: 'text', placeholder: 'Search locations…', value: locSearch, onChange: function(ev) { setLocSearch(ev.target.value); },
+              style: { fontSize: 12, padding: '6px 10px', borderRadius: 8, border: '1px solid #E8D8E5', width: '100%', marginBottom: 8, color: '#4A2B43' } }),
+            e('div', { className: 'loc-checklist', style: { display: 'flex', flexWrap: 'wrap', gap: 6 } },
+              visibleLocations.map(function(l) {
+                var on = !!selLoc[l.name];
+                return e('button', {
+                  key: l.name, onClick: function() { toggleLoc(l.name); },
+                  style: { fontSize: 11, padding: '4px 10px', borderRadius: 20, cursor: 'pointer', border: on ? '1px solid ' + MP : '1px solid #E8D8E5', background: on ? '#EDE0EB' : '#fff', color: on ? '#54274D' : '#9CA3AF', fontWeight: on ? 600 : 400, display: 'inline-flex', alignItems: 'center', gap: 5 }
+                },
+                  l.name,
+                  l.type === 'Corp' && e('span', { style: { fontSize: 8, fontWeight: 700, color: on ? '#54274D' : '#9CA3AF' } }, '●')
+                );
+              })
+            )
+          )
+        )
+      ),
+
+      // ── KPI STRIP ───────────────────────────────────────────────────
+      e('div', { className: 'kpi-grid' },
+        [
+          { label: 'Total sales', value: cad(totals.Total_Sales), sub: salesDelta != null ? e('span', { style: { color: salesDelta >= 0 ? '#166534' : '#991B1B', fontWeight: 700 } }, (salesDelta >= 0 ? '▲' : '▼') + Math.abs(salesDelta).toFixed(1) + '% vs prior period') : e('span', { style: { color: '#9B7A8F' } }, 'No prior-period data') },
+          { label: 'Orders', value: num(totals.Orders), sub: ordersDelta != null ? e('span', { style: { color: ordersDelta >= 0 ? '#166534' : '#991B1B', fontWeight: 700 } }, (ordersDelta >= 0 ? '▲' : '▼') + Math.abs(ordersDelta).toFixed(1) + '% vs prior') : e('span', { style: { color: '#9B7A8F' } }, '—') },
+          { label: 'Avg ticket', value: totals.Avg_Ticket != null ? cad(totals.Avg_Ticket, 2) : '—', sub: e('span', { style: { color: '#9B7A8F' } }, 'Across selection') },
+          { label: 'Online %', value: totals.Total_Sales > 0 ? pct(totals.Online_Sales / totals.Total_Sales * 100, 0) : '—', sub: e('span', { style: { color: '#9B7A8F' } }, cad(totals.Online_Sales) + ' online') },
+          { label: 'Locations', value: byLocation.length, sub: e('span', { style: { color: '#9B7A8F' } }, fmtDateShort(dateFrom) + ' – ' + fmtDateShort(dateTo)) },
+        ].map(function(kpi, i) {
+          return e('div', { key: i, style: { background: '#fff', border: '0.5px solid #E8D8E5', borderLeft: '3px solid ' + MP, borderRadius: 10, padding: '12px 14px' } },
+            e('div', { style: { fontSize: 11, color: '#9B7A8F', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 4 } }, kpi.label),
+            e('div', { style: { fontSize: 22, fontWeight: 800, color: '#2D1A2B', lineHeight: 1.1 } }, kpi.value),
+            e('div', { style: { fontSize: 11, marginTop: 4 } }, kpi.sub)
+          );
+        })
+      ),
+
+      // ── TREND CHART ─────────────────────────────────────────────────
+      e(Card, { style: { marginBottom: 16 } },
+        e(CardHeader, { title: 'Daily Sales Trend', right: e('div', { style: { display: 'flex', gap: 12, fontSize: 10, color: 'rgba(255,255,255,0.8)' } },
+          e('span', null, e('span', { style: { display: 'inline-block', width: 8, height: 8, background: MP, marginRight: 4, borderRadius: 2 } }), 'In-store'),
+          e('span', null, e('span', { style: { display: 'inline-block', width: 8, height: 8, background: '#C9A6C0', marginRight: 4, borderRadius: 2 } }), 'Online')
+        ) }),
+        e('div', { style: { padding: '14px 16px 4px' } }, e(TrendChart, { rows: byDate }))
+      ),
+
+      // ── LENS BREAKDOWN + DEPARTMENT MIX ────────────────────────────
+      e('div', { className: 'lens-grid', style: { marginBottom: 16 } },
+        e(Card, null,
+          e(CardHeader, { title: 'Sales Breakdown', right: e('div', { style: { display: 'flex', gap: 4 } },
+            ['daypart', 'ordertype', 'payment'].map(function(l) {
+              return e('button', { key: l, onClick: function() { setLens(l); },
+                style: { fontSize: 10, padding: '3px 9px', borderRadius: 6, cursor: 'pointer', border: 'none', background: lens === l ? '#fff' : 'rgba(255,255,255,0.15)', color: lens === l ? MP : '#fff', fontWeight: 700 }
+              }, lensLabels[l]);
+            })
+          ) }),
+          e('div', { style: { padding: '16px' } },
+            lensBreakdown.length === 0
+              ? e('div', { style: { textAlign: 'center', color: '#9CA3AF', fontSize: 13, padding: 12 } }, 'No breakdown data for this selection.')
+              : e(Fragment, null,
+                  lensBreakdown.map(function(r) {
+                    return e(BarRow, { key: r.key, label: r.key, value: cad(r.value) + '  (' + pct(totals.Total_Sales > 0 ? r.value / totals.Total_Sales * 100 : 0, 0) + ')', pctOfMax: r.value / maxLensVal * 100 });
+                  }),
+                  lens === 'payment' && e('div', { style: { fontSize: 11, color: '#9B7A8F', marginTop: 10, lineHeight: 1.6 } },
+                    'Tips collected in this range: ' + cad(tipsTotal) + '. Payment totals include tax and tip, so they will not exactly equal Total Sales (net) above — this is expected, not a data error.'
+                  )
+                )
+          )
+        ),
+        e(Card, null,
+          e(CardHeader, { title: 'Menu / Department Mix', right: e('span', { style: { fontSize: 10, color: 'rgba(255,255,255,0.7)' } }, 'ALL-TIME · ALL LOCATIONS') }),
+          e('div', { style: { padding: '16px' } },
+            deptRows.length === 0
+              ? e('div', { style: { textAlign: 'center', color: '#9CA3AF', fontSize: 13, padding: 12 } }, 'No department data available yet.')
+              : e(Fragment, null,
+                  deptRows.slice(0, 8).map(function(r, i) {
+                    var maxDept = deptRows[0].net_sales || 1;
+                    return e(BarRow, { key: i, label: r.department_name, value: cad(r.net_sales), pctOfMax: (r.net_sales / maxDept) * 100 });
+                  }),
+                  e('div', { style: { fontSize: 11, color: '#9B7A8F', marginTop: 10, lineHeight: 1.6 } },
+                    'Not affected by the date/location filters above — department totals are tracked cumulatively across all synced history, all locations combined.'
+                  )
+                )
+          )
+        )
+      ),
+
+      // ── LOCATION TABLE ──────────────────────────────────────────────
+      e(Card, { style: { marginBottom: 16 } },
+        e(CardHeader, { title: 'Location Performance', right: e('span', { style: { fontSize: 11, color: 'rgba(255,255,255,0.75)' } }, byLocation.length + ' locations') }),
+        e('div', { style: { overflowX: 'auto' } },
+          e('table', { style: { width: '100%', borderCollapse: 'collapse', fontSize: 12 } },
+            e('thead', null,
+              e('tr', null,
+                [['Location_Name', 'Location'], ['Total_Sales', 'Total Sales'], ['InStore_Sales', 'In-store'], ['Online_Sales', 'Online'], ['Online_Pct', 'Online %'], ['Orders', 'Orders'], ['Avg_Ticket', 'Avg Ticket']].map(function(c) {
+                  var isNum = c[0] !== 'Location_Name';
+                  return e('th', { key: c[0], onClick: function() { sortBy(c[0]); }, style: isNum ? THR : TH },
+                    c[1], tableSort.key === c[0] ? (tableSort.dir === 1 ? ' ▲' : ' ▼') : ''
+                  );
+                })
+              )
+            ),
+            e('tbody', null,
+              byLocation.length === 0
+                ? e('tr', null, e('td', { colSpan: 7, style: { padding: 24, textAlign: 'center', color: '#9CA3AF' } }, 'No locations match the current filters.'))
+                : byLocation.map(function(r, i) {
+                    return e('tr', { key: r.Location_Name, style: { background: i % 2 === 0 ? '#fff' : '#FAF8F4' } },
+                      e('td', { style: TD },
+                        e('span', { style: { fontWeight: 600, color: '#2D1A2B' } }, r.Location_Name),
+                        r.Location_Type === 'Corp' && e('span', { style: { marginLeft: 6, fontSize: 9, fontWeight: 700, background: '#EDE0EB', color: '#54274D', padding: '1px 5px', borderRadius: 3 } }, 'CORP')
+                      ),
+                      e('td', { style: Object.assign({}, TDR, { fontWeight: 700, color: '#2D1A2B' }) }, cad(r.Total_Sales)),
+                      e('td', { style: Object.assign({}, TDR, { color: '#374151' }) }, cad(r.InStore_Sales)),
+                      e('td', { style: Object.assign({}, TDR, { color: '#374151' }) }, cad(r.Online_Sales)),
+                      e('td', { style: Object.assign({}, TDR, { color: '#374151' }) }, r.Online_Pct != null ? pct(r.Online_Pct, 0) : '—'),
+                      e('td', { style: Object.assign({}, TDR, { color: '#374151' }) }, num(r.Orders)),
+                      e('td', { style: Object.assign({}, TDR, { color: '#374151' }) }, r.Avg_Ticket != null ? cad(r.Avg_Ticket, 2) : '—')
+                    );
+                  }),
+              byLocation.length > 0 && e('tr', null,
+                e('td', { style: { padding: '9px 12px', fontWeight: 700, color: '#2D1A2B', background: '#F5EFF3', borderTop: '2px solid #E8D8E5' } }, 'Total'),
+                e('td', { style: { padding: '9px 12px', textAlign: 'right', fontWeight: 700, color: '#2D1A2B', background: '#F5EFF3', borderTop: '2px solid #E8D8E5' } }, cad(totals.Total_Sales)),
+                e('td', { style: { padding: '9px 12px', textAlign: 'right', fontWeight: 700, color: '#2D1A2B', background: '#F5EFF3', borderTop: '2px solid #E8D8E5' } }, cad(totals.InStore_Sales)),
+                e('td', { style: { padding: '9px 12px', textAlign: 'right', fontWeight: 700, color: '#2D1A2B', background: '#F5EFF3', borderTop: '2px solid #E8D8E5' } }, cad(totals.Online_Sales)),
+                e('td', { style: { padding: '9px 12px', textAlign: 'right', fontWeight: 700, color: '#2D1A2B', background: '#F5EFF3', borderTop: '2px solid #E8D8E5' } }, totals.Total_Sales > 0 ? pct(totals.Online_Sales / totals.Total_Sales * 100, 0) : '—'),
+                e('td', { style: { padding: '9px 12px', textAlign: 'right', fontWeight: 700, color: '#2D1A2B', background: '#F5EFF3', borderTop: '2px solid #E8D8E5' } }, num(totals.Orders)),
+                e('td', { style: { padding: '9px 12px', textAlign: 'right', fontWeight: 700, color: '#2D1A2B', background: '#F5EFF3', borderTop: '2px solid #E8D8E5' } }, totals.Avg_Ticket != null ? cad(totals.Avg_Ticket, 2) : '—')
+              )
+            )
+          )
+        )
+      ),
+
+      // ── FOOTER ──────────────────────────────────────────────────────
+      e('div', { style: { fontSize: 11, color: '#9B7A8F', background: '#F5EFF3', border: '1px solid #E8D8E5', borderRadius: 8, padding: '10px 14px', lineHeight: 1.8 } },
+        e('strong', { style: { color: '#4A2B43' } }, 'About this data: '),
+        'Pulled directly from Givex POS webhook data, daily grain, refreshed automatically by GitHub Actions. ',
+        e('strong', { style: { color: '#4A2B43' } }, 'Ownership (● = Corporate): '), 'hand-maintained in store-mapping.json, confirmed against the weekly scorecard\'s Corp KPI tile. ',
+        e('strong', { style: { color: '#4A2B43' } }, 'Day parts: '), 'Breakfast 6–11 · Lunch 11–14 · Afternoon 14–17 · Dinner 17–21 · Late Night 21–6, based on order opening time. ',
+        (data.unmapped_outlets && Object.keys(data.unmapped_outlets).length > 0) ? (e('strong', { style: { color: '#991B1B' } }, ' ' + Object.keys(data.unmapped_outlets).length + ' unmapped outlet(s) excluded — check store-mapping.json. ')) : '',
+        e('strong', { style: { color: '#4A2B43' } }, ' Separate from: '), 'the weekly operational scorecard (food cost, labour %, GBP, reviews come from the Excel-backed pipeline, not here).'
+      )
+    )
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(e(App, null));
+})();
+</script>
+</body>
+</html>
