@@ -2,8 +2,13 @@ name: Sync Givex sales data from webhook KV
 
 on:
   schedule:
-    - cron: "*/15 * * * *"   # every 15 minutes
-  workflow_dispatch: {}
+    - cron: "*/15 * * * *"   # every 15 minutes -- matches the Excel sync cadence
+  workflow_dispatch:
+    inputs:
+      full_resync:
+        description: "Ignore saved state and rebuild all data from scratch (use after a store-mapping.json or department classification change)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -24,13 +29,14 @@ jobs:
         env:
           GIVEX_WEBHOOK_URL: ${{ secrets.GIVEX_WEBHOOK_URL }}
           GIVEX_SHARED_SECRET: ${{ secrets.GIVEX_SHARED_SECRET }}
+          FULL_RESYNC: ${{ github.event.inputs.full_resync }}
         run: node scripts/sync-givex-to-json.mjs
 
       - name: Commit changes if data updated
         run: |
           git config user.name "mezza-scorecard-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data/givex-sales-data.json
+          git add data/givex-sales-data.json data/givex-sync-state.json
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
