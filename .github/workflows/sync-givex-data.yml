@@ -10,6 +10,17 @@ on:
         type: boolean
         default: false
 
+# Prevent a scheduled run from racing a long-running manual full resync (or
+# another scheduled run that's still going). Without this, two runs can both
+# check out main, both compute results, and the second git push gets rejected
+# as non-fast-forward -- which is exactly what happened on 2026-08-18 when a
+# ~21-minute full resync collided with the next 15-minute scheduled run.
+# cancel-in-progress: false means overlapping runs QUEUE instead of one
+# cancelling the other, so no sync attempt is silently dropped.
+concurrency:
+  group: sync-givex-data
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
@@ -41,5 +52,6 @@ jobs:
             echo "No changes to commit."
           else
             git commit -m "Sync Givex sales data ($(date -u +'%Y-%m-%dT%H:%M:%SZ'))"
+            git pull --rebase origin main
             git push
           fi
