@@ -10705,7 +10705,13 @@
     "orders/2026-08-18/bill_info/1787106125-1787106125317.json",
     "orders/2026-08-18/bill_info/1787106163-1787106163124.json",
     "orders/2026-08-18/bill_info/1787106249-1787106249591.json",
-    "orders/2026-08-18/bill_info/1787106250-1787106250638.json"
+    "orders/2026-08-18/bill_info/1787106250-1787106250638.json",
+    "orders/2026-08-18/bill_info/1787107028-1787107028699.json",
+    "orders/2026-08-18/bill_info/1787107029-1787107029829.json",
+    "orders/2026-08-18/bill_info/1787107145-1787107145975.json",
+    "orders/2026-08-18/bill_info/1787107147-1787107147082.json",
+    "orders/2026-08-18/bill_info/1787107347-1787107347768.json",
+    "orders/2026-08-18/bill_info/1787108044-1787108044433.json"
   ],
   "orders": {
     "45319": {
@@ -168040,6 +168046,61 @@
       },
       "tips": 0
     },
+    "555431": {
+      "locationName": "Barrington",
+      "locationType": "Corp",
+      "businessDate": "2026-08-18",
+      "orderType": "Delivery",
+      "openingTime": "23:33",
+      "dayPart": "Late Night",
+      "netSales": 24.88,
+      "inStoreSales": 0,
+      "onlineSales": 24.88,
+      "deptSales": {
+        "Uber Eats": 24.88
+      },
+      "paymentAmounts": {
+        "UberEats": 28.36
+      },
+      "tips": 0
+    },
+    "555432": {
+      "locationName": "Barrington",
+      "locationType": "Corp",
+      "businessDate": "2026-08-18",
+      "orderType": "Delivery",
+      "openingTime": "23:33",
+      "dayPart": "Late Night",
+      "netSales": 25.04,
+      "inStoreSales": 0,
+      "onlineSales": 25.04,
+      "deptSales": {
+        "Uber Eats": 25.04
+      },
+      "paymentAmounts": {
+        "UberEats": 28.55,
+        "OLO_ROUNDING": -0.01
+      },
+      "tips": 0
+    },
+    "555433": {
+      "locationName": "Barrington",
+      "locationType": "Corp",
+      "businessDate": "2026-08-18",
+      "orderType": "QSR",
+      "openingTime": "23:49",
+      "dayPart": "Late Night",
+      "netSales": 14.99,
+      "inStoreSales": 14.99,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 14.99
+      },
+      "paymentAmounts": {
+        "DEBIT": 17.09
+      },
+      "tips": 5
+    },
     "662093": {
       "locationName": "Clayton Park",
       "locationType": "Corp",
@@ -181613,6 +181674,24 @@
         "DEBIT": 25.4
       },
       "tips": 3.81
+    },
+    "663068": {
+      "locationName": "Clayton Park",
+      "locationType": "Corp",
+      "businessDate": "2026-08-18",
+      "orderType": "QSR",
+      "openingTime": "23:37",
+      "dayPart": "Late Night",
+      "netSales": 31.770000000000003,
+      "inStoreSales": 31.770000000000003,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 31.770000000000003
+      },
+      "paymentAmounts": {
+        "CASH": 36.21
+      },
+      "tips": 0
     }
   },
   "unmappedOutlets": {},
@@ -181622,6 +181701,6 @@
       "reason": "Beta Lanner -- Givex certification/test store, not a real Mezza location"
     }
   },
-  "payloadsProcessedTotal": 10706,
+  "payloadsProcessedTotal": 10712,
   "payloadsSkippedTotal": 0
 }
