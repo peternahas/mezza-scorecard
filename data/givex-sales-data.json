@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-08-19T19:59:17.934Z",
+  "generated_at": "2026-08-19T20:37:22.123Z",
   "source": "givex-webhook-kv",
   "full_resync": false,
-  "payloads_processed_this_run": 78,
+  "payloads_processed_this_run": 179,
   "payloads_skipped_this_run": 0,
-  "payloads_processed_total": 12318,
+  "payloads_processed_total": 12497,
   "payloads_skipped_total": 0,
-  "orders_total": 10930,
+  "orders_total": 11087,
   "days": [
     {
       "Location_Name": "Antigonish",
@@ -131,14 +131,14 @@
       "Location_Name": "Antigonish",
       "Location_Type": "Franchisee",
       "Business_Date": "2026-08-19",
-      "Total_Sales": 1082.56,
-      "InStore_Sales": 1039.3,
-      "Online_Sales": 43.26,
-      "Orders": 43,
-      "Avg_Ticket": 25.18,
+      "Total_Sales": 1282.31,
+      "InStore_Sales": 1207.77,
+      "Online_Sales": 74.54,
+      "Orders": 52,
+      "Avg_Ticket": 24.66,
       "Order_Type_Sales": {
-        "Take-Out": 117.21,
-        "QSR": 808.25,
+        "Take-Out": 148.49,
+        "QSR": 976.72,
         "Convenience": 23.97,
         "Refund": -21.19,
         "Bar": 154.32
@@ -146,17 +146,18 @@
       "Day_Part_Sales": {
         "Breakfast": 19.08,
         "Lunch": 612.86,
-        "Afternoon": 450.62
+        "Afternoon": 574.83,
+        "Dinner": 75.54
       },
       "Payment_Mix": {
-        "DEBIT": 351.74,
-        "CASH": 145.01,
-        "VISA": 388.63,
+        "DEBIT": 518.41,
+        "CASH": 169.27,
+        "VISA": 424.29,
         "MASTERCARD": 280.17,
         "Nish Eats": 27.32,
         "AMEX": 34.18
       },
-      "Tips_Total": 48.42
+      "Tips_Total": 57.52
     },
     {
       "Location_Name": "Barrington",
@@ -333,32 +334,34 @@
       "Location_Name": "Barrington",
       "Location_Type": "Corp",
       "Business_Date": "2026-08-19",
-      "Total_Sales": 1730.1,
-      "InStore_Sales": 1139.02,
-      "Online_Sales": 591.08,
-      "Orders": 75,
-      "Avg_Ticket": 23.07,
+      "Total_Sales": 2086,
+      "InStore_Sales": 1366.38,
+      "Online_Sales": 719.62,
+      "Orders": 81,
+      "Avg_Ticket": 25.75,
       "Order_Type_Sales": {
-        "QSR": 1139.02,
-        "Delivery": 512.66,
-        "Take-Out": 78.42
+        "QSR": 1212.06,
+        "Delivery": 641.2,
+        "Take-Out": 78.42,
+        "Bar": 154.32
       },
       "Day_Part_Sales": {
         "Breakfast": 26.98,
         "Lunch": 1396.93,
-        "Afternoon": 306.19
+        "Afternoon": 354.95,
+        "Dinner": 307.14
       },
       "Payment_Mix": {
-        "CASH": 155.41,
-        "MASTERCARD": 326.46,
-        "OLO_ROUNDING": 52.14,
+        "CASH": 173.05,
+        "MASTERCARD": 354.14,
+        "OLO_ROUNDING": 52.12,
         "DoorDash": 281.23,
         "VISA": 273.73,
-        "UberEats": 340.45,
-        "DEBIT": 488.54,
+        "UberEats": 486.99,
+        "DEBIT": 702.4,
         "AMEX": 54.23
       },
-      "Tips_Total": 93.85
+      "Tips_Total": 99.54
     },
     {
       "Location_Name": "Bridgewater",
@@ -519,30 +522,31 @@
       "Location_Name": "Bridgewater",
       "Location_Type": "Franchisee",
       "Business_Date": "2026-08-19",
-      "Total_Sales": 1461.05,
-      "InStore_Sales": 1196.12,
-      "Online_Sales": 264.93,
-      "Orders": 66,
-      "Avg_Ticket": 22.14,
+      "Total_Sales": 1641.83,
+      "InStore_Sales": 1335.22,
+      "Online_Sales": 306.61,
+      "Orders": 72,
+      "Avg_Ticket": 22.8,
       "Order_Type_Sales": {
-        "QSR": 1196.12,
-        "Take-Out": 168.06,
+        "QSR": 1335.22,
+        "Take-Out": 209.74,
         "Delivery": 96.87
       },
       "Day_Part_Sales": {
         "Breakfast": 14.99,
         "Lunch": 839.88,
-        "Afternoon": 606.18
+        "Afternoon": 670.04,
+        "Dinner": 116.92
       },
       "Payment_Mix": {
-        "VISA": 373.74,
-        "DEBIT": 578.68,
-        "DoorDash": 280.94,
-        "OLO_ROUNDING": 19.98,
-        "CASH": 154.1,
-        "MASTERCARD": 250.23
+        "VISA": 446.54,
+        "DEBIT": 612.86,
+        "DoorDash": 328.46,
+        "OLO_ROUNDING": 19.97,
+        "CASH": 176.09,
+        "MASTERCARD": 279.84
       },
-      "Tips_Total": 81.48
+      "Tips_Total": 89.35
     },
     {
       "Location_Name": "Burnside",
@@ -716,36 +720,38 @@
       "Location_Name": "Burnside",
       "Location_Type": "Corp",
       "Business_Date": "2026-08-19",
-      "Total_Sales": 6817.82,
-      "InStore_Sales": 5891.66,
+      "Total_Sales": 6982.77,
+      "InStore_Sales": 6056.61,
       "Online_Sales": 926.16,
-      "Orders": 166,
-      "Avg_Ticket": 41.07,
+      "Orders": 172,
+      "Avg_Ticket": 40.6,
       "Order_Type_Sales": {
         "Delivery": 706.74,
         "Take-Out": 219.42,
-        "QSR": 2956.83,
+        "QSR": 3121.78,
         "Bar": 2949.82,
         "Refund": -14.99
       },
       "Day_Part_Sales": {
         "Breakfast": 125.22,
         "Lunch": 6132,
-        "Afternoon": 560.6
+        "Afternoon": 570.25,
+        "Dinner": 155.3
       },
       "Payment_Mix": {
         "SkipTheDishes": 103.09,
         "DoorDash": 407.47,
         "OLO_ROUNDING": 14.67,
-        "DEBIT": 1296.38,
-        "VISA": 2763.4,
+        "DEBIT": 1421.49,
+        "VISA": 2800.54,
         "UberEats": 530.55,
-        "MASTERCARD": 876.4,
+        "MASTERCARD": 890.07,
         "CASH": 136.92,
         "AMEX": 96.69,
-        "Catering": 1542.95
+        "Catering": 1542.95,
+        "GIFTCARD": 11
       },
-      "Tips_Total": 200.71
+      "Tips_Total": 204.56
     },
     {
       "Location_Name": "Charlottetown",
@@ -911,30 +917,32 @@
       "Location_Name": "Charlottetown",
       "Location_Type": "Corp",
       "Business_Date": "2026-08-19",
-      "Total_Sales": 1320.98,
-      "InStore_Sales": 1219.75,
-      "Online_Sales": 101.23,
-      "Orders": 55,
+      "Total_Sales": 1369.34,
+      "InStore_Sales": 1231.74,
+      "Online_Sales": 137.6,
+      "Orders": 57,
       "Avg_Ticket": 24.02,
       "Order_Type_Sales": {
         "Take-Out": 691.16,
-        "QSR": 566.16,
-        "Delivery": 63.66
+        "QSR": 578.15,
+        "Delivery": 100.03
       },
       "Day_Part_Sales": {
         "Breakfast": 40.86,
         "Lunch": 791.86,
-        "Afternoon": 488.26
+        "Afternoon": 500.25,
+        "Dinner": 36.37
       },
       "Payment_Mix": {
-        "VISA": 439.81,
+        "VISA": 453.6,
         "DEBIT": 700,
         "MASTERCARD": 121.23,
         "AMEX": 21.26,
         "CASH": 120.41,
         "UberEats": 49.88,
         "DoorDash": 57.2,
-        "OLO_ROUNDING": 9.32
+        "OLO_ROUNDING": 9.31,
+        "SkipTheDishes": 41.83
       },
       "Tips_Total": 86.85
     },
@@ -1111,32 +1119,33 @@
       "Location_Name": "Clayton Park",
       "Location_Type": "Corp",
       "Business_Date": "2026-08-19",
-      "Total_Sales": 1565.05,
-      "InStore_Sales": 1234.09,
-      "Online_Sales": 330.96,
-      "Orders": 68,
-      "Avg_Ticket": 23.02,
+      "Total_Sales": 1811.81,
+      "InStore_Sales": 1452.87,
+      "Online_Sales": 358.94,
+      "Orders": 80,
+      "Avg_Ticket": 22.65,
       "Order_Type_Sales": {
-        "QSR": 1234.09,
-        "Delivery": 273.01,
+        "QSR": 1452.87,
+        "Delivery": 300.99,
         "Take-Out": 57.95
       },
       "Day_Part_Sales": {
         "Breakfast": 117.8,
         "Lunch": 863.23,
-        "Afternoon": 584.02
+        "Afternoon": 617.58,
+        "Dinner": 213.2
       },
       "Payment_Mix": {
         "AMEX": 96.73,
-        "VISA": 404.55,
+        "VISA": 448.52,
         "CASH": 176.75,
-        "DEBIT": 496.55,
+        "DEBIT": 701.98,
         "OLO_ROUNDING": 27.65,
         "DoorDash": 270.79,
         "MASTERCARD": 232.24,
-        "SkipTheDishes": 78.84
+        "SkipTheDishes": 110.74
       },
-      "Tips_Total": 88.05
+      "Tips_Total": 112.34
     },
     {
       "Location_Name": "Cole Harbour",
@@ -1308,31 +1317,32 @@
       "Location_Name": "Cole Harbour",
       "Location_Type": "Franchisee",
       "Business_Date": "2026-08-19",
-      "Total_Sales": 1830.87,
-      "InStore_Sales": 947.5,
+      "Total_Sales": 1933.88,
+      "InStore_Sales": 1050.51,
       "Online_Sales": 883.37,
-      "Orders": 66,
-      "Avg_Ticket": 27.74,
+      "Orders": 69,
+      "Avg_Ticket": 28.03,
       "Order_Type_Sales": {
         "Take-Out": 303.3,
-        "QSR": 891.54,
+        "QSR": 994.55,
         "Delivery": 636.03
       },
       "Day_Part_Sales": {
         "Lunch": 1079.45,
-        "Afternoon": 751.42
+        "Afternoon": 839.44,
+        "Dinner": 14.99
       },
       "Payment_Mix": {
-        "VISA": 318.04,
+        "VISA": 409.48,
         "MASTERCARD": 105.57,
-        "DEBIT": 585.57,
+        "DEBIT": 611.53,
         "UberEats": 439.45,
         "DoorDash": 473.98,
         "CASH": 70.96,
         "OLO_ROUNDING": 57.79,
         "SkipTheDishes": 33.37
       },
-      "Tips_Total": 78.33
+      "Tips_Total": 80.93
     },
     {
       "Location_Name": "Fall River",
@@ -1493,32 +1503,33 @@
       "Location_Name": "Fall River",
       "Location_Type": "Franchisee",
       "Business_Date": "2026-08-19",
-      "Total_Sales": 1048.81,
-      "InStore_Sales": 845.69,
-      "Online_Sales": 203.12,
-      "Orders": 36,
-      "Avg_Ticket": 29.13,
+      "Total_Sales": 1341.4,
+      "InStore_Sales": 1099.7,
+      "Online_Sales": 241.7,
+      "Orders": 46,
+      "Avg_Ticket": 29.16,
       "Order_Type_Sales": {
-        "Take-Out": 237.72,
-        "QSR": 624.95,
+        "Take-Out": 303.28,
+        "QSR": 851.98,
         "Delivery": 186.14
       },
       "Day_Part_Sales": {
         "Breakfast": 54.87,
         "Lunch": 719.36,
-        "Afternoon": 274.58
+        "Afternoon": 293.87,
+        "Dinner": 273.3
       },
       "Payment_Mix": {
-        "VISA": 442.8,
-        "DEBIT": 316.71,
-        "MASTERCARD": 158.33,
-        "DoorDash": 19.36,
+        "VISA": 502.48,
+        "DEBIT": 461.26,
+        "MASTERCARD": 166.32,
+        "DoorDash": 63.34,
         "OLO_ROUNDING": -1.37,
         "SkipTheDishes": 212.2,
         "AMEX": 12.53,
-        "CASH": 33.67
+        "CASH": 109.89
       },
-      "Tips_Total": 55.89
+      "Tips_Total": 76.63
     },
     {
       "Location_Name": "Fredericton",
@@ -1683,31 +1694,32 @@
       "Location_Name": "Fredericton",
       "Location_Type": "Franchisee",
       "Business_Date": "2026-08-19",
-      "Total_Sales": 1480.74,
-      "InStore_Sales": 950.27,
-      "Online_Sales": 530.47,
-      "Orders": 54,
-      "Avg_Ticket": 27.42,
+      "Total_Sales": 1652.72,
+      "InStore_Sales": 1056.6,
+      "Online_Sales": 596.12,
+      "Orders": 60,
+      "Avg_Ticket": 27.55,
       "Order_Type_Sales": {
-        "Delivery": 361.28,
-        "QSR": 950.27,
-        "Take-Out": 169.19
+        "Delivery": 405.66,
+        "QSR": 1056.6,
+        "Take-Out": 190.46
       },
       "Day_Part_Sales": {
         "Lunch": 1270.9,
-        "Afternoon": 209.84
+        "Afternoon": 259.8,
+        "Dinner": 122.02
       },
       "Payment_Mix": {
-        "DoorDash": 392.17,
-        "OLO_ROUNDING": 51.65,
-        "VISA": 372.14,
-        "MASTERCARD": 249.68,
-        "DEBIT": 381.13,
+        "DoorDash": 467.67,
+        "OLO_ROUNDING": 51.64,
+        "VISA": 428.39,
+        "MASTERCARD": 287.14,
+        "DEBIT": 408.49,
         "SkipTheDishes": 166.13,
         "CASH": 18.73,
         "AMEX": 63.65
       },
-      "Tips_Total": 95.35
+      "Tips_Total": 108.06
     },
     {
       "Location_Name": "Halifax Shopping Centre",
@@ -1874,33 +1886,34 @@
       "Location_Name": "Halifax Shopping Centre",
       "Location_Type": "Corp",
       "Business_Date": "2026-08-19",
-      "Total_Sales": 2887.27,
-      "InStore_Sales": 2476.55,
-      "Online_Sales": 410.72,
-      "Orders": 141,
-      "Avg_Ticket": 20.48,
+      "Total_Sales": 3203.87,
+      "InStore_Sales": 2681.58,
+      "Online_Sales": 522.29,
+      "Orders": 151,
+      "Avg_Ticket": 21.22,
       "Order_Type_Sales": {
-        "QSR": 2476.55,
-        "Delivery": 363.15,
+        "QSR": 2681.58,
+        "Delivery": 474.72,
         "Take-Out": 47.57
       },
       "Day_Part_Sales": {
         "Breakfast": 31.28,
         "Lunch": 1716.01,
-        "Afternoon": 1139.98
+        "Afternoon": 1180.03,
+        "Dinner": 276.55
       },
       "Payment_Mix": {
-        "VISA": 978.18,
+        "VISA": 1133.78,
         "MASTERCARD": 680.7,
-        "UberEats": 281.29,
+        "UberEats": 408.48,
         "CASH": 320.32,
-        "DEBIT": 826.76,
+        "DEBIT": 904.88,
         "DoorDash": 126.12,
         "OLO_ROUNDING": 21.24,
         "SkipTheDishes": 38.21,
         "AMEX": 17.09
       },
-      "Tips_Total": 120.71
+      "Tips_Total": 126.08
     },
     {
       "Location_Name": "Herring Cove (Spryfield)",
@@ -2071,32 +2084,34 @@
       "Location_Name": "Herring Cove (Spryfield)",
       "Location_Type": "Corp",
       "Business_Date": "2026-08-19",
-      "Total_Sales": 947.77,
-      "InStore_Sales": 619.09,
-      "Online_Sales": 328.68,
-      "Orders": 42,
-      "Avg_Ticket": 22.57,
+      "Total_Sales": 1249.86,
+      "InStore_Sales": 765.99,
+      "Online_Sales": 483.87,
+      "Orders": 49,
+      "Avg_Ticket": 25.51,
       "Order_Type_Sales": {
-        "Take-Out": 157.53,
-        "QSR": 538.15,
-        "Delivery": 252.09
+        "Take-Out": 274.55,
+        "QSR": 602.41,
+        "Delivery": 372.9
       },
       "Day_Part_Sales": {
         "Breakfast": 14.99,
         "Lunch": 394.47,
-        "Afternoon": 538.31
+        "Afternoon": 622.36,
+        "Dinner": 218.04
       },
       "Payment_Mix": {
         "DEBIT": 271.5,
         "MASTERCARD": 159.67,
         "UberEats": 97.3,
-        "OLO_ROUNDING": 38.18,
-        "VISA": 157.99,
-        "CASH": 96.58,
-        "DoorDash": 239.19,
-        "GIFTCARD": 20
+        "OLO_ROUNDING": 80.34,
+        "VISA": 268.38,
+        "CASH": 113.67,
+        "DoorDash": 319,
+        "GIFTCARD": 60,
+        "SkipTheDishes": 54.93
       },
-      "Tips_Total": 33.59
+      "Tips_Total": 51.15
     },
     {
       "Location_Name": "Larry Uteck",
@@ -2270,33 +2285,35 @@
       "Location_Name": "Larry Uteck",
       "Location_Type": "Franchisee",
       "Business_Date": "2026-08-19",
-      "Total_Sales": 1656.36,
-      "InStore_Sales": 1371.65,
-      "Online_Sales": 284.71,
-      "Orders": 72,
-      "Avg_Ticket": 23,
+      "Total_Sales": 1961.01,
+      "InStore_Sales": 1564.67,
+      "Online_Sales": 396.34,
+      "Orders": 85,
+      "Avg_Ticket": 23.07,
       "Order_Type_Sales": {
-        "Take-Out": 176.22,
-        "Delivery": 210.61,
-        "QSR": 1269.53
+        "Take-Out": 243.07,
+        "Delivery": 288.86,
+        "QSR": 1429.08
       },
       "Day_Part_Sales": {
         "Breakfast": 16.29,
         "Lunch": 894.9,
-        "Afternoon": 745.17
+        "Afternoon": 767.95,
+        "Dinner": 281.87
       },
       "Payment_Mix": {
-        "DEBIT": 614.39,
-        "UberEats": 300.3,
-        "VISA": 501.22,
+        "DEBIT": 668.62,
+        "UberEats": 363.76,
+        "VISA": 620.09,
         "SkipTheDishes": 24.27,
         "AMEX": 137.73,
-        "MASTERCARD": 199.16,
+        "MASTERCARD": 225.12,
         "OLO_ROUNDING": -0.02,
-        "CASH": 83.83,
-        "GIFTCARD": 27.3
+        "CASH": 104.78,
+        "GIFTCARD": 27.3,
+        "DoorDash": 63.79
       },
-      "Tips_Total": 74.57
+      "Tips_Total": 89.08
     },
     {
       "Location_Name": "Lower Sackville",
@@ -2469,33 +2486,34 @@
       "Location_Name": "Lower Sackville",
       "Location_Type": "Corp",
       "Business_Date": "2026-08-19",
-      "Total_Sales": 1197.81,
-      "InStore_Sales": 866.49,
-      "Online_Sales": 331.32,
-      "Orders": 53,
-      "Avg_Ticket": 22.6,
+      "Total_Sales": 1595.76,
+      "InStore_Sales": 1169.79,
+      "Online_Sales": 425.97,
+      "Orders": 66,
+      "Avg_Ticket": 24.18,
       "Order_Type_Sales": {
         "Take-Out": 153.57,
-        "Delivery": 316.84,
-        "QSR": 727.4
+        "Delivery": 411.49,
+        "QSR": 1030.7
       },
       "Day_Part_Sales": {
         "Breakfast": 18.98,
         "Lunch": 417.14,
-        "Afternoon": 761.69
+        "Afternoon": 807.24,
+        "Dinner": 352.4
       },
       "Payment_Mix": {
-        "DEBIT": 443.99,
-        "DoorDash": 132.42,
+        "DEBIT": 559.13,
+        "DoorDash": 159.88,
         "OLO_ROUNDING": 23.14,
-        "UberEats": 222.19,
-        "MASTERCARD": 78.84,
-        "VISA": 204.1,
+        "UberEats": 302.62,
+        "MASTERCARD": 100.83,
+        "VISA": 412.71,
         "CASH": 229.32,
         "AMEX": 19.36,
         "GIFTCARD": 11
       },
-      "Tips_Total": 35.4
+      "Tips_Total": 58.49
     },
     {
       "Location_Name": "Morton Ave",
@@ -2678,35 +2696,36 @@
       "Location_Name": "Morton Ave",
       "Location_Type": "Franchisee",
       "Business_Date": "2026-08-19",
-      "Total_Sales": 1234.5,
-      "InStore_Sales": 968.32,
-      "Online_Sales": 266.18,
-      "Orders": 57,
+      "Total_Sales": 1429.56,
+      "InStore_Sales": 1070.64,
+      "Online_Sales": 358.92,
+      "Orders": 66,
       "Avg_Ticket": 21.66,
       "Order_Type_Sales": {
         "Take-Out": 635.17,
-        "QSR": 288.6,
-        "Delivery": 184.44,
-        "Retail": 126.29
+        "QSR": 328.66,
+        "Delivery": 277.18,
+        "Retail": 188.55
       },
       "Day_Part_Sales": {
         "Breakfast": 57.73,
         "Lunch": 929.17,
-        "Afternoon": 247.6
+        "Afternoon": 283.07,
+        "Dinner": 159.59
       },
       "Payment_Mix": {
-        "MASTERCARD": 227.3,
+        "MASTERCARD": 259.48,
         "CASH": 95.13,
-        "VISA": 229.62,
-        "DEBIT": 532.24,
-        "SkipTheDishes": 137.32,
-        "OLO_ROUNDING": 5.73,
+        "VISA": 251.8,
+        "DEBIT": 595.55,
+        "SkipTheDishes": 218.7,
+        "OLO_ROUNDING": 9.29,
         "UberEats": 61.45,
         "AMEX": 16.66,
         "GIFTCARD": 12.65,
-        "DoorDash": 101.68
+        "DoorDash": 121.94
       },
-      "Tips_Total": 61.29
+      "Tips_Total": 71.95
     },
     {
       "Location_Name": "Mount Pearl",
@@ -2873,33 +2892,33 @@
       "Location_Name": "Mount Pearl",
       "Location_Type": "Franchisee",
       "Business_Date": "2026-08-19",
-      "Total_Sales": 714.57,
-      "InStore_Sales": 424.6,
-      "Online_Sales": 289.97,
-      "Orders": 29,
-      "Avg_Ticket": 24.64,
+      "Total_Sales": 811.58,
+      "InStore_Sales": 495.63,
+      "Online_Sales": 315.95,
+      "Orders": 32,
+      "Avg_Ticket": 25.36,
       "Order_Type_Sales": {
-        "QSR": 285.72,
-        "Delivery": 289.97,
+        "QSR": 356.75,
+        "Delivery": 315.95,
         "Take-Out": 138.88
       },
       "Day_Part_Sales": {
         "Lunch": 366.8,
         "Afternoon": 249.05,
-        "Dinner": 98.72
+        "Dinner": 195.73
       },
       "Payment_Mix": {
-        "DEBIT": 271.03,
+        "DEBIT": 352.71,
         "SkipTheDishes": 26.67,
         "UberEats": 49.66,
-        "DoorDash": 203.23,
+        "DoorDash": 233.11,
         "OLO_ROUNDING": 53.93,
         "AMEX": 20.8,
         "CASH": 19.88,
         "VISA": 151.38,
         "MASTERCARD": 23.91
       },
-      "Tips_Total": 22.3
+      "Tips_Total": 30.47
     },
     {
       "Location_Name": "New Minas",
@@ -3055,30 +3074,31 @@
       "Location_Name": "New Minas",
       "Location_Type": "Franchisee",
       "Business_Date": "2026-08-19",
-      "Total_Sales": 1350.51,
-      "InStore_Sales": 1178.34,
-      "Online_Sales": 172.17,
-      "Orders": 59,
-      "Avg_Ticket": 22.89,
+      "Total_Sales": 1520.29,
+      "InStore_Sales": 1266.87,
+      "Online_Sales": 253.42,
+      "Orders": 65,
+      "Avg_Ticket": 23.39,
       "Order_Type_Sales": {
         "Take-Out": 256.49,
-        "QSR": 986.1,
-        "Delivery": 107.92
+        "QSR": 1074.63,
+        "Delivery": 189.17
       },
       "Day_Part_Sales": {
         "Lunch": 855.53,
-        "Afternoon": 494.98
+        "Afternoon": 534.56,
+        "Dinner": 130.2
       },
       "Payment_Mix": {
-        "VISA": 318.72,
+        "VISA": 347.54,
         "CASH": 207.81,
-        "DoorDash": 180.22,
-        "OLO_ROUNDING": 16.05,
+        "DoorDash": 262.58,
+        "OLO_ROUNDING": 26.31,
         "AMEX": 59.56,
-        "DEBIT": 561.48,
+        "DEBIT": 633.59,
         "MASTERCARD": 193.15
       },
-      "Tips_Total": 95.89
+      "Tips_Total": 100.9
     },
     {
       "Location_Name": "Penhorn",
@@ -3251,32 +3271,33 @@
       "Location_Name": "Penhorn",
       "Location_Type": "Franchisee",
       "Business_Date": "2026-08-19",
-      "Total_Sales": 1623.61,
-      "InStore_Sales": 1417.05,
-      "Online_Sales": 206.56,
-      "Orders": 49,
-      "Avg_Ticket": 33.13,
+      "Total_Sales": 1875.73,
+      "InStore_Sales": 1543.26,
+      "Online_Sales": 332.47,
+      "Orders": 55,
+      "Avg_Ticket": 34.1,
       "Order_Type_Sales": {
         "Bar": 555.09,
-        "QSR": 801.91,
+        "QSR": 928.12,
         "Take-Out": 179.16,
-        "Delivery": 87.45
+        "Delivery": 213.36
       },
       "Day_Part_Sales": {
         "Breakfast": 400.77,
         "Lunch": 735.96,
-        "Afternoon": 486.88
+        "Afternoon": 559.42,
+        "Dinner": 179.58
       },
       "Payment_Mix": {
         "VISA": 653.26,
-        "DEBIT": 470.09,
-        "MASTERCARD": 377.93,
+        "DEBIT": 571.36,
+        "MASTERCARD": 420.54,
         "CASH": 111.87,
-        "DoorDash": 197.3,
-        "OLO_ROUNDING": 15.03,
-        "UberEats": 23.13
+        "DoorDash": 259.73,
+        "OLO_ROUNDING": 15.01,
+        "UberEats": 104.24
       },
-      "Tips_Total": 75.64
+      "Tips_Total": 83.91
     },
     {
       "Location_Name": "Plaza",
@@ -3437,32 +3458,33 @@
       "Location_Name": "Plaza",
       "Location_Type": "Franchisee",
       "Business_Date": "2026-08-19",
-      "Total_Sales": 1222.01,
-      "InStore_Sales": 945.06,
-      "Online_Sales": 276.95,
-      "Orders": 44,
-      "Avg_Ticket": 27.77,
+      "Total_Sales": 1370.44,
+      "InStore_Sales": 1019.94,
+      "Online_Sales": 350.5,
+      "Orders": 48,
+      "Avg_Ticket": 28.55,
       "Order_Type_Sales": {
-        "QSR": 705.36,
+        "QSR": 731.5,
         "Delivery": 155.22,
-        "Take-Out": 361.43
+        "Take-Out": 483.72
       },
       "Day_Part_Sales": {
         "Breakfast": 22.68,
         "Lunch": 557.5,
-        "Afternoon": 641.83
+        "Afternoon": 670.99,
+        "Dinner": 119.27
       },
       "Payment_Mix": {
         "MASTERCARD": 270.02,
-        "DoorDash": 211.27,
+        "DoorDash": 295.85,
         "OLO_ROUNDING": 15.13,
-        "DEBIT": 239.4,
+        "DEBIT": 325.51,
         "VISA": 529.34,
         "SkipTheDishes": 44.13,
         "CASH": 70.23,
         "AMEX": 25.75
       },
-      "Tips_Total": 93.22
+      "Tips_Total": 99.58
     },
     {
       "Location_Name": "Scotia Square",
@@ -3592,31 +3614,32 @@
       "Location_Name": "Scotia Square",
       "Location_Type": "Corp",
       "Business_Date": "2026-08-19",
-      "Total_Sales": 2230.12,
-      "InStore_Sales": 1622.11,
+      "Total_Sales": 2305.95,
+      "InStore_Sales": 1697.94,
       "Online_Sales": 608.01,
-      "Orders": 119,
-      "Avg_Ticket": 18.74,
+      "Orders": 124,
+      "Avg_Ticket": 18.6,
       "Order_Type_Sales": {
-        "QSR": 1622.11,
+        "QSR": 1697.94,
         "Delivery": 608.01
       },
       "Day_Part_Sales": {
         "Breakfast": 184.06,
         "Lunch": 1780.96,
-        "Afternoon": 265.1
+        "Afternoon": 265.1,
+        "Dinner": 75.83
       },
       "Payment_Mix": {
-        "DEBIT": 718.54,
+        "DEBIT": 737.11,
         "DoorDash": 71.42,
-        "VISA": 712.34,
+        "VISA": 749.45,
         "UberEats": 621.69,
         "OLO_ROUNDING": -0.03,
         "MASTERCARD": 173.61,
-        "CASH": 34.62,
-        "AMEX": 210.03
+        "CASH": 51.71,
+        "AMEX": 223.7
       },
-      "Tips_Total": 111.76
+      "Tips_Total": 116.82
     },
     {
       "Location_Name": "Stratford",
@@ -3782,31 +3805,32 @@
       "Location_Name": "Stratford",
       "Location_Type": "Franchisee",
       "Business_Date": "2026-08-19",
-      "Total_Sales": 665.55,
-      "InStore_Sales": 528.45,
+      "Total_Sales": 988.67,
+      "InStore_Sales": 851.57,
       "Online_Sales": 137.1,
-      "Orders": 36,
-      "Avg_Ticket": 18.49,
+      "Orders": 42,
+      "Avg_Ticket": 23.54,
       "Order_Type_Sales": {
-        "Take-Out": 314.11,
-        "QSR": 237.32,
+        "Take-Out": 603.85,
+        "QSR": 270.7,
         "Delivery": 114.12
       },
       "Day_Part_Sales": {
         "Lunch": 522.8,
-        "Afternoon": 142.75
+        "Afternoon": 198.18,
+        "Dinner": 267.69
       },
       "Payment_Mix": {
-        "VISA": 199.13,
-        "DEBIT": 220.76,
+        "VISA": 287.9,
+        "DEBIT": 351.19,
         "OLO_ROUNDING": 13.43,
         "DoorDash": 113.88,
         "AMEX": 17.24,
         "UberEats": 30.34,
         "CASH": 73.37,
-        "MASTERCARD": 97.24
+        "MASTERCARD": 248.4
       },
-      "Tips_Total": 35.13
+      "Tips_Total": 67.42
     },
     {
       "Location_Name": "Tantallon",
@@ -3958,29 +3982,30 @@
       "Location_Name": "Tantallon",
       "Location_Type": "Franchisee",
       "Business_Date": "2026-08-19",
-      "Total_Sales": 1861.52,
-      "InStore_Sales": 1751.88,
-      "Online_Sales": 109.64,
-      "Orders": 71,
-      "Avg_Ticket": 26.22,
+      "Total_Sales": 2143.33,
+      "InStore_Sales": 1966.84,
+      "Online_Sales": 176.49,
+      "Orders": 79,
+      "Avg_Ticket": 27.13,
       "Order_Type_Sales": {
-        "QSR": 1751.88,
-        "Take-Out": 109.64
+        "QSR": 1966.84,
+        "Take-Out": 176.49
       },
       "Day_Part_Sales": {
         "Breakfast": 156.31,
         "Lunch": 993.07,
-        "Afternoon": 712.14
+        "Afternoon": 727.13,
+        "Dinner": 266.82
       },
       "Payment_Mix": {
-        "VISA": 696.12,
-        "DEBIT": 912.91,
+        "VISA": 867.25,
+        "DEBIT": 986.83,
         "CASH": 240.5,
-        "DoorDash": 107.9,
+        "DoorDash": 184.11,
         "MASTERCARD": 163.55,
         "OLO_ROUNDING": -0.01
       },
-      "Tips_Total": 87.89
+      "Tips_Total": 118.99
     },
     {
       "Location_Name": "Truro",
@@ -4153,33 +4178,34 @@
       "Location_Name": "Truro",
       "Location_Type": "Franchisee",
       "Business_Date": "2026-08-19",
-      "Total_Sales": 2232.27,
-      "InStore_Sales": 1966.37,
-      "Online_Sales": 265.9,
-      "Orders": 69,
-      "Avg_Ticket": 32.35,
+      "Total_Sales": 2442.72,
+      "InStore_Sales": 2160.53,
+      "Online_Sales": 282.19,
+      "Orders": 76,
+      "Avg_Ticket": 32.14,
       "Order_Type_Sales": {
-        "QSR": 810.8,
+        "QSR": 974.98,
         "Bar": 389.8,
-        "Take-Out": 836.43,
+        "Take-Out": 882.7,
         "Delivery": 195.24
       },
       "Day_Part_Sales": {
         "Breakfast": 448.94,
         "Lunch": 1259.07,
-        "Afternoon": 524.26
+        "Afternoon": 595.42,
+        "Dinner": 139.29
       },
       "Payment_Mix": {
-        "CASH": 65.26,
-        "MASTERCARD": 753.57,
-        "DEBIT": 834.56,
-        "DoorDash": 157.32,
-        "VISA": 507.66,
+        "CASH": 136.2,
+        "MASTERCARD": 816.12,
+        "DEBIT": 887.31,
+        "DoorDash": 175.89,
+        "VISA": 542.76,
         "AMEX": 78.14,
         "UberEats": 131.9,
         "OLO_ROUNDING": 13.9
       },
-      "Tips_Total": 116.61
+      "Tips_Total": 128.83
     }
   ],
   "weeks": [
@@ -4199,11 +4225,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 3845.53,
-      "InStore_Sales": 3323.33,
-      "Online_Sales": 522.2,
-      "Orders": 163,
-      "Avg_Ticket": 23.59
+      "Total_Sales": 4045.28,
+      "InStore_Sales": 3491.8,
+      "Online_Sales": 553.48,
+      "Orders": 172,
+      "Avg_Ticket": 23.52
     },
     {
       "Location_Name": "Barrington",
@@ -4221,11 +4247,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 7370.99,
-      "InStore_Sales": 4447.13,
-      "Online_Sales": 2923.86,
-      "Orders": 294,
-      "Avg_Ticket": 25.07
+      "Total_Sales": 7726.89,
+      "InStore_Sales": 4674.49,
+      "Online_Sales": 3052.4,
+      "Orders": 300,
+      "Avg_Ticket": 25.76
     },
     {
       "Location_Name": "Bridgewater",
@@ -4243,11 +4269,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 5512.13,
-      "InStore_Sales": 4627.18,
-      "Online_Sales": 884.95,
-      "Orders": 238,
-      "Avg_Ticket": 23.16
+      "Total_Sales": 5692.91,
+      "InStore_Sales": 4766.28,
+      "Online_Sales": 926.63,
+      "Orders": 244,
+      "Avg_Ticket": 23.33
     },
     {
       "Location_Name": "Burnside",
@@ -4265,11 +4291,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 15182.82,
-      "InStore_Sales": 12202.15,
+      "Total_Sales": 15347.77,
+      "InStore_Sales": 12367.1,
       "Online_Sales": 2980.67,
-      "Orders": 480,
-      "Avg_Ticket": 31.63
+      "Orders": 486,
+      "Avg_Ticket": 31.58
     },
     {
       "Location_Name": "Charlottetown",
@@ -4287,11 +4313,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 5786.59,
-      "InStore_Sales": 4776.68,
-      "Online_Sales": 1009.91,
-      "Orders": 215,
-      "Avg_Ticket": 26.91
+      "Total_Sales": 5834.95,
+      "InStore_Sales": 4788.67,
+      "Online_Sales": 1046.28,
+      "Orders": 217,
+      "Avg_Ticket": 26.89
     },
     {
       "Location_Name": "Clayton Park",
@@ -4309,11 +4335,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 8233.22,
-      "InStore_Sales": 7011.86,
-      "Online_Sales": 1221.36,
-      "Orders": 327,
-      "Avg_Ticket": 25.18
+      "Total_Sales": 8479.98,
+      "InStore_Sales": 7230.64,
+      "Online_Sales": 1249.34,
+      "Orders": 339,
+      "Avg_Ticket": 25.01
     },
     {
       "Location_Name": "Cole Harbour",
@@ -4331,11 +4357,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 7665.79,
-      "InStore_Sales": 5502.39,
+      "Total_Sales": 7768.8,
+      "InStore_Sales": 5605.4,
       "Online_Sales": 2163.4,
-      "Orders": 279,
-      "Avg_Ticket": 27.48
+      "Orders": 282,
+      "Avg_Ticket": 27.55
     },
     {
       "Location_Name": "Fall River",
@@ -4353,11 +4379,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 4062.63,
-      "InStore_Sales": 3360.67,
-      "Online_Sales": 701.96,
-      "Orders": 146,
-      "Avg_Ticket": 27.83
+      "Total_Sales": 4355.22,
+      "InStore_Sales": 3614.68,
+      "Online_Sales": 740.54,
+      "Orders": 156,
+      "Avg_Ticket": 27.92
     },
     {
       "Location_Name": "Fredericton",
@@ -4375,11 +4401,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 5448.3,
-      "InStore_Sales": 4280.53,
-      "Online_Sales": 1167.77,
-      "Orders": 215,
-      "Avg_Ticket": 25.34
+      "Total_Sales": 5620.28,
+      "InStore_Sales": 4386.86,
+      "Online_Sales": 1233.42,
+      "Orders": 221,
+      "Avg_Ticket": 25.43
     },
     {
       "Location_Name": "Halifax Shopping Centre",
@@ -4397,11 +4423,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 12155.25,
-      "InStore_Sales": 10685.73,
-      "Online_Sales": 1469.52,
-      "Orders": 583,
-      "Avg_Ticket": 20.85
+      "Total_Sales": 12471.85,
+      "InStore_Sales": 10890.76,
+      "Online_Sales": 1581.09,
+      "Orders": 593,
+      "Avg_Ticket": 21.03
     },
     {
       "Location_Name": "Herring Cove (Spryfield)",
@@ -4419,11 +4445,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 4983.12,
-      "InStore_Sales": 3222.97,
-      "Online_Sales": 1760.15,
-      "Orders": 174,
-      "Avg_Ticket": 28.64
+      "Total_Sales": 5285.21,
+      "InStore_Sales": 3369.87,
+      "Online_Sales": 1915.34,
+      "Orders": 181,
+      "Avg_Ticket": 29.2
     },
     {
       "Location_Name": "Larry Uteck",
@@ -4441,11 +4467,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 7457.39,
-      "InStore_Sales": 5660.7,
-      "Online_Sales": 1796.69,
-      "Orders": 306,
-      "Avg_Ticket": 24.37
+      "Total_Sales": 7762.04,
+      "InStore_Sales": 5853.72,
+      "Online_Sales": 1908.32,
+      "Orders": 319,
+      "Avg_Ticket": 24.33
     },
     {
       "Location_Name": "Lower Sackville",
@@ -4463,11 +4489,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 6286.27,
-      "InStore_Sales": 4530.09,
-      "Online_Sales": 1756.18,
-      "Orders": 227,
-      "Avg_Ticket": 27.69
+      "Total_Sales": 6684.22,
+      "InStore_Sales": 4833.39,
+      "Online_Sales": 1850.83,
+      "Orders": 240,
+      "Avg_Ticket": 27.85
     },
     {
       "Location_Name": "Morton Ave",
@@ -4485,11 +4511,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 5063.73,
-      "InStore_Sales": 4240.65,
-      "Online_Sales": 823.08,
-      "Orders": 200,
-      "Avg_Ticket": 25.32
+      "Total_Sales": 5258.79,
+      "InStore_Sales": 4342.97,
+      "Online_Sales": 915.82,
+      "Orders": 209,
+      "Avg_Ticket": 25.16
     },
     {
       "Location_Name": "Mount Pearl",
@@ -4507,11 +4533,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 3561.72,
-      "InStore_Sales": 1735.19,
-      "Online_Sales": 1826.53,
-      "Orders": 122,
-      "Avg_Ticket": 29.19
+      "Total_Sales": 3658.73,
+      "InStore_Sales": 1806.22,
+      "Online_Sales": 1852.51,
+      "Orders": 125,
+      "Avg_Ticket": 29.27
     },
     {
       "Location_Name": "New Minas",
@@ -4529,11 +4555,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 5363.58,
-      "InStore_Sales": 4334.86,
-      "Online_Sales": 1028.72,
-      "Orders": 227,
-      "Avg_Ticket": 23.63
+      "Total_Sales": 5533.36,
+      "InStore_Sales": 4423.39,
+      "Online_Sales": 1109.97,
+      "Orders": 233,
+      "Avg_Ticket": 23.75
     },
     {
       "Location_Name": "Penhorn",
@@ -4551,11 +4577,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 6076.83,
-      "InStore_Sales": 5028.14,
-      "Online_Sales": 1048.69,
-      "Orders": 215,
-      "Avg_Ticket": 28.26
+      "Total_Sales": 6328.95,
+      "InStore_Sales": 5154.35,
+      "Online_Sales": 1174.6,
+      "Orders": 221,
+      "Avg_Ticket": 28.64
     },
     {
       "Location_Name": "Plaza",
@@ -4573,11 +4599,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 4138.23,
-      "InStore_Sales": 3191.49,
-      "Online_Sales": 946.74,
-      "Orders": 146,
-      "Avg_Ticket": 28.34
+      "Total_Sales": 4286.66,
+      "InStore_Sales": 3266.37,
+      "Online_Sales": 1020.29,
+      "Orders": 150,
+      "Avg_Ticket": 28.58
     },
     {
       "Location_Name": "Scotia Square",
@@ -4595,11 +4621,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 7776.3,
-      "InStore_Sales": 6070.76,
+      "Total_Sales": 7852.13,
+      "InStore_Sales": 6146.59,
       "Online_Sales": 1705.54,
-      "Orders": 343,
-      "Avg_Ticket": 22.67
+      "Orders": 348,
+      "Avg_Ticket": 22.56
     },
     {
       "Location_Name": "Stratford",
@@ -4617,11 +4643,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 3955.96,
-      "InStore_Sales": 2916.36,
+      "Total_Sales": 4279.08,
+      "InStore_Sales": 3239.48,
       "Online_Sales": 1039.6,
-      "Orders": 194,
-      "Avg_Ticket": 20.39
+      "Orders": 200,
+      "Avg_Ticket": 21.4
     },
     {
       "Location_Name": "Tantallon",
@@ -4639,11 +4665,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 6690.11,
-      "InStore_Sales": 6404.5,
-      "Online_Sales": 285.61,
-      "Orders": 249,
-      "Avg_Ticket": 26.87
+      "Total_Sales": 6971.92,
+      "InStore_Sales": 6619.46,
+      "Online_Sales": 352.46,
+      "Orders": 257,
+      "Avg_Ticket": 27.13
     },
     {
       "Location_Name": "Truro",
@@ -4661,61 +4687,61 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 8203.01,
-      "InStore_Sales": 6995.53,
-      "Online_Sales": 1207.48,
-      "Orders": 278,
-      "Avg_Ticket": 29.51
+      "Total_Sales": 8413.46,
+      "InStore_Sales": 7189.69,
+      "Online_Sales": 1223.77,
+      "Orders": 285,
+      "Avg_Ticket": 29.52
     }
   ],
   "department_breakdown": [
     {
       "department_name": "Take - Out",
       "classified_as": "in-store",
-      "net_sales": 21606.93,
-      "orders": 840
+      "net_sales": 22118.48,
+      "orders": 851
     },
     {
       "department_name": "Door Dash - Delivery",
       "classified_as": "online",
-      "net_sales": 20782.28,
-      "orders": 565
+      "net_sales": 21129.93,
+      "orders": 576
     },
     {
       "department_name": "Door Dash - Pickup",
       "classified_as": "online",
-      "net_sales": 15425.67,
-      "orders": 429
+      "net_sales": 15751.65,
+      "orders": 438
     },
     {
       "department_name": "Uber Eats",
       "classified_as": "online",
-      "net_sales": 23920.19,
-      "orders": 664
+      "net_sales": 24357.68,
+      "orders": 672
     },
     {
       "department_name": "Eat - In",
       "classified_as": "in-store",
-      "net_sales": 184515.34,
-      "orders": 8115
+      "net_sales": 187300.5,
+      "orders": 8223
     },
     {
       "department_name": "Skip The Dishes",
       "classified_as": "online",
-      "net_sales": 6597.7,
-      "orders": 164
+      "net_sales": 6780.99,
+      "orders": 169
     },
     {
       "department_name": "Catering",
       "classified_as": "in-store",
-      "net_sales": 9575.51,
-      "orders": 31
+      "net_sales": 9729.83,
+      "orders": 32
     },
     {
       "department_name": "Givex Online",
       "classified_as": "online",
-      "net_sales": 431.99,
-      "orders": 15
+      "net_sales": 463.27,
+      "orders": 16
     },
     {
       "department_name": "Delivery",
@@ -4726,8 +4752,8 @@
     {
       "department_name": "Drive Through",
       "classified_as": "in-store",
-      "net_sales": 2072.04,
-      "orders": 90
+      "net_sales": 2134.3,
+      "orders": 93
     }
   ],
   "unmapped_outlets": {},
