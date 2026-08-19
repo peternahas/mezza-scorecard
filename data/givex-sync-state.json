@@ -10711,7 +10711,22 @@
     "orders/2026-08-18/bill_info/1787107145-1787107145975.json",
     "orders/2026-08-18/bill_info/1787107147-1787107147082.json",
     "orders/2026-08-18/bill_info/1787107347-1787107347768.json",
-    "orders/2026-08-18/bill_info/1787108044-1787108044433.json"
+    "orders/2026-08-18/bill_info/1787108044-1787108044433.json",
+    "orders/2026-08-19/bill_info/1787144710-1787144711091.json",
+    "orders/2026-08-19/bill_info/1787144904-1787144904069.json",
+    "orders/2026-08-19/bill_info/1787144906-1787144906106.json",
+    "orders/2026-08-19/bill_info/1787144973-1787144974009.json",
+    "orders/2026-08-19/bill_info/1787145375-1787145375708.json",
+    "orders/2026-08-19/bill_info/1787145428-1787145428447.json",
+    "orders/2026-08-19/bill_info/1787145498-1787145498226.json",
+    "orders/2026-08-19/bill_info/1787145547-1787145547620.json",
+    "orders/2026-08-19/bill_info/1787145690-1787145691144.json",
+    "orders/2026-08-19/bill_info/1787145728-1787145728407.json",
+    "orders/2026-08-19/bill_info/1787145889-1787145889163.json",
+    "orders/2026-08-19/bill_info/1787145960-1787145960070.json",
+    "orders/2026-08-19/bill_info/1787146096-1787146096292.json",
+    "orders/2026-08-19/bill_info/1787146145-1787146145717.json",
+    "orders/2026-08-19/bill_info/1787146243-1787146243829.json"
   ],
   "orders": {
     "45319": {
@@ -73346,6 +73361,97 @@
       },
       "tips": 1.89
     },
+    "234516": {
+      "locationName": "Scotia Square",
+      "locationType": "Corp",
+      "businessDate": "2026-08-19",
+      "orderType": "QSR",
+      "openingTime": "09:54",
+      "dayPart": "Breakfast",
+      "netSales": 14.99,
+      "inStoreSales": 14.99,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 14.99
+      },
+      "paymentAmounts": {
+        "DEBIT": 17.09
+      },
+      "tips": 0
+    },
+    "234517": {
+      "locationName": "Scotia Square",
+      "locationType": "Corp",
+      "businessDate": "2026-08-19",
+      "orderType": "Delivery",
+      "openingTime": "10:01",
+      "dayPart": "Breakfast",
+      "netSales": 18.69,
+      "inStoreSales": 0,
+      "onlineSales": 18.69,
+      "deptSales": {
+        "Door Dash - Delivery": 18.69
+      },
+      "paymentAmounts": {
+        "DoorDash": 21.31
+      },
+      "tips": 0
+    },
+    "234518": {
+      "locationName": "Scotia Square",
+      "locationType": "Corp",
+      "businessDate": "2026-08-19",
+      "orderType": "QSR",
+      "openingTime": "10:11",
+      "dayPart": "Breakfast",
+      "netSales": 22.490000000000002,
+      "inStoreSales": 22.490000000000002,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 22.490000000000002
+      },
+      "paymentAmounts": {
+        "VISA": 25.64
+      },
+      "tips": 3.85
+    },
+    "234519": {
+      "locationName": "Scotia Square",
+      "locationType": "Corp",
+      "businessDate": "2026-08-19",
+      "orderType": "QSR",
+      "openingTime": "10:17",
+      "dayPart": "Breakfast",
+      "netSales": 8.99,
+      "inStoreSales": 8.99,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 8.99
+      },
+      "paymentAmounts": {
+        "DEBIT": 10.25
+      },
+      "tips": 0
+    },
+    "234520": {
+      "locationName": "Scotia Square",
+      "locationType": "Corp",
+      "businessDate": "2026-08-19",
+      "orderType": "Delivery",
+      "openingTime": "10:24",
+      "dayPart": "Breakfast",
+      "netSales": 103.91000000000001,
+      "inStoreSales": 0,
+      "onlineSales": 103.91000000000001,
+      "deptSales": {
+        "Uber Eats": 103.91000000000001
+      },
+      "paymentAmounts": {
+        "UberEats": 118.46,
+        "OLO_ROUNDING": -0.02
+      },
+      "tips": 0
+    },
     "303577": {
       "locationName": "Morton Ave",
       "locationType": "Franchisee",
@@ -130313,6 +130419,61 @@
       },
       "tips": 0
     },
+    "399906": {
+      "locationName": "Burnside",
+      "locationType": "Corp",
+      "businessDate": "2026-08-19",
+      "orderType": "Delivery",
+      "openingTime": "10:02",
+      "dayPart": "Breakfast",
+      "netSales": 20.73,
+      "inStoreSales": 0,
+      "onlineSales": 20.73,
+      "deptSales": {
+        "Skip The Dishes": 20.73
+      },
+      "paymentAmounts": {
+        "SkipTheDishes": 23.63
+      },
+      "tips": 0
+    },
+    "399907": {
+      "locationName": "Burnside",
+      "locationType": "Corp",
+      "businessDate": "2026-08-19",
+      "orderType": "Delivery",
+      "openingTime": "10:11",
+      "dayPart": "Breakfast",
+      "netSales": 70.21000000000001,
+      "inStoreSales": 0,
+      "onlineSales": 70.21000000000001,
+      "deptSales": {
+        "Door Dash - Delivery": 70.21000000000001
+      },
+      "paymentAmounts": {
+        "DoorDash": 65.33,
+        "OLO_ROUNDING": 14.71
+      },
+      "tips": 0
+    },
+    "399908": {
+      "locationName": "Burnside",
+      "locationType": "Corp",
+      "businessDate": "2026-08-19",
+      "orderType": "Take-Out",
+      "openingTime": "10:23",
+      "dayPart": "Breakfast",
+      "netSales": 19.29,
+      "inStoreSales": 0,
+      "onlineSales": 19.29,
+      "deptSales": {
+        "Door Dash - Pickup": 19.29
+      },
+      "paymentAmounts": {
+        "DoorDash": 21.99
+      },
+      "tips": 1.92
+    },
     "416668": {
       "locationName": "Cole Harbour",
       "locationType": "Franchisee",
@@ -181692,6 +181853,60 @@
         "CASH": 36.21
       },
       "tips": 0
+    },
+    "663073": {
+      "locationName": "Clayton Park",
+      "locationType": "Corp",
+      "businessDate": "2026-08-19",
+      "orderType": "QSR",
+      "openingTime": "09:17",
+      "dayPart": "Breakfast",
+      "netSales": 34.28,
+      "inStoreSales": 34.28,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 34.28
+      },
+      "paymentAmounts": {
+        "AMEX": 39.08
+      },
+      "tips": 1.95
+    },
+    "663074": {
+      "locationName": "Clayton Park",
+      "locationType": "Corp",
+      "businessDate": "2026-08-19",
+      "orderType": "QSR",
+      "openingTime": "10:14",
+      "dayPart": "Breakfast",
+      "netSales": 19.29,
+      "inStoreSales": 19.29,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 19.29
+      },
+      "paymentAmounts": {
+        "VISA": 21.99
+      },
+      "tips": 3.3
+    },
+    "663076": {
+      "locationName": "Clayton Park",
+      "locationType": "Corp",
+      "businessDate": "2026-08-19",
+      "orderType": "QSR",
+      "openingTime": "10:20",
+      "dayPart": "Breakfast",
+      "netSales": 12.98,
+      "inStoreSales": 12.98,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 12.98
+      },
+      "paymentAmounts": {
+        "CASH": 14.8
+      },
+      "tips": 0
     }
   },
   "unmappedOutlets": {},
@@ -181701,6 +181916,6 @@
       "reason": "Beta Lanner -- Givex certification/test store, not a real Mezza location"
     }
   },
-  "payloadsProcessedTotal": 10712,
+  "payloadsProcessedTotal": 10727,
   "payloadsSkippedTotal": 0
 }

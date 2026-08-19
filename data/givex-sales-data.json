@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-08-19T12:41:00.461Z",
+  "generated_at": "2026-08-19T13:31:00.046Z",
   "source": "givex-webhook-kv",
   "full_resync": false,
-  "payloads_processed_this_run": 0,
+  "payloads_processed_this_run": 15,
   "payloads_skipped_this_run": 0,
-  "payloads_processed_total": 10712,
+  "payloads_processed_total": 10727,
   "payloads_skipped_total": 0,
-  "orders_total": 9460,
+  "orders_total": 9471,
   "days": [
     {
       "Location_Name": "Antigonish",
@@ -622,6 +622,29 @@
       "Tips_Total": 132.86
     },
     {
+      "Location_Name": "Burnside",
+      "Location_Type": "Corp",
+      "Business_Date": "2026-08-19",
+      "Total_Sales": 110.23,
+      "InStore_Sales": 0,
+      "Online_Sales": 110.23,
+      "Orders": 3,
+      "Avg_Ticket": 36.74,
+      "Order_Type_Sales": {
+        "Delivery": 90.94,
+        "Take-Out": 19.29
+      },
+      "Day_Part_Sales": {
+        "Breakfast": 110.23
+      },
+      "Payment_Mix": {
+        "SkipTheDishes": 23.63,
+        "DoorDash": 87.32,
+        "OLO_ROUNDING": 14.71
+      },
+      "Tips_Total": 1.92
+    },
+    {
       "Location_Name": "Charlottetown",
       "Location_Type": "Corp",
       "Business_Date": "2026-08-14",
@@ -949,6 +972,28 @@
         "SkipTheDishes": 99.07
       },
       "Tips_Total": 137.71
+    },
+    {
+      "Location_Name": "Clayton Park",
+      "Location_Type": "Corp",
+      "Business_Date": "2026-08-19",
+      "Total_Sales": 66.55,
+      "InStore_Sales": 66.55,
+      "Online_Sales": 0,
+      "Orders": 3,
+      "Avg_Ticket": 22.18,
+      "Order_Type_Sales": {
+        "QSR": 66.55
+      },
+      "Day_Part_Sales": {
+        "Breakfast": 66.55
+      },
+      "Payment_Mix": {
+        "AMEX": 39.08,
+        "VISA": 21.99,
+        "CASH": 14.8
+      },
+      "Tips_Total": 5.25
     },
     {
       "Location_Name": "Cole Harbour",
@@ -3026,6 +3071,31 @@
       "Tips_Total": 157.6
     },
     {
+      "Location_Name": "Scotia Square",
+      "Location_Type": "Corp",
+      "Business_Date": "2026-08-19",
+      "Total_Sales": 169.07,
+      "InStore_Sales": 46.47,
+      "Online_Sales": 122.6,
+      "Orders": 5,
+      "Avg_Ticket": 33.81,
+      "Order_Type_Sales": {
+        "QSR": 46.47,
+        "Delivery": 122.6
+      },
+      "Day_Part_Sales": {
+        "Breakfast": 169.07
+      },
+      "Payment_Mix": {
+        "DEBIT": 27.34,
+        "DoorDash": 21.31,
+        "VISA": 25.64,
+        "UberEats": 118.46,
+        "OLO_ROUNDING": -0.02
+      },
+      "Tips_Total": 3.85
+    },
+    {
       "Location_Name": "Stratford",
       "Location_Type": "Franchisee",
       "Business_Date": "2026-08-14",
@@ -3582,11 +3652,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 8365,
+      "Total_Sales": 8475.23,
       "InStore_Sales": 6310.49,
-      "Online_Sales": 2054.51,
-      "Orders": 314,
-      "Avg_Ticket": 26.64
+      "Online_Sales": 2164.74,
+      "Orders": 317,
+      "Avg_Ticket": 26.74
     },
     {
       "Location_Name": "Charlottetown",
@@ -3626,11 +3696,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 6668.17,
-      "InStore_Sales": 5777.77,
+      "Total_Sales": 6734.72,
+      "InStore_Sales": 5844.32,
       "Online_Sales": 890.4,
-      "Orders": 259,
-      "Avg_Ticket": 25.75
+      "Orders": 262,
+      "Avg_Ticket": 25.71
     },
     {
       "Location_Name": "Cole Harbour",
@@ -3912,11 +3982,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 5546.18,
-      "InStore_Sales": 4448.65,
-      "Online_Sales": 1097.53,
-      "Orders": 224,
-      "Avg_Ticket": 24.76
+      "Total_Sales": 5715.25,
+      "InStore_Sales": 4495.12,
+      "Online_Sales": 1220.13,
+      "Orders": 229,
+      "Avg_Ticket": 24.96
     },
     {
       "Location_Name": "Stratford",
@@ -3995,32 +4065,32 @@
     {
       "department_name": "Door Dash - Delivery",
       "classified_as": "online",
-      "net_sales": 18292.15,
-      "orders": 505
+      "net_sales": 18381.05,
+      "orders": 507
     },
     {
       "department_name": "Door Dash - Pickup",
       "classified_as": "online",
-      "net_sales": 13997.24,
-      "orders": 378
+      "net_sales": 14016.53,
+      "orders": 379
     },
     {
       "department_name": "Uber Eats",
       "classified_as": "online",
-      "net_sales": 21131.43,
-      "orders": 583
+      "net_sales": 21235.34,
+      "orders": 584
     },
     {
       "department_name": "Eat - In",
       "classified_as": "in-store",
-      "net_sales": 161108.24,
-      "orders": 7007
+      "net_sales": 161221.26,
+      "orders": 7013
     },
     {
       "department_name": "Skip The Dishes",
       "classified_as": "online",
-      "net_sales": 5842.46,
-      "orders": 144
+      "net_sales": 5863.19,
+      "orders": 145
     },
     {
       "department_name": "Catering",
