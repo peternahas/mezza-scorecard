@@ -13537,7 +13537,9 @@
     "orders/2026-08-19/bill_info/1787194086-1787194086888.json",
     "orders/2026-08-19/bill_info/1787194172-1787194172092.json",
     "orders/2026-08-19/bill_info/1787194624-1787194624962.json",
-    "orders/2026-08-19/bill_info/1787194806-1787194806968.json"
+    "orders/2026-08-19/bill_info/1787194806-1787194806968.json",
+    "orders/2026-08-20/bill_info/1787229450-1787229450998.json",
+    "orders/2026-08-20/bill_info/1787229570-1787229570648.json"
   ],
   "orders": {
     "45319": {
@@ -230617,6 +230619,24 @@
         "DEBIT": 24.26
       },
       "tips": 3.64
+    },
+    "663285": {
+      "locationName": "Clayton Park",
+      "locationType": "Corp",
+      "businessDate": "2026-08-20",
+      "orderType": "Delivery",
+      "openingTime": "09:32",
+      "dayPart": "Breakfast",
+      "netSales": 20.29,
+      "inStoreSales": 0,
+      "onlineSales": 20.29,
+      "deptSales": {
+        "Uber Eats": 20.29
+      },
+      "paymentAmounts": {
+        "UberEats": 23.13
+      },
+      "tips": 0
     }
   },
   "unmappedOutlets": {},
@@ -230626,6 +230646,6 @@
       "reason": "Beta Lanner -- Givex certification/test store, not a real Mezza location"
     }
   },
-  "payloadsProcessedTotal": 13538,
+  "payloadsProcessedTotal": 13540,
   "payloadsSkippedTotal": 0
 }

@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-08-20T11:53:12.726Z",
+  "generated_at": "2026-08-20T12:42:52.676Z",
   "source": "givex-webhook-kv",
   "full_resync": false,
-  "payloads_processed_this_run": 0,
+  "payloads_processed_this_run": 2,
   "payloads_skipped_this_run": 0,
-  "payloads_processed_total": 13538,
+  "payloads_processed_total": 13540,
   "payloads_skipped_total": 0,
-  "orders_total": 12011,
+  "orders_total": 12012,
   "days": [
     {
       "Location_Name": "Antigonish",
@@ -1151,6 +1151,26 @@
         "GIFTCARD": 20.44
       },
       "Tips_Total": 235.81
+    },
+    {
+      "Location_Name": "Clayton Park",
+      "Location_Type": "Corp",
+      "Business_Date": "2026-08-20",
+      "Total_Sales": 20.29,
+      "InStore_Sales": 0,
+      "Online_Sales": 20.29,
+      "Orders": 1,
+      "Avg_Ticket": 20.29,
+      "Order_Type_Sales": {
+        "Delivery": 20.29
+      },
+      "Day_Part_Sales": {
+        "Breakfast": 20.29
+      },
+      "Payment_Mix": {
+        "UberEats": 23.13
+      },
+      "Tips_Total": 0
     },
     {
       "Location_Name": "Cole Harbour",
@@ -4352,11 +4372,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 10400.51,
+      "Total_Sales": 10420.8,
       "InStore_Sales": 8896.68,
-      "Online_Sales": 1503.83,
-      "Orders": 426,
-      "Avg_Ticket": 24.41
+      "Online_Sales": 1524.12,
+      "Orders": 427,
+      "Avg_Ticket": 24.4
     },
     {
       "Location_Name": "Cole Harbour",
@@ -4733,8 +4753,8 @@
     {
       "department_name": "Uber Eats",
       "classified_as": "online",
-      "net_sales": 26706.85,
-      "orders": 742
+      "net_sales": 26727.14,
+      "orders": 743
     },
     {
       "department_name": "Eat - In",
