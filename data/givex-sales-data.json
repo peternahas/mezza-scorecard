@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-08-20T01:37:30.264Z",
+  "generated_at": "2026-08-20T02:42:39.114Z",
   "source": "givex-webhook-kv",
   "full_resync": false,
-  "payloads_processed_this_run": 132,
+  "payloads_processed_this_run": 30,
   "payloads_skipped_this_run": 0,
-  "payloads_processed_total": 13502,
+  "payloads_processed_total": 13532,
   "payloads_skipped_total": 0,
-  "orders_total": 11985,
+  "orders_total": 12005,
   "days": [
     {
       "Location_Name": "Antigonish",
@@ -335,15 +335,15 @@
       "Location_Name": "Barrington",
       "Location_Type": "Corp",
       "Business_Date": "2026-08-19",
-      "Total_Sales": 3617.67,
-      "InStore_Sales": 2236.34,
-      "Online_Sales": 1381.33,
-      "Orders": 140,
-      "Avg_Ticket": 25.84,
+      "Total_Sales": 3895.41,
+      "InStore_Sales": 2285.29,
+      "Online_Sales": 1610.12,
+      "Orders": 153,
+      "Avg_Ticket": 25.46,
       "Order_Type_Sales": {
-        "QSR": 2082.02,
-        "Delivery": 1302.91,
-        "Take-Out": 78.42,
+        "QSR": 2130.97,
+        "Delivery": 1510.41,
+        "Take-Out": 99.71,
         "Bar": 154.32
       },
       "Day_Part_Sales": {
@@ -351,19 +351,19 @@
         "Lunch": 1396.93,
         "Afternoon": 354.95,
         "Dinner": 1394.97,
-        "Late Night": 443.84
+        "Late Night": 721.58
       },
       "Payment_Mix": {
         "CASH": 323.93,
         "MASTERCARD": 492.99,
-        "OLO_ROUNDING": 91.76,
-        "DoorDash": 468.76,
-        "VISA": 622.69,
-        "UberEats": 1014.14,
-        "DEBIT": 993.76,
+        "OLO_ROUNDING": 102.43,
+        "DoorDash": 568.39,
+        "VISA": 648.65,
+        "UberEats": 1164.63,
+        "DEBIT": 1023.6,
         "AMEX": 115.85
       },
-      "Tips_Total": 149.38
+      "Tips_Total": 152.86
     },
     {
       "Location_Name": "Bridgewater",
@@ -1122,14 +1122,14 @@
       "Location_Name": "Clayton Park",
       "Location_Type": "Corp",
       "Business_Date": "2026-08-19",
-      "Total_Sales": 3570.45,
-      "InStore_Sales": 3013.79,
-      "Online_Sales": 556.66,
-      "Orders": 160,
-      "Avg_Ticket": 22.32,
+      "Total_Sales": 3711.06,
+      "InStore_Sales": 3097.63,
+      "Online_Sales": 613.43,
+      "Orders": 166,
+      "Avg_Ticket": 22.36,
       "Order_Type_Sales": {
-        "QSR": 3013.79,
-        "Delivery": 453.76,
+        "QSR": 3097.63,
+        "Delivery": 510.53,
         "Take-Out": 102.9
       },
       "Day_Part_Sales": {
@@ -1137,20 +1137,20 @@
         "Lunch": 863.23,
         "Afternoon": 617.58,
         "Dinner": 1602.33,
-        "Late Night": 369.51
+        "Late Night": 510.12
       },
       "Payment_Mix": {
         "AMEX": 163.61,
-        "VISA": 873.21,
+        "VISA": 938.03,
         "CASH": 401.39,
-        "DEBIT": 1461.78,
-        "OLO_ROUNDING": 36.61,
-        "DoorDash": 424.92,
+        "DEBIT": 1492.54,
+        "OLO_ROUNDING": 36.6,
+        "DoorDash": 462.18,
         "MASTERCARD": 515.2,
-        "SkipTheDishes": 173.05,
+        "SkipTheDishes": 200.51,
         "GIFTCARD": 20.44
       },
-      "Tips_Total": 221.42
+      "Tips_Total": 232.17
     },
     {
       "Location_Name": "Cole Harbour",
@@ -2708,14 +2708,14 @@
       "Location_Name": "Morton Ave",
       "Location_Type": "Franchisee",
       "Business_Date": "2026-08-19",
-      "Total_Sales": 2112.01,
-      "InStore_Sales": 1589.55,
+      "Total_Sales": 2131.99,
+      "InStore_Sales": 1609.53,
       "Online_Sales": 522.46,
-      "Orders": 101,
-      "Avg_Ticket": 20.91,
+      "Orders": 102,
+      "Avg_Ticket": 20.9,
       "Order_Type_Sales": {
         "Take-Out": 903.32,
-        "QSR": 445.02,
+        "QSR": 465,
         "Delivery": 414.76,
         "Retail": 348.91
       },
@@ -2724,12 +2724,12 @@
         "Lunch": 929.17,
         "Afternoon": 283.07,
         "Dinner": 749.06,
-        "Late Night": 92.98
+        "Late Night": 112.96
       },
       "Payment_Mix": {
         "MASTERCARD": 327.14,
         "CASH": 154.43,
-        "VISA": 309.95,
+        "VISA": 332.93,
         "DEBIT": 986.06,
         "SkipTheDishes": 284.54,
         "OLO_ROUNDING": 9.29,
@@ -2738,7 +2738,7 @@
         "GIFTCARD": 12.65,
         "DoorDash": 201.77
       },
-      "Tips_Total": 112.83
+      "Tips_Total": 115.13
     },
     {
       "Location_Name": "Mount Pearl",
@@ -4264,11 +4264,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 9258.56,
-      "InStore_Sales": 5544.45,
-      "Online_Sales": 3714.11,
-      "Orders": 359,
-      "Avg_Ticket": 25.79
+      "Total_Sales": 9536.3,
+      "InStore_Sales": 5593.4,
+      "Online_Sales": 3942.9,
+      "Orders": 372,
+      "Avg_Ticket": 25.64
     },
     {
       "Location_Name": "Bridgewater",
@@ -4352,11 +4352,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 10238.62,
-      "InStore_Sales": 8791.56,
-      "Online_Sales": 1447.06,
-      "Orders": 419,
-      "Avg_Ticket": 24.44
+      "Total_Sales": 10379.23,
+      "InStore_Sales": 8875.4,
+      "Online_Sales": 1503.83,
+      "Orders": 425,
+      "Avg_Ticket": 24.42
     },
     {
       "Location_Name": "Cole Harbour",
@@ -4528,11 +4528,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 5941.24,
-      "InStore_Sales": 4861.88,
+      "Total_Sales": 5961.22,
+      "InStore_Sales": 4881.86,
       "Online_Sales": 1079.36,
-      "Orders": 244,
-      "Avg_Ticket": 24.35
+      "Orders": 245,
+      "Avg_Ticket": 24.33
     },
     {
       "Location_Name": "Mount Pearl",
@@ -4721,8 +4721,8 @@
     {
       "department_name": "Door Dash - Delivery",
       "classified_as": "online",
-      "net_sales": 22913.27,
-      "orders": 625
+      "net_sales": 23042.73,
+      "orders": 629
     },
     {
       "department_name": "Door Dash - Pickup",
@@ -4733,20 +4733,20 @@
     {
       "department_name": "Uber Eats",
       "classified_as": "online",
-      "net_sales": 26574.84,
-      "orders": 736
+      "net_sales": 26706.85,
+      "orders": 742
     },
     {
       "department_name": "Eat - In",
       "classified_as": "in-store",
-      "net_sales": 202991.17,
-      "orders": 8886
+      "net_sales": 203143.94,
+      "orders": 8895
     },
     {
       "department_name": "Skip The Dishes",
       "classified_as": "online",
-      "net_sales": 7157.79,
-      "orders": 179
+      "net_sales": 7181.88,
+      "orders": 180
     },
     {
       "department_name": "Catering",
