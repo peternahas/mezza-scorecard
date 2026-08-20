@@ -13539,7 +13539,19 @@
     "orders/2026-08-19/bill_info/1787194624-1787194624962.json",
     "orders/2026-08-19/bill_info/1787194806-1787194806968.json",
     "orders/2026-08-20/bill_info/1787229450-1787229450998.json",
-    "orders/2026-08-20/bill_info/1787229570-1787229570648.json"
+    "orders/2026-08-20/bill_info/1787229570-1787229570648.json",
+    "orders/2026-08-20/bill_info/1787229783-1787229784096.json",
+    "orders/2026-08-20/bill_info/1787229931-1787229931127.json",
+    "orders/2026-08-20/bill_info/1787230204-1787230204443.json",
+    "orders/2026-08-20/bill_info/1787231264-1787231264815.json",
+    "orders/2026-08-20/bill_info/1787231288-1787231288563.json",
+    "orders/2026-08-20/bill_info/1787231413-1787231413155.json",
+    "orders/2026-08-20/bill_info/1787231552-1787231552729.json",
+    "orders/2026-08-20/bill_info/1787231772-1787231772634.json",
+    "orders/2026-08-20/bill_info/1787231816-1787231816318.json",
+    "orders/2026-08-20/bill_info/1787231944-1787231944977.json",
+    "orders/2026-08-20/bill_info/1787232391-1787232391261.json",
+    "orders/2026-08-20/bill_info/1787232514-1787232514265.json"
   ],
   "orders": {
     "45319": {
@@ -56135,6 +56147,24 @@
       },
       "tips": 0
     },
+    "133315": {
+      "locationName": "Penhorn",
+      "locationType": "Franchisee",
+      "businessDate": "2026-08-20",
+      "orderType": "Bar",
+      "openingTime": "09:44",
+      "dayPart": "Breakfast",
+      "netSales": 190.39999999999995,
+      "inStoreSales": 190.39999999999995,
+      "onlineSales": 0,
+      "deptSales": {
+        "Catering": 190.39999999999995
+      },
+      "paymentAmounts": {
+        "MASTERCARD": 217.06
+      },
+      "tips": 0
+    },
     "149148": {
       "locationName": "Stratford",
       "locationType": "Franchisee",
@@ -93395,6 +93425,24 @@
         "VISA": 17.09
       },
       "tips": 0
+    },
+    "234679": {
+      "locationName": "Scotia Square",
+      "locationType": "Corp",
+      "businessDate": "2026-08-20",
+      "orderType": "QSR",
+      "openingTime": "10:08",
+      "dayPart": "Breakfast",
+      "netSales": 9.99,
+      "inStoreSales": 9.99,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 9.99
+      },
+      "paymentAmounts": {
+        "MASTERCARD": 11.39
+      },
+      "tips": 1.14
     },
     "303577": {
       "locationName": "Morton Ave",
@@ -166775,6 +166823,42 @@
       },
       "tips": 0
     },
+    "400149": {
+      "locationName": "Burnside",
+      "locationType": "Corp",
+      "businessDate": "2026-08-20",
+      "orderType": "Delivery",
+      "openingTime": "10:02",
+      "dayPart": "Breakfast",
+      "netSales": 20.73,
+      "inStoreSales": 0,
+      "onlineSales": 20.73,
+      "deptSales": {
+        "Skip The Dishes": 20.73
+      },
+      "paymentAmounts": {
+        "SkipTheDishes": 23.63
+      },
+      "tips": 0
+    },
+    "400150": {
+      "locationName": "Burnside",
+      "locationType": "Corp",
+      "businessDate": "2026-08-20",
+      "orderType": "Delivery",
+      "openingTime": "10:06",
+      "dayPart": "Breakfast",
+      "netSales": 21.29,
+      "inStoreSales": 0,
+      "onlineSales": 21.29,
+      "deptSales": {
+        "Door Dash - Delivery": 21.29
+      },
+      "paymentAmounts": {
+        "DoorDash": 24.27
+      },
+      "tips": 0
+    },
     "416668": {
       "locationName": "Cole Harbour",
       "locationType": "Franchisee",
@@ -200081,6 +200165,25 @@
       },
       "tips": 0
     },
+    "504324": {
+      "locationName": "Halifax Shopping Centre",
+      "locationType": "Corp",
+      "businessDate": "2026-08-20",
+      "orderType": "Delivery",
+      "openingTime": "10:21",
+      "dayPart": "Breakfast",
+      "netSales": 174.48999999999998,
+      "inStoreSales": 0,
+      "onlineSales": 174.48999999999998,
+      "deptSales": {
+        "Door Dash - Delivery": 174.48999999999998
+      },
+      "paymentAmounts": {
+        "OLO_ROUNDING": 38.99,
+        "DoorDash": 159.93
+      },
+      "tips": 0
+    },
     "554641": {
       "locationName": "Barrington",
       "locationType": "Corp",
@@ -230637,6 +230740,80 @@
         "UberEats": 23.13
       },
       "tips": 0
+    },
+    "663286": {
+      "locationName": "Clayton Park",
+      "locationType": "Corp",
+      "businessDate": "2026-08-20",
+      "orderType": "Delivery",
+      "openingTime": "09:39",
+      "dayPart": "Breakfast",
+      "netSales": 31.58,
+      "inStoreSales": 0,
+      "onlineSales": 31.58,
+      "deptSales": {
+        "Uber Eats": 31.58
+      },
+      "paymentAmounts": {
+        "UberEats": 36
+      },
+      "tips": 0
+    },
+    "663288": {
+      "locationName": "Clayton Park",
+      "locationType": "Corp",
+      "businessDate": "2026-08-20",
+      "orderType": "QSR",
+      "openingTime": "09:44",
+      "dayPart": "Breakfast",
+      "netSales": 7.99,
+      "inStoreSales": 7.99,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 7.99
+      },
+      "paymentAmounts": {
+        "DEBIT": 7.99
+      },
+      "tips": 0
+    },
+    "663290": {
+      "locationName": "Clayton Park",
+      "locationType": "Corp",
+      "businessDate": "2026-08-20",
+      "orderType": "Delivery",
+      "openingTime": "10:13",
+      "dayPart": "Breakfast",
+      "netSales": 17.18,
+      "inStoreSales": 0,
+      "onlineSales": 17.18,
+      "deptSales": {
+        "Door Dash - Delivery": 17.18
+      },
+      "paymentAmounts": {
+        "DoorDash": 19.59,
+        "OLO_ROUNDING": -0.01
+      },
+      "tips": 0
+    },
+    "663291": {
+      "locationName": "Clayton Park",
+      "locationType": "Corp",
+      "businessDate": "2026-08-20",
+      "orderType": "Delivery",
+      "openingTime": "10:24",
+      "dayPart": "Breakfast",
+      "netSales": 18.69,
+      "inStoreSales": 0,
+      "onlineSales": 18.69,
+      "deptSales": {
+        "Skip The Dishes": 18.69
+      },
+      "paymentAmounts": {
+        "OLO_ROUNDING": -0.01,
+        "SkipTheDishes": 21.31
+      },
+      "tips": 0
     }
   },
   "unmappedOutlets": {},
@@ -230646,6 +230823,6 @@
       "reason": "Beta Lanner -- Givex certification/test store, not a real Mezza location"
     }
   },
-  "payloadsProcessedTotal": 13540,
+  "payloadsProcessedTotal": 13552,
   "payloadsSkippedTotal": 0
 }
