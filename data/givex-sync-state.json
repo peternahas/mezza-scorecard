@@ -14768,7 +14768,9 @@
     "orders/2026-08-20/bill_info/1787279765-1787279765555.json",
     "orders/2026-08-20/bill_info/1787280373-1787280373971.json",
     "orders/2026-08-20/bill_info/1787280415-1787280415976.json",
-    "orders/2026-08-20/bill_info/1787280668-1787280668089.json"
+    "orders/2026-08-20/bill_info/1787280668-1787280668089.json",
+    "orders/2026-08-21/bill_info/1787317688-1787317688462.json",
+    "orders/2026-08-21/bill_info/1787318911-1787318911652.json"
   ],
   "orders": {
     "45319": {
@@ -102590,6 +102592,24 @@
       },
       "tips": 0
     },
+    "234871": {
+      "locationName": "Scotia Square",
+      "locationType": "Corp",
+      "businessDate": "2026-08-21",
+      "orderType": "QSR",
+      "openingTime": "09:57",
+      "dayPart": "Breakfast",
+      "netSales": 3.39,
+      "inStoreSales": 3.39,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 3.39
+      },
+      "paymentAmounts": {
+        "VISA": 3.86
+      },
+      "tips": 0
+    },
     "303577": {
       "locationName": "Morton Ave",
       "locationType": "Franchisee",
@@ -182404,6 +182424,24 @@
       },
       "tips": 0
     },
+    "400365": {
+      "locationName": "Burnside",
+      "locationType": "Corp",
+      "businessDate": "2026-08-21",
+      "orderType": "Delivery",
+      "openingTime": "10:03",
+      "dayPart": "Breakfast",
+      "netSales": 20.73,
+      "inStoreSales": 0,
+      "onlineSales": 20.73,
+      "deptSales": {
+        "Skip The Dishes": 20.73
+      },
+      "paymentAmounts": {
+        "SkipTheDishes": 23.63
+      },
+      "tips": 0
+    },
     "416668": {
       "locationName": "Cole Harbour",
       "locationType": "Franchisee",
@@ -252255,6 +252293,6 @@
       "reason": "Beta Lanner -- Givex certification/test store, not a real Mezza location"
     }
   },
-  "payloadsProcessedTotal": 14769,
+  "payloadsProcessedTotal": 14771,
   "payloadsSkippedTotal": 0
 }
