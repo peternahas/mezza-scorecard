@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-08-22T18:58:21.881Z",
+  "generated_at": "2026-08-22T19:26:58.956Z",
   "source": "givex-webhook-kv",
   "full_resync": false,
-  "payloads_processed_this_run": 90,
+  "payloads_processed_this_run": 5,
   "payloads_skipped_this_run": 0,
-  "payloads_processed_total": 16968,
+  "payloads_processed_total": 16973,
   "payloads_skipped_total": 0,
-  "orders_total": 15161,
+  "orders_total": 15166,
   "days": [
     {
       "Location_Name": "Antigonish",
@@ -518,31 +518,31 @@
       "Location_Name": "Barrington",
       "Location_Type": "Corp",
       "Business_Date": "2026-08-22",
-      "Total_Sales": 1148.6,
-      "InStore_Sales": 647.41,
+      "Total_Sales": 1184.96,
+      "InStore_Sales": 683.77,
       "Online_Sales": 501.19,
-      "Orders": 37,
-      "Avg_Ticket": 31.04,
+      "Orders": 39,
+      "Avg_Ticket": 30.38,
       "Order_Type_Sales": {
         "Delivery": 486.3,
-        "QSR": 647.41,
+        "QSR": 683.77,
         "Take-Out": 14.89
       },
       "Day_Part_Sales": {
         "Lunch": 811.02,
-        "Afternoon": 337.58
+        "Afternoon": 373.94
       },
       "Payment_Mix": {
         "OLO_ROUNDING": 5.37,
         "SkipTheDishes": 21.31,
         "VISA": 218.76,
         "UberEats": 501.86,
-        "DEBIT": 328.32,
+        "DEBIT": 369.76,
         "DoorDash": 42.74,
         "MASTERCARD": 177.21,
         "CASH": 13.67
       },
-      "Tips_Total": 41.23
+      "Tips_Total": 43.12
     },
     {
       "Location_Name": "Bridgewater",
@@ -2520,23 +2520,23 @@
       "Location_Name": "Fredericton",
       "Location_Type": "Franchisee",
       "Business_Date": "2026-08-22",
-      "Total_Sales": 626.65,
-      "InStore_Sales": 626.65,
+      "Total_Sales": 659.23,
+      "InStore_Sales": 659.23,
       "Online_Sales": 0,
-      "Orders": 27,
-      "Avg_Ticket": 23.21,
+      "Orders": 28,
+      "Avg_Ticket": 23.54,
       "Order_Type_Sales": {
-        "QSR": 608.27,
+        "QSR": 640.85,
         "Take-Out": 18.38
       },
       "Day_Part_Sales": {
         "Lunch": 441.64,
-        "Afternoon": 185.01
+        "Afternoon": 217.59
       },
       "Payment_Mix": {
         "DEBIT": 415.8,
         "VISA": 101,
-        "CASH": 108.31,
+        "CASH": 145.77,
         "AMEX": 53.89,
         "MASTERCARD": 40.44
       },
@@ -3397,24 +3397,24 @@
       "Location_Name": "Larry Uteck",
       "Location_Type": "Franchisee",
       "Business_Date": "2026-08-22",
-      "Total_Sales": 985.15,
-      "InStore_Sales": 783.24,
+      "Total_Sales": 1001.44,
+      "InStore_Sales": 799.53,
       "Online_Sales": 201.91,
-      "Orders": 39,
-      "Avg_Ticket": 25.26,
+      "Orders": 40,
+      "Avg_Ticket": 25.04,
       "Order_Type_Sales": {
         "Take-Out": 198.02,
-        "QSR": 673.71,
+        "QSR": 690,
         "Delivery": 113.42
       },
       "Day_Part_Sales": {
         "Lunch": 549.8,
-        "Afternoon": 435.35
+        "Afternoon": 451.64
       },
       "Payment_Mix": {
         "CASH": 118.08,
         "VISA": 287.34,
-        "DEBIT": 341.53,
+        "DEBIT": 360.1,
         "DoorDash": 95.18,
         "MASTERCARD": 145.92,
         "UberEats": 129.3,
@@ -4551,20 +4551,20 @@
       "Location_Name": "New Minas",
       "Location_Type": "Franchisee",
       "Business_Date": "2026-08-22",
-      "Total_Sales": 1028.03,
-      "InStore_Sales": 943.28,
+      "Total_Sales": 1079.6,
+      "InStore_Sales": 994.85,
       "Online_Sales": 84.75,
-      "Orders": 50,
-      "Avg_Ticket": 20.56,
+      "Orders": 51,
+      "Avg_Ticket": 21.17,
       "Order_Type_Sales": {
-        "QSR": 920.8,
+        "QSR": 972.37,
         "Delivery": 84.75,
         "Take-Out": 30.47,
         "Refund": -7.99
       },
       "Day_Part_Sales": {
         "Lunch": 677.94,
-        "Afternoon": 350.09
+        "Afternoon": 401.66
       },
       "Payment_Mix": {
         "CASH": 106.96,
@@ -4572,10 +4572,10 @@
         "VISA": 347.05,
         "GIFTCARD": 33.25,
         "DoorDash": 96.61,
-        "MASTERCARD": 43.63,
+        "MASTERCARD": 102.42,
         "AMEX": 24.26
       },
-      "Tips_Total": 50.93
+      "Tips_Total": 53.68
     },
     {
       "Location_Name": "Penhorn",
@@ -6267,11 +6267,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 15364.41,
-      "InStore_Sales": 9229.59,
+      "Total_Sales": 15400.77,
+      "InStore_Sales": 9265.95,
       "Online_Sales": 6134.82,
-      "Orders": 619,
-      "Avg_Ticket": 24.82
+      "Orders": 621,
+      "Avg_Ticket": 24.8
     },
     {
       "Location_Name": "Bridgewater",
@@ -6421,11 +6421,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 9169.53,
-      "InStore_Sales": 7175.47,
+      "Total_Sales": 9202.11,
+      "InStore_Sales": 7208.05,
       "Online_Sales": 1994.06,
-      "Orders": 358,
-      "Avg_Ticket": 25.61
+      "Orders": 359,
+      "Avg_Ticket": 25.63
     },
     {
       "Location_Name": "Halifax Shopping Centre",
@@ -6487,11 +6487,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 13202.6,
-      "InStore_Sales": 9992.8,
+      "Total_Sales": 13218.89,
+      "InStore_Sales": 10009.09,
       "Online_Sales": 3209.8,
-      "Orders": 539,
-      "Avg_Ticket": 24.49
+      "Orders": 540,
+      "Avg_Ticket": 24.48
     },
     {
       "Location_Name": "Lower Sackville",
@@ -6575,11 +6575,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 9131.61,
-      "InStore_Sales": 7414.72,
+      "Total_Sales": 9183.18,
+      "InStore_Sales": 7466.29,
       "Online_Sales": 1716.89,
-      "Orders": 399,
-      "Avg_Ticket": 22.89
+      "Orders": 400,
+      "Avg_Ticket": 22.96
     },
     {
       "Location_Name": "Penhorn",
@@ -6742,8 +6742,8 @@
     {
       "department_name": "Eat - In",
       "classified_as": "in-store",
-      "net_sales": 254378.31,
-      "orders": 11335
+      "net_sales": 254515.11,
+      "orders": 11340
     },
     {
       "department_name": "Skip The Dishes",
