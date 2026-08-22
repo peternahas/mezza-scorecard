@@ -16049,7 +16049,11 @@
     "orders/2026-08-22/bill_info/1787404450-1787404450268.json",
     "orders/2026-08-22/bill_info/1787404944-1787404944196.json",
     "orders/2026-08-22/bill_info/1787404975-1787404975631.json",
-    "orders/2026-08-22/bill_info/1787405340-1787405340368.json"
+    "orders/2026-08-22/bill_info/1787405340-1787405340368.json",
+    "orders/2026-08-22/bill_info/1787406207-1787406207492.json",
+    "orders/2026-08-22/bill_info/1787406730-1787406730737.json",
+    "orders/2026-08-22/bill_info/1787406848-1787406848228.json",
+    "orders/2026-08-22/bill_info/1787407101-1787407101497.json"
   ],
   "orders": {
     "45319": {
@@ -111852,6 +111856,24 @@
       },
       "tips": 1
     },
+    "235018": {
+      "locationName": "Scotia Square",
+      "locationType": "Corp",
+      "businessDate": "2026-08-22",
+      "orderType": "Delivery",
+      "openingTime": "10:49",
+      "dayPart": "Breakfast",
+      "netSales": 24.09,
+      "inStoreSales": 0,
+      "onlineSales": 24.09,
+      "deptSales": {
+        "Uber Eats": 24.09
+      },
+      "paymentAmounts": {
+        "UberEats": 27.46
+      },
+      "tips": 0
+    },
     "303577": {
       "locationName": "Morton Ave",
       "locationType": "Franchisee",
@@ -198289,6 +198311,25 @@
       },
       "tips": 0.01
     },
+    "400576": {
+      "locationName": "Burnside",
+      "locationType": "Corp",
+      "businessDate": "2026-08-22",
+      "orderType": "Delivery",
+      "openingTime": "10:53",
+      "dayPart": "Breakfast",
+      "netSales": 20.98,
+      "inStoreSales": 0,
+      "onlineSales": 20.98,
+      "deptSales": {
+        "Uber Eats": 20.98
+      },
+      "paymentAmounts": {
+        "UberEats": 23.92,
+        "OLO_ROUNDING": -0.01
+      },
+      "tips": 0
+    },
     "416668": {
       "locationName": "Cole Harbour",
       "locationType": "Franchisee",
@@ -237150,6 +237191,24 @@
       },
       "tips": 2.79
     },
+    "504904": {
+      "locationName": "Halifax Shopping Centre",
+      "locationType": "Corp",
+      "businessDate": "2026-08-22",
+      "orderType": "QSR",
+      "openingTime": "10:27",
+      "dayPart": "Breakfast",
+      "netSales": 19.29,
+      "inStoreSales": 19.29,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 19.29
+      },
+      "paymentAmounts": {
+        "DEBIT": 21.99
+      },
+      "tips": 3.3
+    },
     "554641": {
       "locationName": "Barrington",
       "locationType": "Corp",
@@ -274350,6 +274409,6 @@
       "reason": "Beta Lanner -- Givex certification/test store, not a real Mezza location"
     }
   },
-  "payloadsProcessedTotal": 16050,
+  "payloadsProcessedTotal": 16054,
   "payloadsSkippedTotal": 0
 }
