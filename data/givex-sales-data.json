@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-08-22T13:00:08.096Z",
+  "generated_at": "2026-08-22T13:38:17.918Z",
   "source": "givex-webhook-kv",
   "full_resync": false,
-  "payloads_processed_this_run": 0,
+  "payloads_processed_this_run": 5,
   "payloads_skipped_this_run": 0,
-  "payloads_processed_total": 16045,
+  "payloads_processed_total": 16050,
   "payloads_skipped_total": 0,
-  "orders_total": 14289,
+  "orders_total": 14293,
   "days": [
     {
       "Location_Name": "Antigonish",
@@ -1528,6 +1528,27 @@
         "OLO_ROUNDING": 29.86
       },
       "Tips_Total": 84.58
+    },
+    {
+      "Location_Name": "Clayton Park",
+      "Location_Type": "Corp",
+      "Business_Date": "2026-08-22",
+      "Total_Sales": 72.05,
+      "InStore_Sales": 72.05,
+      "Online_Sales": 0,
+      "Orders": 2,
+      "Avg_Ticket": 36.03,
+      "Order_Type_Sales": {
+        "QSR": 72.05
+      },
+      "Day_Part_Sales": {
+        "Breakfast": 72.05
+      },
+      "Payment_Mix": {
+        "MASTERCARD": 46.47,
+        "VISA": 35.66
+      },
+      "Tips_Total": 6.97
     },
     {
       "Location_Name": "Cole Harbour",
@@ -4838,6 +4859,28 @@
       "Tips_Total": 90.17
     },
     {
+      "Location_Name": "Scotia Square",
+      "Location_Type": "Corp",
+      "Business_Date": "2026-08-22",
+      "Total_Sales": 43.38,
+      "InStore_Sales": 19.29,
+      "Online_Sales": 24.09,
+      "Orders": 2,
+      "Avg_Ticket": 21.69,
+      "Order_Type_Sales": {
+        "Delivery": 24.09,
+        "QSR": 19.29
+      },
+      "Day_Part_Sales": {
+        "Breakfast": 43.38
+      },
+      "Payment_Mix": {
+        "UberEats": 27.46,
+        "VISA": 21.99
+      },
+      "Tips_Total": 1
+    },
+    {
       "Location_Name": "Stratford",
       "Location_Type": "Franchisee",
       "Business_Date": "2026-08-14",
@@ -5714,11 +5757,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 14242.72,
-      "InStore_Sales": 11718.27,
+      "Total_Sales": 14314.77,
+      "InStore_Sales": 11790.32,
       "Online_Sales": 2524.45,
-      "Orders": 587,
-      "Avg_Ticket": 24.26
+      "Orders": 589,
+      "Avg_Ticket": 24.3
     },
     {
       "Location_Name": "Cole Harbour",
@@ -6000,10 +6043,10 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 11259.92,
-      "InStore_Sales": 8978.04,
-      "Online_Sales": 2281.88,
-      "Orders": 510,
+      "Total_Sales": 11303.3,
+      "InStore_Sales": 8997.33,
+      "Online_Sales": 2305.97,
+      "Orders": 512,
       "Avg_Ticket": 22.08
     },
     {
@@ -6095,14 +6138,14 @@
     {
       "department_name": "Uber Eats",
       "classified_as": "online",
-      "net_sales": 31439.3,
-      "orders": 886
+      "net_sales": 31463.39,
+      "orders": 887
     },
     {
       "department_name": "Eat - In",
       "classified_as": "in-store",
-      "net_sales": 238297.96,
-      "orders": 10603
+      "net_sales": 238389.3,
+      "orders": 10606
     },
     {
       "department_name": "Skip The Dishes",

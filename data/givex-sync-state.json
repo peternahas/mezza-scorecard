@@ -16044,7 +16044,12 @@
     "orders/2026-08-21/bill_info/1787377146-1787377146912.json",
     "orders/2026-08-21/bill_info/1787377333-1787377333187.json",
     "orders/2026-08-21/bill_info/1787378405-1787378405869.json",
-    "orders/2026-08-21/bill_info/1787379735-1787379735264.json"
+    "orders/2026-08-21/bill_info/1787379735-1787379735264.json",
+    "orders/2026-08-22/bill_info/1787404226-1787404226853.json",
+    "orders/2026-08-22/bill_info/1787404450-1787404450268.json",
+    "orders/2026-08-22/bill_info/1787404944-1787404944196.json",
+    "orders/2026-08-22/bill_info/1787404975-1787404975631.json",
+    "orders/2026-08-22/bill_info/1787405340-1787405340368.json"
   ],
   "orders": {
     "45319": {
@@ -111810,6 +111815,42 @@
         "DoorDash": 34.52
       },
       "tips": 0
+    },
+    "235008": {
+      "locationName": "Scotia Square",
+      "locationType": "Corp",
+      "businessDate": "2026-08-22",
+      "orderType": "Delivery",
+      "openingTime": "10:07",
+      "dayPart": "Breakfast",
+      "netSales": 24.09,
+      "inStoreSales": 0,
+      "onlineSales": 24.09,
+      "deptSales": {
+        "Uber Eats": 24.09
+      },
+      "paymentAmounts": {
+        "UberEats": 27.46
+      },
+      "tips": 0
+    },
+    "235011": {
+      "locationName": "Scotia Square",
+      "locationType": "Corp",
+      "businessDate": "2026-08-22",
+      "orderType": "QSR",
+      "openingTime": "10:16",
+      "dayPart": "Breakfast",
+      "netSales": 19.29,
+      "inStoreSales": 19.29,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 19.29
+      },
+      "paymentAmounts": {
+        "VISA": 21.99
+      },
+      "tips": 1
     },
     "303577": {
       "locationName": "Morton Ave",
@@ -274264,6 +274305,42 @@
         "DEBIT": 19.37
       },
       "tips": 0
+    },
+    "663805": {
+      "locationName": "Clayton Park",
+      "locationType": "Corp",
+      "businessDate": "2026-08-22",
+      "orderType": "QSR",
+      "openingTime": "10:18",
+      "dayPart": "Breakfast",
+      "netSales": 40.77,
+      "inStoreSales": 40.77,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 40.77
+      },
+      "paymentAmounts": {
+        "MASTERCARD": 46.47
+      },
+      "tips": 6.97
+    },
+    "663806": {
+      "locationName": "Clayton Park",
+      "locationType": "Corp",
+      "businessDate": "2026-08-22",
+      "orderType": "QSR",
+      "openingTime": "10:19",
+      "dayPart": "Breakfast",
+      "netSales": 31.28,
+      "inStoreSales": 31.28,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 31.28
+      },
+      "paymentAmounts": {
+        "VISA": 35.66
+      },
+      "tips": 0
     }
   },
   "unmappedOutlets": {},
@@ -274273,6 +274350,6 @@
       "reason": "Beta Lanner -- Givex certification/test store, not a real Mezza location"
     }
   },
-  "payloadsProcessedTotal": 16045,
+  "payloadsProcessedTotal": 16050,
   "payloadsSkippedTotal": 0
 }
