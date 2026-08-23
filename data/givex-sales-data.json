@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-08-23T12:34:35.973Z",
+  "generated_at": "2026-08-23T13:19:48.304Z",
   "source": "givex-webhook-kv",
   "full_resync": false,
-  "payloads_processed_this_run": 0,
+  "payloads_processed_this_run": 2,
   "payloads_skipped_this_run": 0,
-  "payloads_processed_total": 17123,
+  "payloads_processed_total": 17125,
   "payloads_skipped_total": 0,
-  "orders_total": 15290,
+  "orders_total": 15291,
   "days": [
     {
       "Location_Name": "Antigonish",
@@ -1128,6 +1128,26 @@
         "VISA": 309.3
       },
       "Tips_Total": 13.84
+    },
+    {
+      "Location_Name": "Burnside",
+      "Location_Type": "Corp",
+      "Business_Date": "2026-08-23",
+      "Total_Sales": 20.73,
+      "InStore_Sales": 0,
+      "Online_Sales": 20.73,
+      "Orders": 1,
+      "Avg_Ticket": 20.73,
+      "Order_Type_Sales": {
+        "Delivery": 20.73
+      },
+      "Day_Part_Sales": {
+        "Breakfast": 20.73
+      },
+      "Payment_Mix": {
+        "SkipTheDishes": 23.63
+      },
+      "Tips_Total": 0
     },
     {
       "Location_Name": "Charlottetown",
@@ -6350,11 +6370,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 24910.11,
+      "Total_Sales": 24930.84,
       "InStore_Sales": 20023.66,
-      "Online_Sales": 4886.45,
-      "Orders": 775,
-      "Avg_Ticket": 32.14
+      "Online_Sales": 4907.18,
+      "Orders": 776,
+      "Avg_Ticket": 32.13
     },
     {
       "Location_Name": "Charlottetown",
@@ -6787,8 +6807,8 @@
     {
       "department_name": "Skip The Dishes",
       "classified_as": "online",
-      "net_sales": 9205.18,
-      "orders": 237
+      "net_sales": 9225.91,
+      "orders": 238
     },
     {
       "department_name": "Catering",

@@ -17122,7 +17122,9 @@
     "orders/2026-08-22/bill_info/1787460703-1787460704080.json",
     "orders/2026-08-22/bill_info/1787461570-1787461571151.json",
     "orders/2026-08-22/bill_info/1787461759-1787461759723.json",
-    "orders/2026-08-22/bill_info/1787466818-1787466818946.json"
+    "orders/2026-08-22/bill_info/1787466818-1787466818946.json",
+    "orders/2026-08-23/bill_info/1787490631-1787490632202.json",
+    "orders/2026-08-23/bill_info/1787490741-1787490741426.json"
   ],
   "orders": {
     "45319": {
@@ -210416,6 +210418,24 @@
       },
       "tips": 0
     },
+    "400652": {
+      "locationName": "Burnside",
+      "locationType": "Corp",
+      "businessDate": "2026-08-23",
+      "orderType": "Delivery",
+      "openingTime": "10:06",
+      "dayPart": "Breakfast",
+      "netSales": 20.73,
+      "inStoreSales": 0,
+      "onlineSales": 20.73,
+      "deptSales": {
+        "Skip The Dishes": 20.73
+      },
+      "paymentAmounts": {
+        "SkipTheDishes": 23.63
+      },
+      "tips": 0
+    },
     "416668": {
       "locationName": "Cole Harbour",
       "locationType": "Franchisee",
@@ -293429,6 +293449,6 @@
       "reason": "Beta Lanner -- Givex certification/test store, not a real Mezza location"
     }
   },
-  "payloadsProcessedTotal": 17123,
+  "payloadsProcessedTotal": 17125,
   "payloadsSkippedTotal": 0
 }
