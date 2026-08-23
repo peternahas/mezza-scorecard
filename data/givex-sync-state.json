@@ -17121,7 +17121,8 @@
     "orders/2026-08-22/bill_info/1787460341-1787460341905.json",
     "orders/2026-08-22/bill_info/1787460703-1787460704080.json",
     "orders/2026-08-22/bill_info/1787461570-1787461571151.json",
-    "orders/2026-08-22/bill_info/1787461759-1787461759723.json"
+    "orders/2026-08-22/bill_info/1787461759-1787461759723.json",
+    "orders/2026-08-22/bill_info/1787466818-1787466818946.json"
   ],
   "orders": {
     "45319": {
@@ -272640,6 +272641,24 @@
       },
       "tips": 0
     },
+    "556197": {
+      "locationName": "Barrington",
+      "locationType": "Corp",
+      "businessDate": "2026-08-22",
+      "orderType": "QSR",
+      "openingTime": "03:26",
+      "dayPart": "Late Night",
+      "netSales": 14.99,
+      "inStoreSales": 14.99,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 14.99
+      },
+      "paymentAmounts": {
+        "VISA": 17.09
+      },
+      "tips": 1.71
+    },
     "662093": {
       "locationName": "Clayton Park",
       "locationType": "Corp",
@@ -293410,6 +293429,6 @@
       "reason": "Beta Lanner -- Givex certification/test store, not a real Mezza location"
     }
   },
-  "payloadsProcessedTotal": 17122,
+  "payloadsProcessedTotal": 17123,
   "payloadsSkippedTotal": 0
 }
