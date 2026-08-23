@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-08-23T03:11:15.331Z",
+  "generated_at": "2026-08-23T04:01:08.919Z",
   "source": "givex-webhook-kv",
   "full_resync": false,
-  "payloads_processed_this_run": 23,
+  "payloads_processed_this_run": 2,
   "payloads_skipped_this_run": 0,
-  "payloads_processed_total": 17114,
+  "payloads_processed_total": 17116,
   "payloads_skipped_total": 0,
-  "orders_total": 15281,
+  "orders_total": 15283,
   "days": [
     {
       "Location_Name": "Antigonish",
@@ -521,34 +521,34 @@
       "Location_Name": "Barrington",
       "Location_Type": "Corp",
       "Business_Date": "2026-08-22",
-      "Total_Sales": 1988.14,
-      "InStore_Sales": 1199.06,
+      "Total_Sales": 2063.09,
+      "InStore_Sales": 1274.01,
       "Online_Sales": 789.08,
-      "Orders": 76,
-      "Avg_Ticket": 26.16,
+      "Orders": 78,
+      "Avg_Ticket": 26.45,
       "Order_Type_Sales": {
         "Delivery": 774.19,
-        "QSR": 1199.06,
+        "QSR": 1274.01,
         "Take-Out": 14.89
       },
       "Day_Part_Sales": {
         "Lunch": 811.02,
         "Afternoon": 373.94,
         "Dinner": 24.47,
-        "Late Night": 778.71
+        "Late Night": 853.66
       },
       "Payment_Mix": {
         "OLO_ROUNDING": 11.06,
         "SkipTheDishes": 21.31,
-        "VISA": 314,
+        "VISA": 331.09,
         "UberEats": 741.33,
-        "DEBIT": 602.51,
+        "DEBIT": 670.87,
         "DoorDash": 125.77,
         "MASTERCARD": 325.95,
         "CASH": 84.17,
         "AMEX": 40.18
       },
-      "Tips_Total": 67.79
+      "Tips_Total": 71.5
     },
     {
       "Location_Name": "Bridgewater",
@@ -6306,11 +6306,11 @@
       "Year": 2026,
       "Week_Number": 34,
       "Week_Start": "2026-08-17",
-      "Total_Sales": 16203.95,
-      "InStore_Sales": 9781.24,
+      "Total_Sales": 16278.9,
+      "InStore_Sales": 9856.19,
       "Online_Sales": 6422.71,
-      "Orders": 658,
-      "Avg_Ticket": 24.63
+      "Orders": 660,
+      "Avg_Ticket": 24.66
     },
     {
       "Location_Name": "Bridgewater",
@@ -6781,8 +6781,8 @@
     {
       "department_name": "Eat - In",
       "classified_as": "in-store",
-      "net_sales": 255967.87,
-      "orders": 11414
+      "net_sales": 256042.82,
+      "orders": 11416
     },
     {
       "department_name": "Skip The Dishes",
