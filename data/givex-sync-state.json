@@ -17905,7 +17905,54 @@
     "orders/2026-08-23/bill_info/1787510419-1787510419158.json",
     "orders/2026-08-23/bill_info/1787510423-1787510423390.json",
     "orders/2026-08-23/bill_info/1787510423-1787510423940.json",
-    "orders/2026-08-23/bill_info/1787510438-1787510438576.json"
+    "orders/2026-08-23/bill_info/1787510438-1787510438576.json",
+    "orders/2026-08-23/bill_info/1787510537-1787510537323.json",
+    "orders/2026-08-23/bill_info/1787510541-1787510541511.json",
+    "orders/2026-08-23/bill_info/1787510589-1787510589798.json",
+    "orders/2026-08-23/bill_info/1787510630-1787510630732.json",
+    "orders/2026-08-23/bill_info/1787510631-1787510631366.json",
+    "orders/2026-08-23/bill_info/1787510646-1787510646211.json",
+    "orders/2026-08-23/bill_info/1787510647-1787510647243.json",
+    "orders/2026-08-23/bill_info/1787510744-1787510744693.json",
+    "orders/2026-08-23/bill_info/1787510764-1787510764516.json",
+    "orders/2026-08-23/bill_info/1787510784-1787510784340.json",
+    "orders/2026-08-23/bill_info/1787510805-1787510805870.json",
+    "orders/2026-08-23/bill_info/1787510843-1787510843354.json",
+    "orders/2026-08-23/bill_info/1787510931-1787510931626.json",
+    "orders/2026-08-23/bill_info/1787510949-1787510949529.json",
+    "orders/2026-08-23/bill_info/1787510974-1787510974592.json",
+    "orders/2026-08-23/bill_info/1787510975-1787510975373.json",
+    "orders/2026-08-23/bill_info/1787510989-1787510989196.json",
+    "orders/2026-08-23/bill_info/1787511068-1787511068124.json",
+    "orders/2026-08-23/bill_info/1787511105-1787511105856.json",
+    "orders/2026-08-23/bill_info/1787511106-1787511106635.json",
+    "orders/2026-08-23/bill_info/1787511135-1787511135769.json",
+    "orders/2026-08-23/bill_info/1787511168-1787511168371.json",
+    "orders/2026-08-23/bill_info/1787511169-1787511169744.json",
+    "orders/2026-08-23/bill_info/1787511170-1787511170679.json",
+    "orders/2026-08-23/bill_info/1787511177-1787511177773.json",
+    "orders/2026-08-23/bill_info/1787511201-1787511201704.json",
+    "orders/2026-08-23/bill_info/1787511272-1787511272109.json",
+    "orders/2026-08-23/bill_info/1787511272-1787511272982.json",
+    "orders/2026-08-23/bill_info/1787511331-1787511331499.json",
+    "orders/2026-08-23/bill_info/1787511363-1787511363757.json",
+    "orders/2026-08-23/bill_info/1787511365-1787511365109.json",
+    "orders/2026-08-23/bill_info/1787511365-1787511365682.json",
+    "orders/2026-08-23/bill_info/1787511382-1787511382585.json",
+    "orders/2026-08-23/bill_info/1787511468-1787511468380.json",
+    "orders/2026-08-23/bill_info/1787511552-1787511552236.json",
+    "orders/2026-08-23/bill_info/1787511622-1787511622745.json",
+    "orders/2026-08-23/bill_info/1787511629-1787511629119.json",
+    "orders/2026-08-23/bill_info/1787511665-1787511665829.json",
+    "orders/2026-08-23/bill_info/1787511683-1787511683610.json",
+    "orders/2026-08-23/bill_info/1787511684-1787511684244.json",
+    "orders/2026-08-23/bill_info/1787511689-1787511689560.json",
+    "orders/2026-08-23/bill_info/1787511690-1787511690372.json",
+    "orders/2026-08-23/bill_info/1787511720-1787511720793.json",
+    "orders/2026-08-23/bill_info/1787511721-1787511721746.json",
+    "orders/2026-08-23/bill_info/1787511785-1787511785814.json",
+    "orders/2026-08-23/bill_info/1787511786-1787511786531.json",
+    "orders/2026-08-23/bill_info/1787511795-1787511795760.json"
   ],
   "orders": {
     "45319": {
@@ -25270,6 +25317,24 @@
       },
       "paymentAmounts": {
         "DoorDash": 51.38
+      },
+      "tips": 0
+    },
+    "45973": {
+      "locationName": "Mount Pearl",
+      "locationType": "Franchisee",
+      "businessDate": "2026-08-23",
+      "orderType": "Delivery",
+      "openingTime": "16:08",
+      "dayPart": "Afternoon",
+      "netSales": 28.28,
+      "inStoreSales": 0,
+      "onlineSales": 28.28,
+      "deptSales": {
+        "Uber Eats": 28.28
+      },
+      "paymentAmounts": {
+        "UberEats": 32.52
       },
       "tips": 0
     },
@@ -35435,6 +35500,24 @@
       },
       "paymentAmounts": {
         "VISA": 18.73
+      },
+      "tips": 0
+    },
+    "47047": {
+      "locationName": "Charlottetown",
+      "locationType": "Corp",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:25",
+      "dayPart": "Afternoon",
+      "netSales": 38.870000000000005,
+      "inStoreSales": 38.870000000000005,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 38.870000000000005
+      },
+      "paymentAmounts": {
+        "DEBIT": 44.7
       },
       "tips": 0
     },
@@ -48038,6 +48121,25 @@
         "VISA": 58.98
       },
       "tips": 5.9
+    },
+    "71594": {
+      "locationName": "Bridgewater",
+      "locationType": "Franchisee",
+      "businessDate": "2026-08-23",
+      "orderType": "Delivery",
+      "openingTime": "15:57",
+      "dayPart": "Afternoon",
+      "netSales": 59.650000000000006,
+      "inStoreSales": 0,
+      "onlineSales": 59.650000000000006,
+      "deptSales": {
+        "Door Dash - Delivery": 59.650000000000006
+      },
+      "paymentAmounts": {
+        "DoorDash": 56.6,
+        "OLO_ROUNDING": 11.4
+      },
+      "tips": 0
     },
     "110307": {
       "locationName": "Plaza",
@@ -63073,6 +63175,24 @@
       },
       "tips": 2.86
     },
+    "114016": {
+      "locationName": "Fall River",
+      "locationType": "Franchisee",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:36",
+      "dayPart": "Afternoon",
+      "netSales": 17.29,
+      "inStoreSales": 17.29,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 17.29
+      },
+      "paymentAmounts": {
+        "DEBIT": 19.71
+      },
+      "tips": 1.97
+    },
     "132696": {
       "locationName": "Penhorn",
       "locationType": "Franchisee",
@@ -75137,6 +75257,114 @@
         "VISA": 37.14
       },
       "tips": 0
+    },
+    "133753": {
+      "locationName": "Penhorn",
+      "locationType": "Franchisee",
+      "businessDate": "2026-08-23",
+      "orderType": "Take-Out",
+      "openingTime": "15:47",
+      "dayPart": "Afternoon",
+      "netSales": 38.58,
+      "inStoreSales": 38.58,
+      "onlineSales": 0,
+      "deptSales": {
+        "Take - Out": 38.58
+      },
+      "paymentAmounts": {
+        "MASTERCARD": 43.98
+      },
+      "tips": 4.4
+    },
+    "133754": {
+      "locationName": "Penhorn",
+      "locationType": "Franchisee",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:48",
+      "dayPart": "Afternoon",
+      "netSales": 19.29,
+      "inStoreSales": 19.29,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 19.29
+      },
+      "paymentAmounts": {
+        "DEBIT": 21.99
+      },
+      "tips": 0
+    },
+    "133755": {
+      "locationName": "Penhorn",
+      "locationType": "Franchisee",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:49",
+      "dayPart": "Afternoon",
+      "netSales": 23.269999999999996,
+      "inStoreSales": 23.269999999999996,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 23.269999999999996
+      },
+      "paymentAmounts": {
+        "MASTERCARD": 26.53
+      },
+      "tips": 3.98
+    },
+    "133756": {
+      "locationName": "Penhorn",
+      "locationType": "Franchisee",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:54",
+      "dayPart": "Afternoon",
+      "netSales": 11.73,
+      "inStoreSales": 11.73,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 11.73
+      },
+      "paymentAmounts": {
+        "MASTERCARD": 13.38
+      },
+      "tips": 0
+    },
+    "133757": {
+      "locationName": "Penhorn",
+      "locationType": "Franchisee",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:55",
+      "dayPart": "Afternoon",
+      "netSales": 21.98,
+      "inStoreSales": 21.98,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 21.98
+      },
+      "paymentAmounts": {
+        "VISA": 25.06
+      },
+      "tips": 0
+    },
+    "133758": {
+      "locationName": "Penhorn",
+      "locationType": "Franchisee",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "16:00",
+      "dayPart": "Afternoon",
+      "netSales": 14.98,
+      "inStoreSales": 14.98,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 14.98
+      },
+      "paymentAmounts": {
+        "VISA": 17.08
+      },
+      "tips": 1.71
     },
     "149148": {
       "locationName": "Stratford",
@@ -92134,6 +92362,42 @@
       },
       "tips": 1.94
     },
+    "156267": {
+      "locationName": "Antigonish",
+      "locationType": "Franchisee",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "14:31",
+      "dayPart": "Afternoon",
+      "netSales": 62.14,
+      "inStoreSales": 62.14,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 62.14
+      },
+      "paymentAmounts": {
+        "DEBIT": 70.82
+      },
+      "tips": 0
+    },
+    "156268": {
+      "locationName": "Antigonish",
+      "locationType": "Franchisee",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:40",
+      "dayPart": "Afternoon",
+      "netSales": 19.29,
+      "inStoreSales": 19.29,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 19.29
+      },
+      "paymentAmounts": {
+        "DEBIT": 21.99
+      },
+      "tips": 2
+    },
     "175460": {
       "locationName": "New Minas",
       "locationType": "Franchisee",
@@ -103965,6 +104229,96 @@
         "VISA": 54.68
       },
       "tips": 0
+    },
+    "176784": {
+      "locationName": "New Minas",
+      "locationType": "Franchisee",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:34",
+      "dayPart": "Afternoon",
+      "netSales": 23.98,
+      "inStoreSales": 23.98,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 23.98
+      },
+      "paymentAmounts": {
+        "CASH": 27.34
+      },
+      "tips": 0
+    },
+    "176785": {
+      "locationName": "New Minas",
+      "locationType": "Franchisee",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:41",
+      "dayPart": "Afternoon",
+      "netSales": 0.99,
+      "inStoreSales": 0.99,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 0.99
+      },
+      "paymentAmounts": {
+        "CASH": 1.13
+      },
+      "tips": 0
+    },
+    "176786": {
+      "locationName": "New Minas",
+      "locationType": "Franchisee",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:51",
+      "dayPart": "Afternoon",
+      "netSales": 5.48,
+      "inStoreSales": 5.48,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 5.48
+      },
+      "paymentAmounts": {
+        "VISA": 6.24
+      },
+      "tips": 0.94
+    },
+    "176788": {
+      "locationName": "New Minas",
+      "locationType": "Franchisee",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:52",
+      "dayPart": "Afternoon",
+      "netSales": 11.99,
+      "inStoreSales": 11.99,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 11.99
+      },
+      "paymentAmounts": {
+        "DEBIT": 13.67
+      },
+      "tips": 2.05
+    },
+    "176791": {
+      "locationName": "New Minas",
+      "locationType": "Franchisee",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:54",
+      "dayPart": "Afternoon",
+      "netSales": 14.99,
+      "inStoreSales": 14.99,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 14.99
+      },
+      "paymentAmounts": {
+        "DEBIT": 17.09
+      },
+      "tips": 1.71
     },
     "213095": {
       "locationName": "Fredericton",
@@ -135990,6 +136344,24 @@
       },
       "tips": 0
     },
+    "304514": {
+      "locationName": "Morton Ave",
+      "locationType": "Franchisee",
+      "businessDate": "2026-08-23",
+      "orderType": "Take-Out",
+      "openingTime": "15:32",
+      "dayPart": "Afternoon",
+      "netSales": 23.47,
+      "inStoreSales": 23.47,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 23.47
+      },
+      "paymentAmounts": {
+        "DEBIT": 27
+      },
+      "tips": 4.05
+    },
     "317006": {
       "locationName": "Truro",
       "locationType": "Franchisee",
@@ -150307,6 +150679,24 @@
       },
       "tips": 0
     },
+    "318232": {
+      "locationName": "Truro",
+      "locationType": "Franchisee",
+      "businessDate": "2026-08-23",
+      "orderType": "Delivery",
+      "openingTime": "14:58",
+      "dayPart": "Afternoon",
+      "netSales": 20.29,
+      "inStoreSales": 0,
+      "onlineSales": 20.29,
+      "deptSales": {
+        "Door Dash - Delivery": 20.29
+      },
+      "paymentAmounts": {
+        "DoorDash": 23.13
+      },
+      "tips": 0
+    },
     "318233": {
       "locationName": "Truro",
       "locationType": "Franchisee",
@@ -163369,6 +163759,24 @@
       },
       "tips": 0
     },
+    "341163": {
+      "locationName": "Tantallon",
+      "locationType": "Franchisee",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:36",
+      "dayPart": "Afternoon",
+      "netSales": 19.29,
+      "inStoreSales": 19.29,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 19.29
+      },
+      "paymentAmounts": {
+        "MASTERCARD": 21.99
+      },
+      "tips": 2
+    },
     "349754": {
       "locationName": "Herring Cove (Spryfield)",
       "locationType": "Corp",
@@ -173117,6 +173525,24 @@
       },
       "tips": 0
     },
+    "350693": {
+      "locationName": "Herring Cove (Spryfield)",
+      "locationType": "Corp",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:14",
+      "dayPart": "Afternoon",
+      "netSales": 16.58,
+      "inStoreSales": 16.58,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 16.58
+      },
+      "paymentAmounts": {
+        "VISA": 18.9
+      },
+      "tips": 1.89
+    },
     "350694": {
       "locationName": "Herring Cove (Spryfield)",
       "locationType": "Corp",
@@ -173133,6 +173559,42 @@
       "paymentAmounts": {
         "UberEats": 21.31,
         "OLO_ROUNDING": -0.01
+      },
+      "tips": 0
+    },
+    "350695": {
+      "locationName": "Herring Cove (Spryfield)",
+      "locationType": "Corp",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:41",
+      "dayPart": "Afternoon",
+      "netSales": 34.57,
+      "inStoreSales": 34.57,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 34.57
+      },
+      "paymentAmounts": {
+        "MASTERCARD": 39.41
+      },
+      "tips": 3
+    },
+    "350696": {
+      "locationName": "Herring Cove (Spryfield)",
+      "locationType": "Corp",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:46",
+      "dayPart": "Afternoon",
+      "netSales": 38.27,
+      "inStoreSales": 38.27,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 38.27
+      },
+      "paymentAmounts": {
+        "VISA": 43.63
       },
       "tips": 0
     },
@@ -189654,6 +190116,24 @@
       },
       "tips": 0
     },
+    "363236": {
+      "locationName": "Larry Uteck",
+      "locationType": "Franchisee",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:28",
+      "dayPart": "Afternoon",
+      "netSales": 7.99,
+      "inStoreSales": 7.99,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 7.99
+      },
+      "paymentAmounts": {
+        "AMEX": 7.99
+      },
+      "tips": 0
+    },
     "363237": {
       "locationName": "Larry Uteck",
       "locationType": "Franchisee",
@@ -202712,6 +203192,61 @@
         "VISA": 42.35
       },
       "tips": 4.24
+    },
+    "376403": {
+      "locationName": "Lower Sackville",
+      "locationType": "Corp",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:22",
+      "dayPart": "Afternoon",
+      "netSales": 63.42000000000001,
+      "inStoreSales": 63.42000000000001,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 63.42000000000001
+      },
+      "paymentAmounts": {
+        "DEBIT": 72.29
+      },
+      "tips": 7.23
+    },
+    "376404": {
+      "locationName": "Lower Sackville",
+      "locationType": "Corp",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:38",
+      "dayPart": "Afternoon",
+      "netSales": 16.29,
+      "inStoreSales": 16.29,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 16.29
+      },
+      "paymentAmounts": {
+        "DEBIT": 18.57
+      },
+      "tips": 0
+    },
+    "376405": {
+      "locationName": "Lower Sackville",
+      "locationType": "Corp",
+      "businessDate": "2026-08-23",
+      "orderType": "Delivery",
+      "openingTime": "15:44",
+      "dayPart": "Afternoon",
+      "netSales": 33.870000000000005,
+      "inStoreSales": 0,
+      "onlineSales": 33.870000000000005,
+      "deptSales": {
+        "Door Dash - Delivery": 33.870000000000005
+      },
+      "paymentAmounts": {
+        "DoorDash": 30.63,
+        "OLO_ROUNDING": 7.98
+      },
+      "tips": 0
     },
     "399303": {
       "locationName": "Burnside",
@@ -236249,6 +236784,24 @@
       },
       "tips": 0
     },
+    "418053": {
+      "locationName": "Cole Harbour",
+      "locationType": "Franchisee",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:33",
+      "dayPart": "Afternoon",
+      "netSales": 22.39,
+      "inStoreSales": 22.39,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 22.39
+      },
+      "paymentAmounts": {
+        "DEBIT": 25.52
+      },
+      "tips": 2.55
+    },
     "418054": {
       "locationName": "Cole Harbour",
       "locationType": "Franchisee",
@@ -236265,6 +236818,60 @@
       "paymentAmounts": {
         "DoorDash": 38.4,
         "OLO_ROUNDING": -0.01
+      },
+      "tips": 0
+    },
+    "418055": {
+      "locationName": "Cole Harbour",
+      "locationType": "Franchisee",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:41",
+      "dayPart": "Afternoon",
+      "netSales": 16.98,
+      "inStoreSales": 16.98,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 16.98
+      },
+      "paymentAmounts": {
+        "DEBIT": 19.36
+      },
+      "tips": 0
+    },
+    "418056": {
+      "locationName": "Cole Harbour",
+      "locationType": "Franchisee",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:44",
+      "dayPart": "Afternoon",
+      "netSales": 16.98,
+      "inStoreSales": 16.98,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 16.98
+      },
+      "paymentAmounts": {
+        "VISA": 19.36
+      },
+      "tips": 0
+    },
+    "418057": {
+      "locationName": "Cole Harbour",
+      "locationType": "Franchisee",
+      "businessDate": "2026-08-23",
+      "orderType": "Take-Out",
+      "openingTime": "15:56",
+      "dayPart": "Afternoon",
+      "netSales": 26.48,
+      "inStoreSales": 0,
+      "onlineSales": 26.48,
+      "deptSales": {
+        "Uber Eats": 26.48
+      },
+      "paymentAmounts": {
+        "UberEats": 30.19
       },
       "tips": 0
     },
@@ -265822,6 +266429,132 @@
         "DEBIT": 22.54
       },
       "tips": 2.25
+    },
+    "505350": {
+      "locationName": "Halifax Shopping Centre",
+      "locationType": "Corp",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:37",
+      "dayPart": "Afternoon",
+      "netSales": 49.36,
+      "inStoreSales": 49.36,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 49.36
+      },
+      "paymentAmounts": {
+        "VISA": 56.27
+      },
+      "tips": 11.25
+    },
+    "505351": {
+      "locationName": "Halifax Shopping Centre",
+      "locationType": "Corp",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:43",
+      "dayPart": "Afternoon",
+      "netSales": 14.99,
+      "inStoreSales": 14.99,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 14.99
+      },
+      "paymentAmounts": {
+        "DEBIT": 17.09
+      },
+      "tips": 1.71
+    },
+    "505352": {
+      "locationName": "Halifax Shopping Centre",
+      "locationType": "Corp",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:46",
+      "dayPart": "Afternoon",
+      "netSales": 19.29,
+      "inStoreSales": 19.29,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 19.29
+      },
+      "paymentAmounts": {
+        "DEBIT": 21.99
+      },
+      "tips": 3.3
+    },
+    "505353": {
+      "locationName": "Halifax Shopping Centre",
+      "locationType": "Corp",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:47",
+      "dayPart": "Afternoon",
+      "netSales": 29.98,
+      "inStoreSales": 29.98,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 29.98
+      },
+      "paymentAmounts": {
+        "DEBIT": 34.18
+      },
+      "tips": 0
+    },
+    "505354": {
+      "locationName": "Halifax Shopping Centre",
+      "locationType": "Corp",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:51",
+      "dayPart": "Afternoon",
+      "netSales": 9.99,
+      "inStoreSales": 9.99,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 9.99
+      },
+      "paymentAmounts": {
+        "DEBIT": 11.39
+      },
+      "tips": 0
+    },
+    "505355": {
+      "locationName": "Halifax Shopping Centre",
+      "locationType": "Corp",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:54",
+      "dayPart": "Afternoon",
+      "netSales": 21.279999999999998,
+      "inStoreSales": 21.279999999999998,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 21.279999999999998
+      },
+      "paymentAmounts": {
+        "CASH": 24.26
+      },
+      "tips": 0
+    },
+    "505356": {
+      "locationName": "Halifax Shopping Centre",
+      "locationType": "Corp",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:54",
+      "dayPart": "Afternoon",
+      "netSales": 22.68,
+      "inStoreSales": 22.68,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 22.68
+      },
+      "paymentAmounts": {
+        "DEBIT": 25.85
+      },
+      "tips": 3.88
     },
     "554641": {
       "locationName": "Barrington",
@@ -307051,6 +307784,79 @@
         "SkipTheDishes": 27.46
       },
       "tips": 0
+    },
+    "664022": {
+      "locationName": "Clayton Park",
+      "locationType": "Corp",
+      "businessDate": "2026-08-23",
+      "orderType": "Delivery",
+      "openingTime": "15:47",
+      "dayPart": "Afternoon",
+      "netSales": 27.38,
+      "inStoreSales": 0,
+      "onlineSales": 27.38,
+      "deptSales": {
+        "Skip The Dishes": 27.38
+      },
+      "paymentAmounts": {
+        "OLO_ROUNDING": 0.01,
+        "SkipTheDishes": 31.21
+      },
+      "tips": 0
+    },
+    "664023": {
+      "locationName": "Clayton Park",
+      "locationType": "Corp",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:48",
+      "dayPart": "Afternoon",
+      "netSales": 22.39,
+      "inStoreSales": 22.39,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 22.39
+      },
+      "paymentAmounts": {
+        "CASH": 25.52
+      },
+      "tips": 0
+    },
+    "664025": {
+      "locationName": "Clayton Park",
+      "locationType": "Corp",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:50",
+      "dayPart": "Afternoon",
+      "netSales": 33.269999999999996,
+      "inStoreSales": 33.269999999999996,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 33.269999999999996
+      },
+      "paymentAmounts": {
+        "VISA": 37.93
+      },
+      "tips": 2
+    },
+    "664026": {
+      "locationName": "Clayton Park",
+      "locationType": "Corp",
+      "businessDate": "2026-08-23",
+      "orderType": "QSR",
+      "openingTime": "15:51",
+      "dayPart": "Afternoon",
+      "netSales": 32.58,
+      "inStoreSales": 32.58,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 32.58
+      },
+      "paymentAmounts": {
+        "DEBIT": 37.14
+      },
+      "tips": 0
     }
   },
   "unmappedOutlets": {},
@@ -307060,6 +307866,6 @@
       "reason": "Beta Lanner -- Givex certification/test store, not a real Mezza location"
     }
   },
-  "payloadsProcessedTotal": 17906,
+  "payloadsProcessedTotal": 17953,
   "payloadsSkippedTotal": 0
 }
