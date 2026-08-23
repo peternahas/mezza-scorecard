@@ -17124,7 +17124,8 @@
     "orders/2026-08-22/bill_info/1787461759-1787461759723.json",
     "orders/2026-08-22/bill_info/1787466818-1787466818946.json",
     "orders/2026-08-23/bill_info/1787490631-1787490632202.json",
-    "orders/2026-08-23/bill_info/1787490741-1787490741426.json"
+    "orders/2026-08-23/bill_info/1787490741-1787490741426.json",
+    "orders/2026-08-23/bill_info/1787491839-1787491839790.json"
   ],
   "orders": {
     "45319": {
@@ -225980,6 +225981,24 @@
       },
       "tips": 0
     },
+    "418017": {
+      "locationName": "Cole Harbour",
+      "locationType": "Franchisee",
+      "businessDate": "2026-08-23",
+      "orderType": "Bar",
+      "openingTime": "10:07",
+      "dayPart": "Breakfast",
+      "netSales": 489.60000000000025,
+      "inStoreSales": 489.60000000000025,
+      "onlineSales": 0,
+      "deptSales": {
+        "Catering": 489.60000000000025
+      },
+      "paymentAmounts": {
+        "CASH": 558.2
+      },
+      "tips": 0
+    },
     "503018": {
       "locationName": "Halifax Shopping Centre",
       "locationType": "Corp",
@@ -293449,6 +293468,6 @@
       "reason": "Beta Lanner -- Givex certification/test store, not a real Mezza location"
     }
   },
-  "payloadsProcessedTotal": 17125,
+  "payloadsProcessedTotal": 17126,
   "payloadsSkippedTotal": 0
 }
