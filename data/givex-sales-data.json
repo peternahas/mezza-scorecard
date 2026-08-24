@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-08-24T12:03:57.942Z",
+  "generated_at": "2026-08-24T13:12:22.298Z",
   "source": "givex-webhook-kv",
   "full_resync": false,
-  "payloads_processed_this_run": 0,
+  "payloads_processed_this_run": 2,
   "payloads_skipped_this_run": 0,
-  "payloads_processed_total": 18246,
+  "payloads_processed_total": 18248,
   "payloads_skipped_total": 0,
-  "orders_total": 16280,
+  "orders_total": 16282,
   "days": [
     {
       "Location_Name": "Antigonish",
@@ -1246,6 +1246,26 @@
         "DoorDash": 35.52
       },
       "Tips_Total": 14.92
+    },
+    {
+      "Location_Name": "Burnside",
+      "Location_Type": "Corp",
+      "Business_Date": "2026-08-24",
+      "Total_Sales": 20.73,
+      "InStore_Sales": 0,
+      "Online_Sales": 20.73,
+      "Orders": 1,
+      "Avg_Ticket": 20.73,
+      "Order_Type_Sales": {
+        "Delivery": 20.73
+      },
+      "Day_Part_Sales": {
+        "Breakfast": 20.73
+      },
+      "Payment_Mix": {
+        "SkipTheDishes": 23.63
+      },
+      "Tips_Total": 0
     },
     {
       "Location_Name": "Charlottetown",
@@ -5989,6 +6009,26 @@
       "Tips_Total": 16.36
     },
     {
+      "Location_Name": "Scotia Square",
+      "Location_Type": "Corp",
+      "Business_Date": "2026-08-24",
+      "Total_Sales": 6.19,
+      "InStore_Sales": 6.19,
+      "Online_Sales": 0,
+      "Orders": 1,
+      "Avg_Ticket": 6.19,
+      "Order_Type_Sales": {
+        "QSR": 6.19
+      },
+      "Day_Part_Sales": {
+        "Breakfast": 6.19
+      },
+      "Payment_Mix": {
+        "CASH": 7.06
+      },
+      "Tips_Total": 0
+    },
+    {
       "Location_Name": "Stratford",
       "Location_Type": "Franchisee",
       "Business_Date": "2026-08-14",
@@ -7006,6 +7046,17 @@
       "Avg_Ticket": 31.85
     },
     {
+      "Location_Name": "Burnside",
+      "Year": 2026,
+      "Week_Number": 35,
+      "Week_Start": "2026-08-24",
+      "Total_Sales": 20.73,
+      "InStore_Sales": 0,
+      "Online_Sales": 20.73,
+      "Orders": 1,
+      "Avg_Ticket": 20.73
+    },
+    {
       "Location_Name": "Charlottetown",
       "Year": 2026,
       "Week_Number": 33,
@@ -7336,6 +7387,17 @@
       "Avg_Ticket": 22.4
     },
     {
+      "Location_Name": "Scotia Square",
+      "Year": 2026,
+      "Week_Number": 35,
+      "Week_Start": "2026-08-24",
+      "Total_Sales": 6.19,
+      "InStore_Sales": 6.19,
+      "Online_Sales": 0,
+      "Orders": 1,
+      "Avg_Ticket": 6.19
+    },
+    {
       "Location_Name": "Stratford",
       "Year": 2026,
       "Week_Number": 33,
@@ -7430,14 +7492,14 @@
     {
       "department_name": "Eat - In",
       "classified_as": "in-store",
-      "net_sales": 273550.6,
-      "orders": 12155
+      "net_sales": 273556.79,
+      "orders": 12156
     },
     {
       "department_name": "Skip The Dishes",
       "classified_as": "online",
-      "net_sales": 9897.98,
-      "orders": 258
+      "net_sales": 9918.71,
+      "orders": 259
     },
     {
       "department_name": "Catering",
