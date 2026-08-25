@@ -20472,7 +20472,11 @@
     "orders/2026-08-25/bill_info/1787678921-1787678921050.json",
     "orders/2026-08-25/bill_info/1787678921-1787678921776.json",
     "orders/2026-08-25/bill_info/1787678922-1787678922461.json",
-    "orders/2026-08-25/bill_info/1787678938-1787678938854.json"
+    "orders/2026-08-25/bill_info/1787678938-1787678938854.json",
+    "orders/2026-08-25/bill_info/1787679005-1787679005852.json",
+    "orders/2026-08-25/bill_info/1787679078-1787679078516.json",
+    "orders/2026-08-25/bill_info/1787679101-1787679101593.json",
+    "orders/2026-08-25/bill_info/1787679102-1787679102480.json"
   ],
   "orders": {
     "45319": {
@@ -40303,6 +40307,25 @@
       },
       "paymentAmounts": {
         "CASH": 21.26
+      },
+      "tips": 0
+    },
+    "47253": {
+      "locationName": "Charlottetown",
+      "locationType": "Corp",
+      "businessDate": "2026-08-25",
+      "orderType": "Delivery",
+      "openingTime": "14:26",
+      "dayPart": "Afternoon",
+      "netSales": 41.92,
+      "inStoreSales": 0,
+      "onlineSales": 41.92,
+      "deptSales": {
+        "Door Dash - Delivery": 41.92
+      },
+      "paymentAmounts": {
+        "DoorDash": 39.4,
+        "OLO_ROUNDING": 8.81
       },
       "tips": 0
     },
@@ -130620,6 +130643,24 @@
       },
       "paymentAmounts": {
         "DoorDash": 31.02
+      },
+      "tips": 0
+    },
+    "214257": {
+      "locationName": "Fredericton",
+      "locationType": "Franchisee",
+      "businessDate": "2026-08-25",
+      "orderType": "QSR",
+      "openingTime": "14:25",
+      "dayPart": "Afternoon",
+      "netSales": 19.29,
+      "inStoreSales": 19.29,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 19.29
+      },
+      "paymentAmounts": {
+        "DEBIT": 22.18
       },
       "tips": 0
     },
@@ -305303,6 +305344,42 @@
       },
       "tips": 0
     },
+    "505836": {
+      "locationName": "Halifax Shopping Centre",
+      "locationType": "Corp",
+      "businessDate": "2026-08-25",
+      "orderType": "QSR",
+      "openingTime": "14:27",
+      "dayPart": "Afternoon",
+      "netSales": 19.78,
+      "inStoreSales": 19.78,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 19.78
+      },
+      "paymentAmounts": {
+        "MASTERCARD": 22.54
+      },
+      "tips": 1
+    },
+    "505837": {
+      "locationName": "Halifax Shopping Centre",
+      "locationType": "Corp",
+      "businessDate": "2026-08-25",
+      "orderType": "QSR",
+      "openingTime": "14:29",
+      "dayPart": "Afternoon",
+      "netSales": 16.29,
+      "inStoreSales": 16.29,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 16.29
+      },
+      "paymentAmounts": {
+        "DEBIT": 18.57
+      },
+      "tips": 0
+    },
     "554641": {
       "locationName": "Barrington",
       "locationType": "Corp",
@@ -351974,6 +352051,6 @@
       "reason": "Beta Lanner -- Givex certification/test store, not a real Mezza location"
     }
   },
-  "payloadsProcessedTotal": 20473,
+  "payloadsProcessedTotal": 20477,
   "payloadsSkippedTotal": 0
 }

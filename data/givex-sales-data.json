@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-08-25T17:30:02.700Z",
+  "generated_at": "2026-08-25T17:59:45.271Z",
   "source": "givex-webhook-kv",
   "full_resync": false,
-  "payloads_processed_this_run": 152,
+  "payloads_processed_this_run": 4,
   "payloads_skipped_this_run": 0,
-  "payloads_processed_total": 20473,
+  "payloads_processed_total": 20477,
   "payloads_skipped_total": 0,
-  "orders_total": 18347,
+  "orders_total": 18351,
   "days": [
     {
       "Location_Name": "Antigonish",
@@ -1847,28 +1847,28 @@
       "Location_Name": "Charlottetown",
       "Location_Type": "Corp",
       "Business_Date": "2026-08-25",
-      "Total_Sales": 597.37,
+      "Total_Sales": 639.29,
       "InStore_Sales": 401.18,
-      "Online_Sales": 196.19,
-      "Orders": 27,
-      "Avg_Ticket": 22.12,
+      "Online_Sales": 238.11,
+      "Orders": 28,
+      "Avg_Ticket": 22.83,
       "Order_Type_Sales": {
         "QSR": 232.65,
-        "Delivery": 160.83,
+        "Delivery": 202.75,
         "Take-Out": 203.89
       },
       "Day_Part_Sales": {
         "Lunch": 580.79,
-        "Afternoon": 16.58
+        "Afternoon": 58.5
       },
       "Payment_Mix": {
         "DEBIT": 220.13,
         "MASTERCARD": 52.81,
-        "DoorDash": 195.17,
+        "DoorDash": 234.57,
         "SkipTheDishes": 30.45,
         "CASH": 131.05,
         "VISA": 54.7,
-        "OLO_ROUNDING": -0.02
+        "OLO_ROUNDING": 8.79
       },
       "Tips_Total": 19.76
     },
@@ -3358,22 +3358,23 @@
       "Location_Name": "Fredericton",
       "Location_Type": "Franchisee",
       "Business_Date": "2026-08-25",
-      "Total_Sales": 828.13,
-      "InStore_Sales": 688.63,
+      "Total_Sales": 847.42,
+      "InStore_Sales": 707.92,
       "Online_Sales": 139.5,
-      "Orders": 28,
-      "Avg_Ticket": 29.58,
+      "Orders": 29,
+      "Avg_Ticket": 29.22,
       "Order_Type_Sales": {
-        "QSR": 672.34,
+        "QSR": 691.63,
         "Delivery": 139.5,
         "Take-Out": 16.29
       },
       "Day_Part_Sales": {
         "Breakfast": 117.52,
-        "Lunch": 710.61
+        "Lunch": 710.61,
+        "Afternoon": 19.29
       },
       "Payment_Mix": {
-        "DEBIT": 181.21,
+        "DEBIT": 203.39,
         "MASTERCARD": 305.63,
         "CASH": 111.15,
         "DoorDash": 154.68,
@@ -3737,34 +3738,34 @@
       "Location_Name": "Halifax Shopping Centre",
       "Location_Type": "Corp",
       "Business_Date": "2026-08-25",
-      "Total_Sales": 2845.16,
-      "InStore_Sales": 2323.04,
+      "Total_Sales": 2881.23,
+      "InStore_Sales": 2359.11,
       "Online_Sales": 522.12,
-      "Orders": 129,
-      "Avg_Ticket": 22.06,
+      "Orders": 131,
+      "Avg_Ticket": 21.99,
       "Order_Type_Sales": {
-        "QSR": 2323.04,
+        "QSR": 2359.11,
         "Delivery": 344.22,
         "Take-Out": 177.9
       },
       "Day_Part_Sales": {
         "Breakfast": 196.44,
         "Lunch": 2274.44,
-        "Afternoon": 374.28
+        "Afternoon": 410.35
       },
       "Payment_Mix": {
         "CASH": 393.32,
-        "DEBIT": 1188.06,
+        "DEBIT": 1206.63,
         "DoorDash": 124.48,
         "OLO_ROUNDING": 26.09,
         "AMEX": 128.25,
         "VISA": 543.9,
-        "MASTERCARD": 339.95,
+        "MASTERCARD": 362.49,
         "UberEats": 398.37,
         "SkipTheDishes": 46.26,
         "GIFTCARD": 40.56
       },
-      "Tips_Total": 97.24
+      "Tips_Total": 98.24
     },
     {
       "Location_Name": "Herring Cove (Spryfield)",
@@ -8417,11 +8418,11 @@
       "Year": 2026,
       "Week_Number": 35,
       "Week_Start": "2026-08-24",
-      "Total_Sales": 1927.3,
+      "Total_Sales": 1969.22,
       "InStore_Sales": 1217.5,
-      "Online_Sales": 709.8,
-      "Orders": 78,
-      "Avg_Ticket": 24.71
+      "Online_Sales": 751.72,
+      "Orders": 79,
+      "Avg_Ticket": 24.93
     },
     {
       "Location_Name": "Clayton Park",
@@ -8549,11 +8550,11 @@
       "Year": 2026,
       "Week_Number": 35,
       "Week_Start": "2026-08-24",
-      "Total_Sales": 1859.14,
-      "InStore_Sales": 1704.65,
+      "Total_Sales": 1878.43,
+      "InStore_Sales": 1723.94,
       "Online_Sales": 154.49,
-      "Orders": 74,
-      "Avg_Ticket": 25.12
+      "Orders": 75,
+      "Avg_Ticket": 25.05
     },
     {
       "Location_Name": "Halifax Shopping Centre",
@@ -8582,11 +8583,11 @@
       "Year": 2026,
       "Week_Number": 35,
       "Week_Start": "2026-08-24",
-      "Total_Sales": 5956.34,
-      "InStore_Sales": 5158.16,
+      "Total_Sales": 5992.41,
+      "InStore_Sales": 5194.23,
       "Online_Sales": 798.18,
-      "Orders": 270,
-      "Avg_Ticket": 22.06
+      "Orders": 272,
+      "Avg_Ticket": 22.03
     },
     {
       "Location_Name": "Herring Cove (Spryfield)",
@@ -8995,8 +8996,8 @@
     {
       "department_name": "Door Dash - Delivery",
       "classified_as": "online",
-      "net_sales": 34367.56,
-      "orders": 935
+      "net_sales": 34409.48,
+      "orders": 936
     },
     {
       "department_name": "Door Dash - Pickup",
@@ -9013,8 +9014,8 @@
     {
       "department_name": "Eat - In",
       "classified_as": "in-store",
-      "net_sales": 306751.24,
-      "orders": 13784
+      "net_sales": 306806.6,
+      "orders": 13787
     },
     {
       "department_name": "Skip The Dishes",
