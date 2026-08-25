@@ -19416,7 +19416,27 @@
     "orders/2026-08-24/bill_info/1787625267-1787625267535.json",
     "orders/2026-08-24/bill_info/1787625367-1787625367926.json",
     "orders/2026-08-25/bill_info/1787663105-1787663105963.json",
-    "orders/2026-08-25/bill_info/1787663259-1787663259691.json"
+    "orders/2026-08-25/bill_info/1787663259-1787663259691.json",
+    "orders/2026-08-25/bill_info/1787663809-1787663809544.json",
+    "orders/2026-08-25/bill_info/1787663827-1787663827696.json",
+    "orders/2026-08-25/bill_info/1787663963-1787663964004.json",
+    "orders/2026-08-25/bill_info/1787664314-1787664314796.json",
+    "orders/2026-08-25/bill_info/1787664528-1787664528065.json",
+    "orders/2026-08-25/bill_info/1787664893-1787664893266.json",
+    "orders/2026-08-25/bill_info/1787664896-1787664896144.json",
+    "orders/2026-08-25/bill_info/1787664981-1787664981927.json",
+    "orders/2026-08-25/bill_info/1787665032-1787665032555.json",
+    "orders/2026-08-25/bill_info/1787665144-1787665144693.json",
+    "orders/2026-08-25/bill_info/1787665216-1787665216739.json",
+    "orders/2026-08-25/bill_info/1787665330-1787665330192.json",
+    "orders/2026-08-25/bill_info/1787665336-1787665336330.json",
+    "orders/2026-08-25/bill_info/1787665336-1787665337042.json",
+    "orders/2026-08-25/bill_info/1787665385-1787665385402.json",
+    "orders/2026-08-25/bill_info/1787665529-1787665529226.json",
+    "orders/2026-08-25/bill_info/1787665687-1787665688034.json",
+    "orders/2026-08-25/bill_info/1787666470-1787666471112.json",
+    "orders/2026-08-25/bill_info/1787666592-1787666593034.json",
+    "orders/2026-08-25/bill_info/1787666609-1787666609212.json"
   ],
   "orders": {
     "45319": {
@@ -27237,6 +27257,24 @@
       },
       "paymentAmounts": {
         "UberEats": 34.42
+      },
+      "tips": 0
+    },
+    "46086": {
+      "locationName": "Mount Pearl",
+      "locationType": "Franchisee",
+      "businessDate": "2026-08-25",
+      "orderType": "Delivery",
+      "openingTime": "11:03",
+      "dayPart": "Lunch",
+      "netSales": 25.88,
+      "inStoreSales": 0,
+      "onlineSales": 25.88,
+      "deptSales": {
+        "Uber Eats": 25.88
+      },
+      "paymentAmounts": {
+        "UberEats": 29.76
       },
       "tips": 0
     },
@@ -136082,6 +136120,168 @@
       },
       "tips": 0
     },
+    "235229": {
+      "locationName": "Scotia Square",
+      "locationType": "Corp",
+      "businessDate": "2026-08-25",
+      "orderType": "QSR",
+      "openingTime": "10:10",
+      "dayPart": "Breakfast",
+      "netSales": 3.39,
+      "inStoreSales": 3.39,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 3.39
+      },
+      "paymentAmounts": {
+        "MASTERCARD": 3.86
+      },
+      "tips": 0
+    },
+    "235232": {
+      "locationName": "Scotia Square",
+      "locationType": "Corp",
+      "businessDate": "2026-08-25",
+      "orderType": "QSR",
+      "openingTime": "10:16",
+      "dayPart": "Breakfast",
+      "netSales": 12.08,
+      "inStoreSales": 12.08,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 12.08
+      },
+      "paymentAmounts": {
+        "MASTERCARD": 13.77
+      },
+      "tips": 1.38
+    },
+    "235233": {
+      "locationName": "Scotia Square",
+      "locationType": "Corp",
+      "businessDate": "2026-08-25",
+      "orderType": "Delivery",
+      "openingTime": "10:21",
+      "dayPart": "Breakfast",
+      "netSales": 64.77,
+      "inStoreSales": 0,
+      "onlineSales": 64.77,
+      "deptSales": {
+        "Uber Eats": 64.77
+      },
+      "paymentAmounts": {
+        "UberEats": 73.84
+      },
+      "tips": 0
+    },
+    "235234": {
+      "locationName": "Scotia Square",
+      "locationType": "Corp",
+      "businessDate": "2026-08-25",
+      "orderType": "QSR",
+      "openingTime": "10:26",
+      "dayPart": "Breakfast",
+      "netSales": 16.29,
+      "inStoreSales": 16.29,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 16.29
+      },
+      "paymentAmounts": {
+        "MASTERCARD": 18.57
+      },
+      "tips": 1.86
+    },
+    "235235": {
+      "locationName": "Scotia Square",
+      "locationType": "Corp",
+      "businessDate": "2026-08-25",
+      "orderType": "QSR",
+      "openingTime": "10:32",
+      "dayPart": "Breakfast",
+      "netSales": 7.99,
+      "inStoreSales": 7.99,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 7.99
+      },
+      "paymentAmounts": {
+        "MASTERCARD": 7.99
+      },
+      "tips": 1
+    },
+    "235236": {
+      "locationName": "Scotia Square",
+      "locationType": "Corp",
+      "businessDate": "2026-08-25",
+      "orderType": "QSR",
+      "openingTime": "10:34",
+      "dayPart": "Breakfast",
+      "netSales": 3.98,
+      "inStoreSales": 3.98,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 3.98
+      },
+      "paymentAmounts": {
+        "CASH": 4.54
+      },
+      "tips": 0
+    },
+    "235237": {
+      "locationName": "Scotia Square",
+      "locationType": "Corp",
+      "businessDate": "2026-08-25",
+      "orderType": "QSR",
+      "openingTime": "10:37",
+      "dayPart": "Breakfast",
+      "netSales": 31.28,
+      "inStoreSales": 31.28,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 31.28
+      },
+      "paymentAmounts": {
+        "VISA": 35.66
+      },
+      "tips": 1
+    },
+    "235238": {
+      "locationName": "Scotia Square",
+      "locationType": "Corp",
+      "businessDate": "2026-08-25",
+      "orderType": "Delivery",
+      "openingTime": "10:39",
+      "dayPart": "Breakfast",
+      "netSales": 26.77,
+      "inStoreSales": 0,
+      "onlineSales": 26.77,
+      "deptSales": {
+        "Door Dash - Delivery": 26.77
+      },
+      "paymentAmounts": {
+        "DoorDash": 30.52
+      },
+      "tips": 0
+    },
+    "235239": {
+      "locationName": "Scotia Square",
+      "locationType": "Corp",
+      "businessDate": "2026-08-25",
+      "orderType": "QSR",
+      "openingTime": "10:39",
+      "dayPart": "Breakfast",
+      "netSales": 5.98,
+      "inStoreSales": 5.98,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 5.98
+      },
+      "paymentAmounts": {
+        "DEBIT": 6.82
+      },
+      "tips": 0
+    },
     "303577": {
       "locationName": "Morton Ave",
       "locationType": "Franchisee",
@@ -238384,6 +238584,42 @@
       },
       "tips": 0
     },
+    "400888": {
+      "locationName": "Burnside",
+      "locationType": "Corp",
+      "businessDate": "2026-08-25",
+      "orderType": "QSR",
+      "openingTime": "10:36",
+      "dayPart": "Breakfast",
+      "netSales": 16.29,
+      "inStoreSales": 16.29,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 16.29
+      },
+      "paymentAmounts": {
+        "DEBIT": 18.57
+      },
+      "tips": 2
+    },
+    "400890": {
+      "locationName": "Burnside",
+      "locationType": "Corp",
+      "businessDate": "2026-08-25",
+      "orderType": "Delivery",
+      "openingTime": "10:56",
+      "dayPart": "Breakfast",
+      "netSales": 21.19,
+      "inStoreSales": 0,
+      "onlineSales": 21.19,
+      "deptSales": {
+        "Uber Eats": 21.19
+      },
+      "paymentAmounts": {
+        "UberEats": 24.16
+      },
+      "tips": 0
+    },
     "416668": {
       "locationName": "Cole Harbour",
       "locationType": "Franchisee",
@@ -288266,6 +288502,79 @@
       },
       "tips": 2
     },
+    "505703": {
+      "locationName": "Halifax Shopping Centre",
+      "locationType": "Corp",
+      "businessDate": "2026-08-25",
+      "orderType": "QSR",
+      "openingTime": "10:14",
+      "dayPart": "Breakfast",
+      "netSales": 22.78,
+      "inStoreSales": 22.78,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 22.78
+      },
+      "paymentAmounts": {
+        "CASH": 25.96
+      },
+      "tips": 0
+    },
+    "505704": {
+      "locationName": "Halifax Shopping Centre",
+      "locationType": "Corp",
+      "businessDate": "2026-08-25",
+      "orderType": "QSR",
+      "openingTime": "10:14",
+      "dayPart": "Breakfast",
+      "netSales": 8.99,
+      "inStoreSales": 8.99,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 8.99
+      },
+      "paymentAmounts": {
+        "DEBIT": 10.25
+      },
+      "tips": 1
+    },
+    "505705": {
+      "locationName": "Halifax Shopping Centre",
+      "locationType": "Corp",
+      "businessDate": "2026-08-25",
+      "orderType": "QSR",
+      "openingTime": "10:16",
+      "dayPart": "Breakfast",
+      "netSales": 16.29,
+      "inStoreSales": 16.29,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 16.29
+      },
+      "paymentAmounts": {
+        "DEBIT": 18.57
+      },
+      "tips": 0
+    },
+    "505706": {
+      "locationName": "Halifax Shopping Centre",
+      "locationType": "Corp",
+      "businessDate": "2026-08-25",
+      "orderType": "Delivery",
+      "openingTime": "10:31",
+      "dayPart": "Breakfast",
+      "netSales": 117.10000000000002,
+      "inStoreSales": 0,
+      "onlineSales": 117.10000000000002,
+      "deptSales": {
+        "Door Dash - Delivery": 117.10000000000002
+      },
+      "paymentAmounts": {
+        "DoorDash": 107.39,
+        "OLO_ROUNDING": 26.08
+      },
+      "tips": 0
+    },
     "554641": {
       "locationName": "Barrington",
       "locationType": "Corp",
@@ -333198,6 +333507,24 @@
         "SkipTheDishes": 23.13
       },
       "tips": 0
+    },
+    "664326": {
+      "locationName": "Clayton Park",
+      "locationType": "Corp",
+      "businessDate": "2026-08-25",
+      "orderType": "QSR",
+      "openingTime": "10:30",
+      "dayPart": "Breakfast",
+      "netSales": 34.28,
+      "inStoreSales": 34.28,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 34.28
+      },
+      "paymentAmounts": {
+        "AMEX": 39.08
+      },
+      "tips": 1.95
     }
   },
   "unmappedOutlets": {},
@@ -333207,6 +333534,6 @@
       "reason": "Beta Lanner -- Givex certification/test store, not a real Mezza location"
     }
   },
-  "payloadsProcessedTotal": 19417,
+  "payloadsProcessedTotal": 19437,
   "payloadsSkippedTotal": 0
 }

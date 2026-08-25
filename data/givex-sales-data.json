@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-08-25T13:11:00.594Z",
+  "generated_at": "2026-08-25T14:04:18.269Z",
   "source": "givex-webhook-kv",
   "full_resync": false,
-  "payloads_processed_this_run": 2,
+  "payloads_processed_this_run": 20,
   "payloads_skipped_this_run": 0,
-  "payloads_processed_total": 19417,
+  "payloads_processed_total": 19437,
   "payloads_skipped_total": 0,
-  "orders_total": 17365,
+  "orders_total": 17382,
   "days": [
     {
       "Location_Name": "Antigonish",
@@ -1379,22 +1379,26 @@
       "Location_Name": "Burnside",
       "Location_Type": "Corp",
       "Business_Date": "2026-08-25",
-      "Total_Sales": 490.96,
-      "InStore_Sales": 490.96,
-      "Online_Sales": 0,
-      "Orders": 2,
-      "Avg_Ticket": 245.48,
+      "Total_Sales": 528.44,
+      "InStore_Sales": 507.25,
+      "Online_Sales": 21.19,
+      "Orders": 4,
+      "Avg_Ticket": 132.11,
       "Order_Type_Sales": {
-        "Bar": 490.96
+        "Bar": 490.96,
+        "QSR": 16.29,
+        "Delivery": 21.19
       },
       "Day_Part_Sales": {
-        "Breakfast": 490.96
+        "Breakfast": 528.44
       },
       "Payment_Mix": {
         "MASTERCARD": 276.85,
-        "VISA": 282.87
+        "VISA": 282.87,
+        "DEBIT": 18.57,
+        "UberEats": 24.16
       },
-      "Tips_Total": 0
+      "Tips_Total": 2
     },
     {
       "Location_Name": "Charlottetown",
@@ -2108,6 +2112,26 @@
         "SkipTheDishes": 23.13
       },
       "Tips_Total": 152.09
+    },
+    {
+      "Location_Name": "Clayton Park",
+      "Location_Type": "Corp",
+      "Business_Date": "2026-08-25",
+      "Total_Sales": 34.28,
+      "InStore_Sales": 34.28,
+      "Online_Sales": 0,
+      "Orders": 1,
+      "Avg_Ticket": 34.28,
+      "Order_Type_Sales": {
+        "QSR": 34.28
+      },
+      "Day_Part_Sales": {
+        "Breakfast": 34.28
+      },
+      "Payment_Mix": {
+        "AMEX": 39.08
+      },
+      "Tips_Total": 1.95
     },
     {
       "Location_Name": "Cole Harbour",
@@ -3485,6 +3509,30 @@
         "AMEX": 69.94
       },
       "Tips_Total": 120.9
+    },
+    {
+      "Location_Name": "Halifax Shopping Centre",
+      "Location_Type": "Corp",
+      "Business_Date": "2026-08-25",
+      "Total_Sales": 165.16,
+      "InStore_Sales": 48.06,
+      "Online_Sales": 117.1,
+      "Orders": 4,
+      "Avg_Ticket": 41.29,
+      "Order_Type_Sales": {
+        "QSR": 48.06,
+        "Delivery": 117.1
+      },
+      "Day_Part_Sales": {
+        "Breakfast": 165.16
+      },
+      "Payment_Mix": {
+        "CASH": 25.96,
+        "DEBIT": 28.82,
+        "DoorDash": 107.39,
+        "OLO_ROUNDING": 26.08
+      },
+      "Tips_Total": 1
     },
     {
       "Location_Name": "Herring Cove (Spryfield)",
@@ -5296,6 +5344,26 @@
       "Tips_Total": 14.7
     },
     {
+      "Location_Name": "Mount Pearl",
+      "Location_Type": "Franchisee",
+      "Business_Date": "2026-08-25",
+      "Total_Sales": 25.88,
+      "InStore_Sales": 0,
+      "Online_Sales": 25.88,
+      "Orders": 1,
+      "Avg_Ticket": 25.88,
+      "Order_Type_Sales": {
+        "Delivery": 25.88
+      },
+      "Day_Part_Sales": {
+        "Lunch": 25.88
+      },
+      "Payment_Mix": {
+        "UberEats": 29.76
+      },
+      "Tips_Total": 0
+    },
+    {
       "Location_Name": "New Minas",
       "Location_Type": "Franchisee",
       "Business_Date": "2026-08-14",
@@ -6596,6 +6664,32 @@
       "Tips_Total": 56.75
     },
     {
+      "Location_Name": "Scotia Square",
+      "Location_Type": "Corp",
+      "Business_Date": "2026-08-25",
+      "Total_Sales": 172.53,
+      "InStore_Sales": 80.99,
+      "Online_Sales": 91.54,
+      "Orders": 9,
+      "Avg_Ticket": 19.17,
+      "Order_Type_Sales": {
+        "QSR": 80.99,
+        "Delivery": 91.54
+      },
+      "Day_Part_Sales": {
+        "Breakfast": 172.53
+      },
+      "Payment_Mix": {
+        "MASTERCARD": 44.19,
+        "UberEats": 73.84,
+        "CASH": 4.54,
+        "VISA": 35.66,
+        "DoorDash": 30.52,
+        "DEBIT": 6.82
+      },
+      "Tips_Total": 5.24
+    },
+    {
       "Location_Name": "Stratford",
       "Location_Type": "Franchisee",
       "Business_Date": "2026-08-14",
@@ -7744,11 +7838,11 @@
       "Year": 2026,
       "Week_Number": 35,
       "Week_Start": "2026-08-24",
-      "Total_Sales": 1975.48,
-      "InStore_Sales": 1506.16,
-      "Online_Sales": 469.32,
-      "Orders": 89,
-      "Avg_Ticket": 22.2
+      "Total_Sales": 2012.96,
+      "InStore_Sales": 1522.45,
+      "Online_Sales": 490.51,
+      "Orders": 91,
+      "Avg_Ticket": 22.12
     },
     {
       "Location_Name": "Charlottetown",
@@ -7810,11 +7904,11 @@
       "Year": 2026,
       "Week_Number": 35,
       "Week_Start": "2026-08-24",
-      "Total_Sales": 2102.81,
-      "InStore_Sales": 2082.52,
+      "Total_Sales": 2137.09,
+      "InStore_Sales": 2116.8,
       "Online_Sales": 20.29,
-      "Orders": 57,
-      "Avg_Ticket": 36.89
+      "Orders": 58,
+      "Avg_Ticket": 36.85
     },
     {
       "Location_Name": "Cole Harbour",
@@ -7942,11 +8036,11 @@
       "Year": 2026,
       "Week_Number": 35,
       "Week_Start": "2026-08-24",
-      "Total_Sales": 3111.18,
-      "InStore_Sales": 2835.12,
-      "Online_Sales": 276.06,
-      "Orders": 141,
-      "Avg_Ticket": 22.07
+      "Total_Sales": 3276.34,
+      "InStore_Sales": 2883.18,
+      "Online_Sales": 393.16,
+      "Orders": 145,
+      "Avg_Ticket": 22.6
     },
     {
       "Location_Name": "Herring Cove (Spryfield)",
@@ -8107,11 +8201,11 @@
       "Year": 2026,
       "Week_Number": 35,
       "Week_Start": "2026-08-24",
-      "Total_Sales": 373.84,
+      "Total_Sales": 399.72,
       "InStore_Sales": 190.81,
-      "Online_Sales": 183.03,
-      "Orders": 15,
-      "Avg_Ticket": 24.92
+      "Online_Sales": 208.91,
+      "Orders": 16,
+      "Avg_Ticket": 24.98
     },
     {
       "Location_Name": "New Minas",
@@ -8239,11 +8333,11 @@
       "Year": 2026,
       "Week_Number": 35,
       "Week_Start": "2026-08-24",
-      "Total_Sales": 1807.07,
-      "InStore_Sales": 1418.13,
-      "Online_Sales": 388.94,
-      "Orders": 71,
-      "Avg_Ticket": 25.45
+      "Total_Sales": 1979.6,
+      "InStore_Sales": 1499.12,
+      "Online_Sales": 480.48,
+      "Orders": 80,
+      "Avg_Ticket": 24.74
     },
     {
       "Location_Name": "Stratford",
@@ -8355,8 +8449,8 @@
     {
       "department_name": "Door Dash - Delivery",
       "classified_as": "online",
-      "net_sales": 32845.38,
-      "orders": 897
+      "net_sales": 32989.25,
+      "orders": 899
     },
     {
       "department_name": "Door Dash - Pickup",
@@ -8367,14 +8461,14 @@
     {
       "department_name": "Uber Eats",
       "classified_as": "online",
-      "net_sales": 38217.63,
-      "orders": 1075
+      "net_sales": 38329.47,
+      "orders": 1078
     },
     {
       "department_name": "Eat - In",
       "classified_as": "in-store",
-      "net_sales": 291121.01,
-      "orders": 12995
+      "net_sales": 291300.63,
+      "orders": 13007
     },
     {
       "department_name": "Skip The Dishes",
