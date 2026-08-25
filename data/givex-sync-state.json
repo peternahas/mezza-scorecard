@@ -19414,7 +19414,9 @@
     "orders/2026-08-24/bill_info/1787624173-1787624173645.json",
     "orders/2026-08-24/bill_info/1787624174-1787624174513.json",
     "orders/2026-08-24/bill_info/1787625267-1787625267535.json",
-    "orders/2026-08-24/bill_info/1787625367-1787625367926.json"
+    "orders/2026-08-24/bill_info/1787625367-1787625367926.json",
+    "orders/2026-08-25/bill_info/1787663105-1787663105963.json",
+    "orders/2026-08-25/bill_info/1787663259-1787663259691.json"
   ],
   "orders": {
     "45319": {
@@ -238346,6 +238348,42 @@
       },
       "tips": 0
     },
+    "400883": {
+      "locationName": "Burnside",
+      "locationType": "Corp",
+      "businessDate": "2026-08-25",
+      "orderType": "Bar",
+      "openingTime": "09:16",
+      "dayPart": "Breakfast",
+      "netSales": 242.83000000000007,
+      "inStoreSales": 242.83000000000007,
+      "onlineSales": 0,
+      "deptSales": {
+        "Catering": 242.83000000000007
+      },
+      "paymentAmounts": {
+        "MASTERCARD": 276.85
+      },
+      "tips": 0
+    },
+    "400884": {
+      "locationName": "Burnside",
+      "locationType": "Corp",
+      "businessDate": "2026-08-25",
+      "orderType": "Bar",
+      "openingTime": "10:02",
+      "dayPart": "Breakfast",
+      "netSales": 248.13,
+      "inStoreSales": 248.13,
+      "onlineSales": 0,
+      "deptSales": {
+        "Catering": 248.13
+      },
+      "paymentAmounts": {
+        "VISA": 282.87
+      },
+      "tips": 0
+    },
     "416668": {
       "locationName": "Cole Harbour",
       "locationType": "Franchisee",
@@ -333169,6 +333207,6 @@
       "reason": "Beta Lanner -- Givex certification/test store, not a real Mezza location"
     }
   },
-  "payloadsProcessedTotal": 19415,
+  "payloadsProcessedTotal": 19417,
   "payloadsSkippedTotal": 0
 }
