@@ -20611,7 +20611,16 @@
     "orders/2026-08-25/bill_info/1787712328-1787712328270.json",
     "orders/2026-08-25/bill_info/1787712329-1787712329214.json",
     "orders/2026-08-25/bill_info/1787712670-1787712670450.json",
-    "orders/2026-08-25/bill_info/1787713049-1787713050093.json"
+    "orders/2026-08-25/bill_info/1787713049-1787713050093.json",
+    "orders/2026-08-26/bill_info/1787749663-1787749664123.json",
+    "orders/2026-08-26/bill_info/1787749682-1787749682193.json",
+    "orders/2026-08-26/bill_info/1787749886-1787749886562.json",
+    "orders/2026-08-26/bill_info/1787750027-1787750027550.json",
+    "orders/2026-08-26/bill_info/1787750234-1787750234724.json",
+    "orders/2026-08-26/bill_info/1787750376-1787750376828.json",
+    "orders/2026-08-26/bill_info/1787750886-1787750886586.json",
+    "orders/2026-08-26/bill_info/1787751015-1787751015681.json",
+    "orders/2026-08-26/bill_info/1787751066-1787751066533.json"
   ],
   "orders": {
     "45319": {
@@ -253216,6 +253225,60 @@
       },
       "tips": 1.5
     },
+    "401073": {
+      "locationName": "Burnside",
+      "locationType": "Corp",
+      "businessDate": "2026-08-26",
+      "orderType": "Delivery",
+      "openingTime": "10:02",
+      "dayPart": "Breakfast",
+      "netSales": 20.73,
+      "inStoreSales": 0,
+      "onlineSales": 20.73,
+      "deptSales": {
+        "Skip The Dishes": 20.73
+      },
+      "paymentAmounts": {
+        "SkipTheDishes": 23.63
+      },
+      "tips": 0
+    },
+    "401074": {
+      "locationName": "Burnside",
+      "locationType": "Corp",
+      "businessDate": "2026-08-26",
+      "orderType": "Delivery",
+      "openingTime": "10:23",
+      "dayPart": "Breakfast",
+      "netSales": 28.13,
+      "inStoreSales": 0,
+      "onlineSales": 28.13,
+      "deptSales": {
+        "Uber Eats": 28.13
+      },
+      "paymentAmounts": {
+        "UberEats": 32.07
+      },
+      "tips": 0
+    },
+    "401075": {
+      "locationName": "Burnside",
+      "locationType": "Corp",
+      "businessDate": "2026-08-26",
+      "orderType": "Take-Out",
+      "openingTime": "10:26",
+      "dayPart": "Breakfast",
+      "netSales": 19.29,
+      "inStoreSales": 0,
+      "onlineSales": 19.29,
+      "deptSales": {
+        "Door Dash - Pickup": 19.29
+      },
+      "paymentAmounts": {
+        "DoorDash": 21.99
+      },
+      "tips": 1.92
+    },
     "416668": {
       "locationName": "Cole Harbour",
       "locationType": "Franchisee",
@@ -306168,6 +306231,24 @@
       },
       "tips": 0
     },
+    "505981": {
+      "locationName": "Halifax Shopping Centre",
+      "locationType": "Corp",
+      "businessDate": "2026-08-26",
+      "orderType": "Take-Out",
+      "openingTime": "10:14",
+      "dayPart": "Breakfast",
+      "netSales": 19.98,
+      "inStoreSales": 19.98,
+      "onlineSales": 0,
+      "deptSales": {
+        "Take - Out": 19.98
+      },
+      "paymentAmounts": {
+        "DEBIT": 22.78
+      },
+      "tips": 0
+    },
     "554641": {
       "locationName": "Barrington",
       "locationType": "Corp",
@@ -354188,6 +354269,60 @@
         "MASTERCARD": 25.4
       },
       "tips": 1
+    },
+    "664521": {
+      "locationName": "Clayton Park",
+      "locationType": "Corp",
+      "businessDate": "2026-08-26",
+      "orderType": "Bar",
+      "openingTime": "10:05",
+      "dayPart": "Breakfast",
+      "netSales": 194.88000000000002,
+      "inStoreSales": 194.88000000000002,
+      "onlineSales": 0,
+      "deptSales": {
+        "Catering": 194.88000000000002
+      },
+      "paymentAmounts": {
+        "Catering": 222.18
+      },
+      "tips": 22.22
+    },
+    "664522": {
+      "locationName": "Clayton Park",
+      "locationType": "Corp",
+      "businessDate": "2026-08-26",
+      "orderType": "Bar",
+      "openingTime": "10:06",
+      "dayPart": "Breakfast",
+      "netSales": 790.5799999999997,
+      "inStoreSales": 790.5799999999997,
+      "onlineSales": 0,
+      "deptSales": {
+        "Catering": 790.5799999999997
+      },
+      "paymentAmounts": {
+        "VISA": 901.24
+      },
+      "tips": 0
+    },
+    "664523": {
+      "locationName": "Clayton Park",
+      "locationType": "Corp",
+      "businessDate": "2026-08-26",
+      "orderType": "QSR",
+      "openingTime": "10:11",
+      "dayPart": "Breakfast",
+      "netSales": 39.27,
+      "inStoreSales": 39.27,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 39.27
+      },
+      "paymentAmounts": {
+        "AMEX": 44.77
+      },
+      "tips": 2.24
     }
   },
   "unmappedOutlets": {},
@@ -354197,6 +354332,6 @@
       "reason": "Beta Lanner -- Givex certification/test store, not a real Mezza location"
     }
   },
-  "payloadsProcessedTotal": 20612,
+  "payloadsProcessedTotal": 20621,
   "payloadsSkippedTotal": 0
 }

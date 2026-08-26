@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-08-26T12:18:08.775Z",
+  "generated_at": "2026-08-26T13:33:18.711Z",
   "source": "givex-webhook-kv",
   "full_resync": false,
-  "payloads_processed_this_run": 0,
+  "payloads_processed_this_run": 9,
   "payloads_skipped_this_run": 0,
-  "payloads_processed_total": 20612,
+  "payloads_processed_total": 20621,
   "payloads_skipped_total": 0,
-  "orders_total": 18462,
+  "orders_total": 18469,
   "days": [
     {
       "Location_Name": "Antigonish",
@@ -1500,6 +1500,29 @@
       "Tips_Total": 116.52
     },
     {
+      "Location_Name": "Burnside",
+      "Location_Type": "Corp",
+      "Business_Date": "2026-08-26",
+      "Total_Sales": 68.15,
+      "InStore_Sales": 0,
+      "Online_Sales": 68.15,
+      "Orders": 3,
+      "Avg_Ticket": 22.72,
+      "Order_Type_Sales": {
+        "Delivery": 48.86,
+        "Take-Out": 19.29
+      },
+      "Day_Part_Sales": {
+        "Breakfast": 68.15
+      },
+      "Payment_Mix": {
+        "SkipTheDishes": 23.63,
+        "UberEats": 32.07,
+        "DoorDash": 21.99
+      },
+      "Tips_Total": 1.92
+    },
+    {
       "Location_Name": "Charlottetown",
       "Location_Type": "Corp",
       "Business_Date": "2026-08-14",
@@ -2273,6 +2296,29 @@
         "SkipTheDishes": 48.31
       },
       "Tips_Total": 60.6
+    },
+    {
+      "Location_Name": "Clayton Park",
+      "Location_Type": "Corp",
+      "Business_Date": "2026-08-26",
+      "Total_Sales": 1024.73,
+      "InStore_Sales": 1024.73,
+      "Online_Sales": 0,
+      "Orders": 3,
+      "Avg_Ticket": 341.58,
+      "Order_Type_Sales": {
+        "Bar": 985.46,
+        "QSR": 39.27
+      },
+      "Day_Part_Sales": {
+        "Breakfast": 1024.73
+      },
+      "Payment_Mix": {
+        "Catering": 222.18,
+        "VISA": 901.24,
+        "AMEX": 44.77
+      },
+      "Tips_Total": 24.46
     },
     {
       "Location_Name": "Cole Harbour",
@@ -3777,6 +3823,26 @@
         "GIFTCARD": 40.56
       },
       "Tips_Total": 98.24
+    },
+    {
+      "Location_Name": "Halifax Shopping Centre",
+      "Location_Type": "Corp",
+      "Business_Date": "2026-08-26",
+      "Total_Sales": 19.98,
+      "InStore_Sales": 19.98,
+      "Online_Sales": 0,
+      "Orders": 1,
+      "Avg_Ticket": 19.98,
+      "Order_Type_Sales": {
+        "Take-Out": 19.98
+      },
+      "Day_Part_Sales": {
+        "Breakfast": 19.98
+      },
+      "Payment_Mix": {
+        "DEBIT": 22.78
+      },
+      "Tips_Total": 0
     },
     {
       "Location_Name": "Herring Cove (Spryfield)",
@@ -8409,11 +8475,11 @@
       "Year": 2026,
       "Week_Number": 35,
       "Week_Start": "2026-08-24",
-      "Total_Sales": 4306.05,
+      "Total_Sales": 4374.2,
       "InStore_Sales": 3278.81,
-      "Online_Sales": 1027.24,
-      "Orders": 199,
-      "Avg_Ticket": 21.64
+      "Online_Sales": 1095.39,
+      "Orders": 202,
+      "Avg_Ticket": 21.65
     },
     {
       "Location_Name": "Charlottetown",
@@ -8475,11 +8541,11 @@
       "Year": 2026,
       "Week_Number": 35,
       "Week_Start": "2026-08-24",
-      "Total_Sales": 3697.06,
-      "InStore_Sales": 3586.38,
+      "Total_Sales": 4721.79,
+      "InStore_Sales": 4611.11,
       "Online_Sales": 110.68,
-      "Orders": 136,
-      "Avg_Ticket": 27.18
+      "Orders": 139,
+      "Avg_Ticket": 33.97
     },
     {
       "Location_Name": "Cole Harbour",
@@ -8607,11 +8673,11 @@
       "Year": 2026,
       "Week_Number": 35,
       "Week_Start": "2026-08-24",
-      "Total_Sales": 6002.41,
-      "InStore_Sales": 5204.23,
+      "Total_Sales": 6022.39,
+      "InStore_Sales": 5224.21,
       "Online_Sales": 798.18,
-      "Orders": 273,
-      "Avg_Ticket": 21.99
+      "Orders": 274,
+      "Avg_Ticket": 21.98
     },
     {
       "Location_Name": "Herring Cove (Spryfield)",
@@ -9014,8 +9080,8 @@
     {
       "department_name": "Take - Out",
       "classified_as": "in-store",
-      "net_sales": 33938.31,
-      "orders": 1345
+      "net_sales": 33958.29,
+      "orders": 1346
     },
     {
       "department_name": "Door Dash - Delivery",
@@ -9026,32 +9092,32 @@
     {
       "department_name": "Door Dash - Pickup",
       "classified_as": "online",
-      "net_sales": 22671.88,
-      "orders": 630
+      "net_sales": 22691.17,
+      "orders": 631
     },
     {
       "department_name": "Uber Eats",
       "classified_as": "online",
-      "net_sales": 40168.51,
-      "orders": 1134
+      "net_sales": 40196.64,
+      "orders": 1135
     },
     {
       "department_name": "Eat - In",
       "classified_as": "in-store",
-      "net_sales": 308534.43,
-      "orders": 13869
+      "net_sales": 308573.7,
+      "orders": 13870
     },
     {
       "department_name": "Skip The Dishes",
       "classified_as": "online",
-      "net_sales": 10893.58,
-      "orders": 286
+      "net_sales": 10914.31,
+      "orders": 287
     },
     {
       "department_name": "Catering",
       "classified_as": "in-store",
-      "net_sales": 16897.54,
-      "orders": 56
+      "net_sales": 17883,
+      "orders": 58
     },
     {
       "department_name": "Givex Online",
