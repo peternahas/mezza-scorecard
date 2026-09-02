@@ -105,7 +105,10 @@ const out = {
   highest_d1_row_id: since,
   note:
     "Keys, types and how often each path was non-empty. Values are listed ONLY for " +
-    "classification fields (department, order type, payment method, category, day part, " +\n    "line type, bill status, section). Numeric paths also report how often they are " +\n    "NON-ZERO, plus min/max/sum -- aggregate figures from Mezza's own sales. No customer " +\n    "name, member number, staff name or card data is emitted.",
+    "classification fields (department, order type, payment method, category, day part, " +
+    "line type, bill status, section). Numeric paths also report how often they are " +
+    "NON-ZERO, plus min/max/sum — aggregate figures from Mezza's own sales. No customer " +
+    "name, member number, staff name or card data is emitted.",
   fields: Object.fromEntries(
     Object.entries(shape)
       .sort(([a], [b]) => a.localeCompare(b))
