@@ -1,0 +1,6 @@
+{
+  "_comment": "Maps a Google Business Profile location to the Mezza Location_Name the sales feed uses. Google's own titles do not match ours -- Google may call a store '7001 Mumford' where the scorecard calls it 'Halifax Shopping Centre' -- and guessing is how one store's reviews end up filed against another. So the sync never guesses: an unmapped location is reported with its Google title and address, and the first run prints a ready-to-paste block. byLocationId is checked first (stable), then byTitle (convenient but changes whenever someone edits the listing).",
+  "_how_to_fill": "Run the 'Sync Google reviews and Business Profile' workflow once. Its log prints every unmapped location. Paste the ids below and set each value to the Location_Name exactly as it appears on the scorecard (see scripts/store-mapping.json for the canonical spellings).",
+  "byLocationId": {},
+  "byTitle": {}
+}

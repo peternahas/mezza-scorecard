@@ -1,0 +1,47 @@
+name: Sync Google reviews and Business Profile
+
+# Daily rather than every 15 minutes: reviews and profile metrics move
+# on a scale of days, Google's quota is per-minute, and the metrics
+# themselves lag by a day or two on Google's side. Polling harder would
+# cost quota and buy nothing.
+
+on:
+  schedule:
+    - cron: "20 11 * * *"   # ~08:20 Atlantic, before anyone reads the scorecard
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-google-data
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Pull reviews and Business Profile metrics
+        env:
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
+        run: node scripts/sync-google-to-json.mjs
+
+      - name: Commit changes if data updated
+        run: |
+          git config user.name "mezza-scorecard-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/google-data.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Sync Google reviews and Business Profile ($(date -u +'%Y-%m-%dT%H:%M:%SZ'))"
+            git pull --rebase origin main
+            git push
+          fi
