@@ -37742,7 +37742,26 @@
     "orders/2026-09-01/bill_info/1788316475",
     "orders/2026-09-01/bill_info/1788317184",
     "orders/2026-09-01/bill_info/1788317351",
-    "orders/2026-09-01/bill_info/1788317360"
+    "orders/2026-09-01/bill_info/1788317360",
+    "orders/2026-09-02/bill_info/1788354115",
+    "orders/2026-09-02/bill_info/1788354322",
+    "orders/2026-09-02/bill_info/1788354324",
+    "orders/2026-09-02/bill_info/1788354387",
+    "orders/2026-09-02/bill_info/1788354388",
+    "orders/2026-09-02/bill_info/1788354389",
+    "orders/2026-09-02/bill_info/1788354431",
+    "orders/2026-09-02/bill_info/1788354569",
+    "orders/2026-09-02/bill_info/1788354612",
+    "orders/2026-09-02/bill_info/1788354748",
+    "orders/2026-09-02/bill_info/1788355417",
+    "orders/2026-09-02/bill_info/1788355523",
+    "orders/2026-09-02/bill_info/1788356057",
+    "orders/2026-09-02/bill_info/1788356088",
+    "orders/2026-09-02/bill_info/1788356197",
+    "orders/2026-09-02/bill_info/1788356247",
+    "orders/2026-09-02/bill_info/1788356249",
+    "orders/2026-09-02/bill_info/1788356283",
+    "orders/2026-09-02/bill_info/1788356284"
   ],
   "orders": {
     "45319": {
@@ -54520,22 +54539,22 @@
       "tips": 0
     },
     "46690": {
-      "locationName": "Charlottetown",
-      "locationType": "Corp",
-      "businessDate": "2026-08-19",
-      "orderType": "Take-Out",
-      "openingTime": "19:04",
-      "dayPart": "Dinner",
-      "netSales": 19.78,
+      "locationName": "Mount Pearl",
+      "locationType": "Franchisee",
+      "businessDate": "2026-09-02",
+      "orderType": "Delivery",
+      "openingTime": "11:01",
+      "dayPart": "Lunch",
+      "netSales": 14.29,
       "inStoreSales": 0,
-      "onlineSales": 19.78,
+      "onlineSales": 14.29,
       "deptSales": {
-        "Door Dash - Pickup": 19.78
+        "Door Dash - Delivery": 14.29
       },
       "paymentAmounts": {
-        "DoorDash": 22.75
+        "DoorDash": 16.43
       },
-      "tips": 1.97
+      "tips": 0
     },
     "46691": {
       "locationName": "Charlottetown",
@@ -93530,6 +93549,24 @@
       },
       "paymentAmounts": {
         "CASH": 27.68
+      },
+      "tips": 0
+    },
+    "72696": {
+      "locationName": "Bridgewater",
+      "locationType": "Franchisee",
+      "businessDate": "2026-09-02",
+      "orderType": "QSR",
+      "openingTime": "09:59",
+      "dayPart": "Breakfast",
+      "netSales": 1.7,
+      "inStoreSales": 1.7,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 1.7
+      },
+      "paymentAmounts": {
+        "CASH": 1.94
       },
       "tips": 0
     },
@@ -259614,6 +259651,60 @@
       },
       "paymentAmounts": {
         "MASTERCARD": 96.27
+      },
+      "tips": 0
+    },
+    "236362": {
+      "locationName": "Scotia Square",
+      "locationType": "Corp",
+      "businessDate": "2026-09-02",
+      "orderType": "QSR",
+      "openingTime": "09:57",
+      "dayPart": "Breakfast",
+      "netSales": 14.99,
+      "inStoreSales": 14.99,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 14.99
+      },
+      "paymentAmounts": {
+        "VISA": 17.09
+      },
+      "tips": 0
+    },
+    "236363": {
+      "locationName": "Scotia Square",
+      "locationType": "Corp",
+      "businessDate": "2026-09-02",
+      "orderType": "Delivery",
+      "openingTime": "10:30",
+      "dayPart": "Breakfast",
+      "netSales": 24.09,
+      "inStoreSales": 0,
+      "onlineSales": 24.09,
+      "deptSales": {
+        "Uber Eats": 24.09
+      },
+      "paymentAmounts": {
+        "UberEats": 27.46
+      },
+      "tips": 0
+    },
+    "236364": {
+      "locationName": "Scotia Square",
+      "locationType": "Corp",
+      "businessDate": "2026-09-02",
+      "orderType": "Delivery",
+      "openingTime": "10:33",
+      "dayPart": "Breakfast",
+      "netSales": 23.28,
+      "inStoreSales": 0,
+      "onlineSales": 23.28,
+      "deptSales": {
+        "Uber Eats": 23.28
+      },
+      "paymentAmounts": {
+        "UberEats": 26.54
       },
       "tips": 0
     },
@@ -458892,6 +458983,117 @@
       },
       "tips": 0
     },
+    "402242": {
+      "locationName": "Burnside",
+      "locationType": "Corp",
+      "businessDate": "2026-09-02",
+      "orderType": "QSR",
+      "openingTime": "08:54",
+      "dayPart": "Breakfast",
+      "netSales": 6,
+      "inStoreSales": 6,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 6
+      },
+      "paymentAmounts": {
+        "DEBIT": 6.84
+      },
+      "tips": 0
+    },
+    "402243": {
+      "locationName": "Burnside",
+      "locationType": "Corp",
+      "businessDate": "2026-09-02",
+      "orderType": "Take-Out",
+      "openingTime": "10:01",
+      "dayPart": "Breakfast",
+      "netSales": 20.479999999999997,
+      "inStoreSales": 0,
+      "onlineSales": 20.479999999999997,
+      "deptSales": {
+        "Door Dash - Pickup": 20.479999999999997
+      },
+      "paymentAmounts": {
+        "OLO_ROUNDING": -0.01,
+        "DoorDash": 23.35
+      },
+      "tips": 0
+    },
+    "402244": {
+      "locationName": "Burnside",
+      "locationType": "Corp",
+      "businessDate": "2026-09-02",
+      "orderType": "Delivery",
+      "openingTime": "10:02",
+      "dayPart": "Breakfast",
+      "netSales": 20.73,
+      "inStoreSales": 0,
+      "onlineSales": 20.73,
+      "deptSales": {
+        "Skip The Dishes": 20.73
+      },
+      "paymentAmounts": {
+        "SkipTheDishes": 23.63
+      },
+      "tips": 0
+    },
+    "402246": {
+      "locationName": "Burnside",
+      "locationType": "Corp",
+      "businessDate": "2026-09-02",
+      "orderType": "Take-Out",
+      "openingTime": "10:03",
+      "dayPart": "Breakfast",
+      "netSales": 22.78,
+      "inStoreSales": 0,
+      "onlineSales": 22.78,
+      "deptSales": {
+        "Door Dash - Pickup": 22.78
+      },
+      "paymentAmounts": {
+        "DoorDash": 25.97,
+        "OLO_ROUNDING": -0.01
+      },
+      "tips": 0
+    },
+    "402248": {
+      "locationName": "Burnside",
+      "locationType": "Corp",
+      "businessDate": "2026-09-02",
+      "orderType": "Delivery",
+      "openingTime": "10:07",
+      "dayPart": "Breakfast",
+      "netSales": 58.93000000000001,
+      "inStoreSales": 0,
+      "onlineSales": 58.93000000000001,
+      "deptSales": {
+        "Uber Eats": 58.93000000000001
+      },
+      "paymentAmounts": {
+        "UberEats": 65.84,
+        "OLO_ROUNDING": -0.02
+      },
+      "tips": 0
+    },
+    "402249": {
+      "locationName": "Burnside",
+      "locationType": "Corp",
+      "businessDate": "2026-09-02",
+      "orderType": "Bar",
+      "openingTime": "10:23",
+      "dayPart": "Breakfast",
+      "netSales": 210.47999999999993,
+      "inStoreSales": 210.47999999999993,
+      "onlineSales": 0,
+      "deptSales": {
+        "Catering": 210.47999999999993
+      },
+      "paymentAmounts": {
+        "VISA": 239.94
+      },
+      "tips": 0
+    },
     "416668": {
       "locationName": "Cole Harbour",
       "locationType": "Franchisee",
@@ -558243,6 +558445,42 @@
       },
       "tips": 0
     },
+    "508092": {
+      "locationName": "Halifax Shopping Centre",
+      "locationType": "Corp",
+      "businessDate": "2026-09-02",
+      "orderType": "QSR",
+      "openingTime": "10:18",
+      "dayPart": "Breakfast",
+      "netSales": 19.29,
+      "inStoreSales": 19.29,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 19.29
+      },
+      "paymentAmounts": {
+        "MASTERCARD": 21.99
+      },
+      "tips": 0
+    },
+    "508093": {
+      "locationName": "Halifax Shopping Centre",
+      "locationType": "Corp",
+      "businessDate": "2026-09-02",
+      "orderType": "QSR",
+      "openingTime": "10:19",
+      "dayPart": "Breakfast",
+      "netSales": 11.99,
+      "inStoreSales": 11.99,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 11.99
+      },
+      "paymentAmounts": {
+        "VISA": 13.67
+      },
+      "tips": 0
+    },
     "554641": {
       "locationName": "Barrington",
       "locationType": "Corp",
@@ -647170,6 +647408,24 @@
         "MASTERCARD": 12.53
       },
       "tips": 0
+    },
+    "666067": {
+      "locationName": "Clayton Park",
+      "locationType": "Corp",
+      "businessDate": "2026-09-02",
+      "orderType": "QSR",
+      "openingTime": "09:23",
+      "dayPart": "Breakfast",
+      "netSales": 34.28,
+      "inStoreSales": 34.28,
+      "onlineSales": 0,
+      "deptSales": {
+        "Eat - In": 34.28
+      },
+      "paymentAmounts": {
+        "AMEX": 39.08
+      },
+      "tips": 1.95
     }
   },
   "unmappedOutlets": {},
@@ -647179,6 +647435,6 @@
       "reason": "Beta Lanner -- Givex certification/test store, not a real Mezza location"
     }
   },
-  "payloadsProcessedTotal": 37743,
+  "payloadsProcessedTotal": 37762,
   "payloadsSkippedTotal": 0
 }
