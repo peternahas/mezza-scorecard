@@ -39,27 +39,48 @@
  * tip, with what attached" — between a sales report and something you
  * can run the business off.
  *
- * ── WHAT THE PROBE SHOWED IS *NOT* THERE ─────────────────────────
+ * ── WHAT IS AND IS NOT ACTUALLY POPULATED ────────────────────────
  *
- * Recorded here so nobody builds a metric on top of an empty field
- * and then reads the resulting zero as a business fact:
+ * Recorded here so nobody builds a metric on an empty field and then
+ * reads the resulting zero as a business fact.
  *
+ * Genuinely absent:
  *   customer_id / customer_name / member_number — present on every
- *     bill, EMPTY on every bill. No loyalty or repeat-customer
+ *     bill, EMPTY on every bill. No loyalty, repeat-rate or cohort
  *     analysis is possible from this feed today.
  *   discounts[] / coupons[] / returns[] / modifiers[] — present on
- *     every line item, empty on every line item.
- *   discount_pretax / coupon_pretax — present on every bill, ZERO on
- *     every bill sampled.
+ *     every line item, empty on every one.
+ *   coupon_pretax — present, zero everywhere seen.
  *   service_charge_amt / service_charge_tax — always zero.
- *   num_seats — always 1. Guest counts are not meaningful here, so
- *     sales-per-guest is captured but must not be featured.
+ *   num_seats — always 1, and table_num is populated on 100% of
+ *     orders, so it is an order/queue number rather than a dine-in
+ *     table. Neither supports a guest-count or table-turn metric.
  *
- * Discounting, comps and voids are therefore NOT measurable from the
- * webhook as configured. `type` on each line item is the one usable
- * signal — production shows only "sale", so anything else is tracked
- * as a non-sale line and surfaced, which is how a void would first
- * become visible if Givex starts sending them.
+ * Present after all, contrary to a first small sample:
+ *   discount_pretax — non-zero. Roughly 0.45% of net sales over the
+ *     first full week measured. Small, but real and worth watching.
+ *   line `type` — production carries "sale" AND "refund". Refunds are
+ *     therefore measurable, which is what NonSale_Lines/NonSale_Sales
+ *     report.
+ *
+ * ── HOW THE MONEY FIELDS ACTUALLY RELATE ─────────────────────────
+ *
+ * This was established by reconciling a full week of real data, not
+ * from documentation, and it matters because getting it wrong would
+ * mean double-counting revenue:
+ *
+ *   adj_gross_sales  +  paid add-ons  -  discounts  ≈  net_sales
+ *      $355,539          $21,062        $1,667        $374,080
+ *      (residual +$854, of which -$757 is refund lines: 0.03%)
+ *
+ * So `net_sales` ALREADY CONTAINS the add-on money, and
+ * `adj_gross_sales` is the BASE ITEM VALUE BEFORE add-ons — it is
+ * smaller than net, not larger. Calling it "gross sales" would be
+ * actively misleading, so it is emitted as Item_Base_Sales.
+ *
+ * Paid add-ons are therefore reported as a COMPONENT of net sales,
+ * never added to it. Adding them would have inflated every sales
+ * figure on the scorecard by about 5.6%.
  *
  * ── BACKWARD COMPATIBILITY IS ABSOLUTE ───────────────────────────
  *
@@ -318,7 +339,7 @@ function resolveLocationType(mapping, locationName) {
    ═════════════════════════════════════════════════════════════════ */
 
 function extractOrder(o, lines, mapping, locationName, businessDate) {
-  let net = 0, gross = 0, tax = 0;
+  let net = 0, base = 0, tax = 0;
   let inStore = 0, online = 0, marketplace = 0;
   let units = 0;
   let bevSales = 0, foodSales = 0, hasBeverage = false;
@@ -338,7 +359,7 @@ function extractOrder(o, lines, mapping, locationName, businessDate) {
 
     const deptName = pick(li, ["department_name"], "line.department_name") || "(none)";
     const amt = num(pick(li, ["net_sales"], "line.net_sales"));
-    const grossAmt = num(pick(li, ["adj_gross_sales"], "line.adj_gross_sales"));
+    const baseAmt = num(pick(li, ["adj_gross_sales"], "line.adj_gross_sales"));
     const qty = num(pick(li, ["units"], "line.units")) || 1;
     tax += num(pick(li, ["total_tax"], "line.total_tax"));
 
@@ -351,7 +372,7 @@ function extractOrder(o, lines, mapping, locationName, businessDate) {
     }
 
     net += amt;
-    gross += grossAmt || amt;
+    base += baseAmt || amt;
     units += qty;
 
     if (ONLINE_DEPARTMENTS.has(deptName)) online += amt; else inStore += amt;
@@ -378,16 +399,16 @@ function extractOrder(o, lines, mapping, locationName, businessDate) {
       rec.s += amt;
     }
 
-    // Add-ons. The probe showed most carry adj_gross_sales of 0 — they
-    // are free customisations — while a minority are genuinely paid
-    // upsells. Only the paid ones are a revenue lever, so they are
-    // counted separately.
+    // Add-ons. Most carry adj_gross_sales of 0 — free customisations —
+    // while a minority are genuinely paid upsells. Only the paid ones
+    // are a revenue lever, so they are counted separately.
     //
-    // Their money is NOT added to net. It is not established whether
-    // Givex already includes an add-on's price in the parent line's
-    // net_sales, and adding it would silently inflate every historical
-    // sales comparison on the scorecard. Reported alongside, never
-    // folded in.
+    // Their money is deliberately NOT added to net, because
+    // reconciling a full week of real data showed net_sales already
+    // contains it: adj_gross_sales + paid add-ons - discounts lands
+    // within 0.03% of net_sales. Adding them again would have
+    // inflated every sales figure on the scorecard by about 5.6%.
+    // They are a COMPONENT of net sales, reported alongside it.
     const addons = pick(li, ["addons"], "line.addons");
     if (Array.isArray(addons)) {
       for (const a of addons) {
@@ -415,7 +436,7 @@ function extractOrder(o, lines, mapping, locationName, businessDate) {
   const payments = {};
   let tips = 0, tendered = 0, subtotal = 0, billTax = 0;
   let guests = 0, discount = 0, coupon = 0;
-  let onlineOrderId = false, tableNum = null;
+  let onlineOrderId = false;
 
   for (const bill of o.bills || []) {
     subtotal += num(pick(bill, ["order_subtotal"], "bill.order_subtotal"));
@@ -438,8 +459,10 @@ function extractOrder(o, lines, mapping, locationName, businessDate) {
     }
   }
 
-  const tbl = pick(o, ["table_num"], "order.table_num");
-  if (tbl != null && String(tbl) !== "0" && String(tbl) !== "") tableNum = String(tbl);
+  // table_num is deliberately not extracted. It is populated on 100%
+  // of production orders, so in this format it is an order/queue
+  // number rather than a dine-in table, and a metric that is always
+  // 100% only invites a wrong reading.
 
   return {
     l: locationName,
@@ -452,7 +475,7 @@ function extractOrder(o, lines, mapping, locationName, businessDate) {
     hr: hourOf(openingTime),
     sm: serviceMinutes(openingTime, closingTime),
     n: net,
-    g: gross,
+    b: base,
     tx: billTax || tax,
     st: subtotal,
     is: inStore,
@@ -480,7 +503,6 @@ function extractOrder(o, lines, mapping, locationName, businessDate) {
     lty: lineTypes,
     pm: payments,
     o: operator,
-    tbl: tableNum,
     ooid: onlineOrderId ? 1 : 0,
   };
 }
@@ -494,14 +516,13 @@ function newDayBucket(loc, type, date) {
     Location_Name: loc, Location_Type: type, Business_Date: date,
     Total_Sales: 0, InStore_Sales: 0, Online_Sales: 0, Orders: 0,
     Order_Type_Sales: {}, Day_Part_Sales: {}, Payment_Mix: {}, Tips_Total: 0,
-    Gross_Sales: 0, Tax_Total: 0, Subtotal_Total: 0,
+    Item_Base_Sales: 0, Tax_Total: 0, Subtotal_Total: 0,
     Marketplace_Sales: 0, Marketplace_Orders: 0, Online_Orders: 0,
     Units: 0, Guests: 0,
     Beverage_Sales: 0, Food_Sales: 0, Beverage_Orders: 0,
     Paid_Addon_Count: 0, Paid_Addon_Sales: 0, Free_Addon_Count: 0,
     NonSale_Lines: 0, NonSale_Sales: 0,
     Discount_Total: 0, Coupon_Total: 0, Tendered_Total: 0,
-    Table_Orders: 0,
     Hour_Sales: {}, Hour_Orders: {},
     Category_Sales: {}, Category_Group_Sales: {}, Subcategory_Sales: {},
     Department_Sales: {}, Line_Types: {},
@@ -516,7 +537,7 @@ function addMap(target, src) {
 
 function foldOrderIntoDay(b, ord) {
   b.Total_Sales += ord.n;
-  b.Gross_Sales += ord.g;
+  b.Item_Base_Sales += ord.b;
   b.Tax_Total += ord.tx;
   b.Subtotal_Total += ord.st;
   b.InStore_Sales += ord.is;
@@ -539,7 +560,6 @@ function foldOrderIntoDay(b, ord) {
   b.Coupon_Total += ord.cpn;
   b.Tips_Total += ord.tp;
   b.Tendered_Total += ord.td;
-  if (ord.tbl) b.Table_Orders += 1;
   b.Order_Type_Sales[ord.ot] = (b.Order_Type_Sales[ord.ot] || 0) + ord.n;
   b.Day_Part_Sales[ord.dp] = (b.Day_Part_Sales[ord.dp] || 0) + ord.n;
   if (ord.hr !== null && ord.hr !== undefined) {
@@ -576,7 +596,10 @@ function sealDay(b) {
     Payment_Mix: rMap(b.Payment_Mix),
     Tips_Total: r2(b.Tips_Total),
     // ── v2 ──
-    Gross_Sales: r2(b.Gross_Sales),
+    // NOT "gross sales" -- this is the base item value BEFORE paid
+    // add-ons and before discount, so it is SMALLER than net sales.
+    // adj_gross_sales + add-ons - discounts = net_sales.
+    Item_Base_Sales: r2(b.Item_Base_Sales),
     Tax_Total: r2(b.Tax_Total),
     Subtotal_Total: r2(b.Subtotal_Total),
     Marketplace_Sales: r2(b.Marketplace_Sales),
@@ -596,11 +619,10 @@ function sealDay(b) {
     NonSale_Sales: r2(b.NonSale_Sales),
     Discount_Total: r2(b.Discount_Total),
     Coupon_Total: r2(b.Coupon_Total),
-    Discount_Pct: b.Gross_Sales ? r2(((b.Discount_Total + b.Coupon_Total) / b.Gross_Sales) * 100) : 0,
+    Discount_Pct: b.Total_Sales ? r2(((b.Discount_Total + b.Coupon_Total) / b.Total_Sales) * 100) : 0,
     Tendered_Total: r2(b.Tendered_Total),
     Tip_Pct: b.Tendered_Total ? r2((b.Tips_Total / b.Tendered_Total) * 100) : 0,
     Guests: r2(b.Guests),
-    Table_Orders: b.Table_Orders,
     Avg_Service_Minutes: b._svcN ? r2(b._svcSum / b._svcN) : null,
     Hour_Sales: rMap(b.Hour_Sales),
     Hour_Orders: b.Hour_Orders,
@@ -888,13 +910,13 @@ async function main() {
       Location_Name: d.Location_Name, Location_Type: d.Location_Type,
       Year: year, Week_Number: weekNumber, Week_Start: weekStart,
       Total_Sales: 0, InStore_Sales: 0, Online_Sales: 0, Orders: 0,
-      Gross_Sales: 0, Tax_Total: 0, Marketplace_Sales: 0, Marketplace_Orders: 0,
+      Item_Base_Sales: 0, Tax_Total: 0, Marketplace_Sales: 0, Marketplace_Orders: 0,
       Online_Orders: 0, Units: 0, Beverage_Sales: 0, Food_Sales: 0,
       Paid_Addon_Sales: 0, Tips_Total: 0, Tendered_Total: 0, Days_Reporting: 0,
     });
     w.Total_Sales += d.Total_Sales; w.InStore_Sales += d.InStore_Sales;
     w.Online_Sales += d.Online_Sales; w.Orders += d.Orders;
-    w.Gross_Sales += d.Gross_Sales; w.Tax_Total += d.Tax_Total;
+    w.Item_Base_Sales += d.Item_Base_Sales; w.Tax_Total += d.Tax_Total;
     w.Marketplace_Sales += d.Marketplace_Sales; w.Marketplace_Orders += d.Marketplace_Orders;
     w.Online_Orders += d.Online_Orders; w.Units += d.Units;
     w.Beverage_Sales += d.Beverage_Sales; w.Food_Sales += d.Food_Sales;
@@ -914,7 +936,7 @@ async function main() {
     Avg_Ticket: w.Orders ? r2(w.Total_Sales / w.Orders) : 0,
     // v2
     Location_Type: w.Location_Type,
-    Gross_Sales: r2(w.Gross_Sales),
+    Item_Base_Sales: r2(w.Item_Base_Sales),
     Tax_Total: r2(w.Tax_Total),
     Marketplace_Sales: r2(w.Marketplace_Sales),
     Marketplace_Orders: w.Marketplace_Orders,
@@ -1061,11 +1083,11 @@ async function main() {
 function reviveFrozen(s) {
   const b = newDayBucket(s.Location_Name, s.Location_Type, s.Business_Date);
   const scalars = [
-    "Total_Sales","InStore_Sales","Online_Sales","Orders","Tips_Total","Gross_Sales",
+    "Total_Sales","InStore_Sales","Online_Sales","Orders","Tips_Total","Item_Base_Sales",
     "Tax_Total","Subtotal_Total","Marketplace_Sales","Marketplace_Orders","Online_Orders",
     "Units","Guests","Beverage_Sales","Food_Sales","Paid_Addon_Count","Paid_Addon_Sales",
     "Free_Addon_Count","NonSale_Lines","NonSale_Sales","Discount_Total","Coupon_Total",
-    "Tendered_Total","Table_Orders",
+    "Tendered_Total",
   ];
   for (const k of scalars) b[k] = s[k] || 0;
   const maps = [
@@ -1086,11 +1108,11 @@ function reviveFrozen(s) {
 
 function mergeWorking(a, b) {
   const scalars = [
-    "Total_Sales","InStore_Sales","Online_Sales","Orders","Tips_Total","Gross_Sales",
+    "Total_Sales","InStore_Sales","Online_Sales","Orders","Tips_Total","Item_Base_Sales",
     "Tax_Total","Subtotal_Total","Marketplace_Sales","Marketplace_Orders","Online_Orders",
     "Units","Guests","Beverage_Sales","Food_Sales","Beverage_Orders","Paid_Addon_Count",
     "Paid_Addon_Sales","Free_Addon_Count","NonSale_Lines","NonSale_Sales","Discount_Total",
-    "Coupon_Total","Tendered_Total","Table_Orders","_svcSum","_svcN","_opnExtra",
+    "Coupon_Total","Tendered_Total","_svcSum","_svcN","_opnExtra",
   ];
   for (const k of scalars) a[k] = (a[k] || 0) + (b[k] || 0);
   a._legacy = a._legacy || b._legacy;

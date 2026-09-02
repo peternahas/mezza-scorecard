@@ -1,4 +1,4 @@
-name: Sync Givex sales data from webhook KV
+name: Sync Givex sales data
 
 on:
   schedule:
@@ -35,6 +35,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+
+      # The unit tests run before the API is touched. This pipeline
+      # fails silently when it fails at all -- a wrong field name gives
+      # a zero, not an error -- so the cheap check goes first.
+      - name: Unit tests
+        run: |
+          mkdir -p /tmp/synctest && cd /tmp/synctest
+          cp "$GITHUB_WORKSPACE/scripts/sync-givex-to-json.mjs" sync.mjs
+          cp "$GITHUB_WORKSPACE/scripts/store-mapping.json" .
+          cp "$GITHUB_WORKSPACE/scripts/test-sync-v2.mjs" test.mjs
+          node test.mjs
 
       - name: Pull latest orders from the Givex webhook Worker and aggregate
         env:
