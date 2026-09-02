@@ -51,6 +51,7 @@ const WHITELIST = new Set([
   "department_name", "order_type", "payment_method",
   "category_name", "category_group_name", "subcat_name",
   "action", "device_type", "order_status", "revenue_center", "day_part",
+  "type", "bill_status", "section_name",
 ]);
 
 // Union of keys across every object seen at each path, so an optional
@@ -60,7 +61,7 @@ const shape = {};
 const values = {};
 
 function walk(v, path, depth) {
-  if (depth > 6) return;
+  if (depth > 9) return;
   if (Array.isArray(v)) {
     for (const e of v.slice(0, 50)) walk(e, path + "[]", depth + 1);
     return;
@@ -73,6 +74,19 @@ function walk(v, path, depth) {
       rec.seen++;
       rec.types[t] = (rec.types[t] || 0) + 1;
       if (v[k] !== null && v[k] !== "" && !(Array.isArray(v[k]) && !v[k].length)) rec.nonEmpty++;
+      // For numbers, "present" is not the same as "carries information".
+      // discount_pretax is present on every bill; the question that
+      // actually matters is whether it is ever non-zero. Without this
+      // distinction a field looks usable and then silently reports 0
+      // forever. These are aggregate figures from Mezza's own sales,
+      // not personal data.
+      if (typeof v[k] === "number") {
+        rec.numeric = rec.numeric || { nonZero: 0, min: Infinity, max: -Infinity, sum: 0 };
+        if (v[k] !== 0) rec.numeric.nonZero++;
+        rec.numeric.min = Math.min(rec.numeric.min, v[k]);
+        rec.numeric.max = Math.max(rec.numeric.max, v[k]);
+        rec.numeric.sum += v[k];
+      }
       if (WHITELIST.has(k) && (typeof v[k] === "string" || typeof v[k] === "number")) {
         (values[k] || (values[k] = new Set())).add(String(v[k]));
       }
@@ -91,12 +105,21 @@ const out = {
   highest_d1_row_id: since,
   note:
     "Keys, types and how often each path was non-empty. Values are listed ONLY for " +
-    "classification fields (department, order type, payment method, category, day part). " +
-    "No customer, member, staff, amount or card data is emitted.",
+    "classification fields (department, order type, payment method, category, day part, " +\n    "line type, bill status, section). Numeric paths also report how often they are " +\n    "NON-ZERO, plus min/max/sum -- aggregate figures from Mezza's own sales. No customer " +\n    "name, member number, staff name or card data is emitted.",
   fields: Object.fromEntries(
     Object.entries(shape)
       .sort(([a], [b]) => a.localeCompare(b))
-      .map(([k, v]) => [k, { seen: v.seen, non_empty: v.nonEmpty, types: v.types }])
+      .map(([k, v]) => [k, {
+        seen: v.seen,
+        non_empty: v.nonEmpty,
+        types: v.types,
+        ...(v.numeric
+          ? { non_zero: v.numeric.nonZero,
+              min: v.numeric.min,
+              max: v.numeric.max,
+              sum: Math.round(v.numeric.sum * 100) / 100 }
+          : {}),
+      }])
   ),
   classification_values: Object.fromEntries(
     Object.entries(values).map(([k, s]) => [k, [...s].sort()])
