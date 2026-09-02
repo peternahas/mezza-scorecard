@@ -45,14 +45,21 @@ jobs:
           VERIFY_ONLY: "true"
         run: node scripts/sync-givex-to-json.v2.mjs
 
+      # continue-on-error, then a gate at the end: the whole point of
+      # this run is the comparison REPORT, so it has to be committed
+      # even when it says the numbers moved. Failing here and skipping
+      # the commit would hide the evidence needed to fix it.
       - name: Compare against the feed currently on the scorecard
-        run: node scripts/compare-givex-feeds.mjs
+        id: compare
+        continue-on-error: true
+        run: node scripts/compare-givex-feeds.mjs | tee data/givex-feed-comparison.log
 
       - name: Commit the verify output and the comparison
+        if: always()
         run: |
           git config user.name "mezza-scorecard-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data/givex-sales-data.verify.json data/givex-feed-comparison.json
+          git add data/givex-sales-data.verify.json data/givex-feed-comparison.json data/givex-feed-comparison.log
           if git diff --cached --quiet; then
             echo "No change."
           else
@@ -60,3 +67,10 @@ jobs:
             git pull --rebase origin main
             git push
           fi
+
+      - name: Fail if any existing measure moved
+        if: steps.compare.outcome == 'failure'
+        run: |
+          echo "The comparison found drift in measures the business has already seen."
+          echo "See data/givex-feed-comparison.json (committed above) for the detail."
+          exit 1

@@ -77,6 +77,8 @@ if (report.fields_never_found.length) {
   console.log(`Fields never found (metric will read zero): ${report.fields_never_found.join(", ")}`);
 }
 if (drift.length) {
+  // Report is already written above -- exiting non-zero here is a
+  // signal to the workflow, not a reason to withhold the evidence.
   console.error(`\nFAIL: ${drift.length} existing measure(s) changed value. First few:`);
   for (const d of drift.slice(0, 10)) {
     console.error(`  ${d.store_day} ${d.field}: live ${d.live} -> v2 ${d.v2} (${d.delta > 0 ? "+" : ""}${d.delta})`);
