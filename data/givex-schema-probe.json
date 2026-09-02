@@ -1,576 +1,791 @@
 {
-  "probed_at": "2026-09-02T16:06:20.024Z",
-  "payloads_sampled": 85,
-  "highest_d1_row_id": 19044,
-  "note": "Keys, types and how often each path was non-empty. Values are listed ONLY for classification fields (department, order type, payment method, category, day part). No customer, member, staff, amount or card data is emitted.",
+  "probed_at": "2026-09-02T16:10:28.405Z",
+  "payloads_sampled": 7,
+  "highest_d1_row_id": 19070,
+  "note": "Keys, types and how often each path was non-empty. Values are listed ONLY for classification fields (department, order type, payment method, category, day part, line type, bill status, section). Numeric paths also report how often they are NON-ZERO, plus min/max/sum — aggregate figures from Mezza's own sales. No customer name, member number, staff name or card data is emitted.",
   "fields": {
     "action": {
-      "seen": 85,
-      "non_empty": 85,
+      "seen": 7,
+      "non_empty": 7,
       "types": {
-        "string": 85
+        "string": 7
       }
     },
     "BusinessDate": {
-      "seen": 85,
-      "non_empty": 85,
+      "seen": 7,
+      "non_empty": 7,
       "types": {
-        "string": 85
+        "string": 7
       }
     },
     "client_id": {
-      "seen": 85,
-      "non_empty": 85,
+      "seen": 7,
+      "non_empty": 7,
       "types": {
-        "number": 85
-      }
+        "number": 7
+      },
+      "non_zero": 7,
+      "min": 16907,
+      "max": 16907,
+      "sum": 118349
     },
     "ClientID": {
-      "seen": 85,
-      "non_empty": 85,
+      "seen": 7,
+      "non_empty": 7,
       "types": {
-        "number": 85
-      }
+        "number": 7
+      },
+      "non_zero": 7,
+      "min": 16907,
+      "max": 16907,
+      "sum": 118349
     },
     "MerchantID": {
-      "seen": 85,
-      "non_empty": 85,
+      "seen": 7,
+      "non_empty": 7,
       "types": {
-        "number": 85
-      }
+        "number": 7
+      },
+      "non_zero": 7,
+      "min": 19495,
+      "max": 19495,
+      "sum": 136465
     },
     "OnlineOrderID": {
-      "seen": 85,
+      "seen": 7,
       "non_empty": 0,
       "types": {
-        "string": 85
+        "string": 7
       }
     },
     "OrderID": {
-      "seen": 85,
-      "non_empty": 85,
+      "seen": 7,
+      "non_empty": 7,
       "types": {
-        "number": 85
-      }
+        "number": 7
+      },
+      "non_zero": 7,
+      "min": 46706,
+      "max": 419520,
+      "sum": 1905150
     },
     "OutletID": {
-      "seen": 85,
-      "non_empty": 85,
+      "seen": 7,
+      "non_empty": 7,
       "types": {
-        "number": 85
-      }
+        "number": 7
+      },
+      "non_zero": 7,
+      "min": 162050,
+      "max": 400005267,
+      "sum": 1600509413
     },
     "payload": {
-      "seen": 85,
-      "non_empty": 85,
+      "seen": 7,
+      "non_empty": 7,
       "types": {
-        "array": 85
+        "array": 7
       }
     },
     "payload[][].addons": {
-      "seen": 154,
-      "non_empty": 139,
+      "seen": 10,
+      "non_empty": 10,
       "types": {
-        "array": 154
+        "array": 10
       }
     },
     "payload[][].addons[].adj_gross_sales": {
-      "seen": 351,
-      "non_empty": 351,
+      "seen": 32,
+      "non_empty": 32,
       "types": {
-        "number": 351
-      }
+        "number": 32
+      },
+      "non_zero": 6,
+      "min": 0,
+      "max": 3,
+      "sum": 13.29
     },
     "payload[][].addons[].date": {
-      "seen": 351,
-      "non_empty": 351,
+      "seen": 32,
+      "non_empty": 32,
       "types": {
-        "string": 351
+        "string": 32
       }
     },
     "payload[][].addons[].discounts": {
-      "seen": 351,
+      "seen": 32,
       "non_empty": 0,
       "types": {
-        "array": 351
+        "array": 32
       }
     },
     "payload[][].addons[].item_name": {
-      "seen": 351,
-      "non_empty": 351,
+      "seen": 32,
+      "non_empty": 32,
       "types": {
-        "string": 351
+        "string": 32
       }
     },
     "payload[][].addons[].item_sku_code": {
-      "seen": 351,
-      "non_empty": 351,
+      "seen": 32,
+      "non_empty": 32,
       "types": {
-        "string": 351
+        "string": 32
       }
     },
     "payload[][].addons[].modifiers": {
-      "seen": 351,
+      "seen": 32,
       "non_empty": 0,
       "types": {
-        "array": 351
+        "array": 32
       }
     },
     "payload[][].addons[].price_per_unit": {
-      "seen": 351,
-      "non_empty": 351,
+      "seen": 32,
+      "non_empty": 32,
       "types": {
-        "number": 351
-      }
+        "number": 32
+      },
+      "non_zero": 6,
+      "min": 0,
+      "max": 3,
+      "sum": 13.29
     },
     "payload[][].addons[].time": {
-      "seen": 351,
-      "non_empty": 351,
+      "seen": 32,
+      "non_empty": 32,
       "types": {
-        "string": 351
+        "string": 32
       }
     },
     "payload[][].addons[].units": {
-      "seen": 351,
-      "non_empty": 351,
+      "seen": 32,
+      "non_empty": 32,
       "types": {
-        "number": 351
-      }
+        "number": 32
+      },
+      "non_zero": 32,
+      "min": 1,
+      "max": 1,
+      "sum": 32
     },
     "payload[][].adj_gross_sales": {
-      "seen": 154,
-      "non_empty": 154,
+      "seen": 10,
+      "non_empty": 10,
       "types": {
-        "number": 154
-      }
+        "number": 10
+      },
+      "non_zero": 10,
+      "min": 4.49,
+      "max": 19.29,
+      "sum": 125.8
     },
     "payload[][].bills": {
-      "seen": 85,
-      "non_empty": 85,
+      "seen": 7,
+      "non_empty": 7,
       "types": {
-        "array": 85
+        "array": 7
       }
     },
     "payload[][].bills[].bill_amount": {
-      "seen": 85,
-      "non_empty": 85,
+      "seen": 7,
+      "non_empty": 7,
       "types": {
-        "number": 85
-      }
+        "number": 7
+      },
+      "non_zero": 7,
+      "min": 12.53,
+      "max": 36.45,
+      "sum": 159.17
     },
     "payload[][].bills[].bill_online_order_id": {
-      "seen": 85,
-      "non_empty": 10,
+      "seen": 7,
+      "non_empty": 2,
       "types": {
-        "number": 10,
-        "null": 75
-      }
+        "null": 5,
+        "number": 2
+      },
+      "non_zero": 2,
+      "min": 411666128,
+      "max": 411666129,
+      "sum": 823332257
     },
     "payload[][].bills[].bill_status": {
-      "seen": 85,
-      "non_empty": 85,
+      "seen": 7,
+      "non_empty": 7,
       "types": {
-        "string": 85
+        "string": 7
       }
     },
     "payload[][].bills[].bill_tax": {
-      "seen": 85,
-      "non_empty": 85,
+      "seen": 7,
+      "non_empty": 7,
       "types": {
-        "number": 85
-      }
+        "number": 7
+      },
+      "non_zero": 7,
+      "min": 1.54,
+      "max": 4.48,
+      "sum": 20.08
     },
     "payload[][].bills[].coupon_pretax": {
-      "seen": 85,
-      "non_empty": 85,
+      "seen": 7,
+      "non_empty": 7,
       "types": {
-        "number": 85
-      }
+        "number": 7
+      },
+      "non_zero": 0,
+      "min": 0,
+      "max": 0,
+      "sum": 0
     },
     "payload[][].bills[].customer_id": {
-      "seen": 85,
+      "seen": 7,
       "non_empty": 0,
       "types": {
-        "string": 85
+        "string": 7
       }
     },
     "payload[][].bills[].customer_name": {
-      "seen": 85,
+      "seen": 7,
       "non_empty": 0,
       "types": {
-        "string": 85
+        "string": 7
       }
     },
     "payload[][].bills[].discount_pretax": {
-      "seen": 85,
-      "non_empty": 85,
+      "seen": 7,
+      "non_empty": 7,
       "types": {
-        "number": 85
-      }
+        "number": 7
+      },
+      "non_zero": 0,
+      "min": 0,
+      "max": 0,
+      "sum": 0
     },
     "payload[][].bills[].member_number": {
-      "seen": 85,
+      "seen": 7,
       "non_empty": 0,
       "types": {
-        "string": 85
+        "string": 7
       }
     },
     "payload[][].bills[].num_seats": {
-      "seen": 85,
-      "non_empty": 85,
+      "seen": 7,
+      "non_empty": 7,
       "types": {
-        "number": 85
-      }
+        "number": 7
+      },
+      "non_zero": 7,
+      "min": 1,
+      "max": 1,
+      "sum": 7
     },
     "payload[][].bills[].order_subtotal": {
-      "seen": 85,
-      "non_empty": 85,
+      "seen": 7,
+      "non_empty": 7,
       "types": {
-        "number": 85
-      }
+        "number": 7
+      },
+      "non_zero": 7,
+      "min": 10.99,
+      "max": 31.97,
+      "sum": 139.09
     },
     "payload[][].bills[].payments": {
-      "seen": 85,
-      "non_empty": 85,
+      "seen": 7,
+      "non_empty": 7,
       "types": {
-        "array": 85
+        "array": 7
       }
+    },
+    "payload[][].bills[].payments[].adjusted_by": {
+      "seen": 7,
+      "non_empty": 0,
+      "types": {
+        "null": 7
+      }
+    },
+    "payload[][].bills[].payments[].adjustment_note": {
+      "seen": 7,
+      "non_empty": 0,
+      "types": {
+        "null": 7
+      }
+    },
+    "payload[][].bills[].payments[].cash_out_id": {
+      "seen": 7,
+      "non_empty": 7,
+      "types": {
+        "number": 7
+      },
+      "non_zero": 7,
+      "min": 2131,
+      "max": 10794,
+      "sum": 52994
+    },
+    "payload[][].bills[].payments[].operator_login": {
+      "seen": 7,
+      "non_empty": 7,
+      "types": {
+        "number": 7
+      },
+      "non_zero": 7,
+      "min": 111,
+      "max": 1111,
+      "sum": 5143
+    },
+    "payload[][].bills[].payments[].operator_name": {
+      "seen": 7,
+      "non_empty": 7,
+      "types": {
+        "string": 7
+      }
+    },
+    "payload[][].bills[].payments[].payment_method": {
+      "seen": 7,
+      "non_empty": 7,
+      "types": {
+        "string": 7
+      }
+    },
+    "payload[][].bills[].payments[].payment_method_amount": {
+      "seen": 7,
+      "non_empty": 7,
+      "types": {
+        "number": 7
+      },
+      "non_zero": 7,
+      "min": 12.53,
+      "max": 36.45,
+      "sum": 159.17
+    },
+    "payload[][].bills[].payments[].payment_ref": {
+      "seen": 7,
+      "non_empty": 5,
+      "types": {
+        "string": 5,
+        "null": 2
+      }
+    },
+    "payload[][].bills[].payments[].total_payment": {
+      "seen": 7,
+      "non_empty": 7,
+      "types": {
+        "number": 7
+      },
+      "non_zero": 7,
+      "min": 13.62,
+      "max": 40,
+      "sum": 174.34
+    },
+    "payload[][].bills[].payments[].total_tip": {
+      "seen": 7,
+      "non_empty": 7,
+      "types": {
+        "number": 7
+      },
+      "non_zero": 5,
+      "min": 0,
+      "max": 6.67,
+      "sum": 15.17
     },
     "payload[][].bills[].vxl_bill_id": {
-      "seen": 85,
-      "non_empty": 85,
+      "seen": 7,
+      "non_empty": 7,
       "types": {
-        "number": 85
-      }
+        "number": 7
+      },
+      "non_zero": 7,
+      "min": 41165,
+      "max": 385416,
+      "sum": 1652265
     },
     "payload[][].category_group_name": {
-      "seen": 154,
-      "non_empty": 154,
+      "seen": 10,
+      "non_empty": 10,
       "types": {
-        "string": 154
+        "string": 10
       }
     },
     "payload[][].category_id": {
-      "seen": 154,
-      "non_empty": 154,
+      "seen": 10,
+      "non_empty": 10,
       "types": {
-        "number": 154
-      }
+        "number": 10
+      },
+      "non_zero": 10,
+      "min": 2819,
+      "max": 2828,
+      "sum": 28208
     },
     "payload[][].category_name": {
-      "seen": 154,
-      "non_empty": 154,
+      "seen": 10,
+      "non_empty": 10,
       "types": {
-        "string": 154
+        "string": 10
       }
     },
     "payload[][].closing_date": {
-      "seen": 85,
-      "non_empty": 85,
+      "seen": 7,
+      "non_empty": 7,
       "types": {
-        "string": 85
+        "string": 7
       }
     },
     "payload[][].closing_time": {
-      "seen": 85,
-      "non_empty": 85,
+      "seen": 7,
+      "non_empty": 7,
       "types": {
-        "string": 85
+        "string": 7
       }
     },
     "payload[][].coupons": {
-      "seen": 154,
+      "seen": 10,
       "non_empty": 0,
       "types": {
-        "array": 154
+        "array": 10
       }
     },
     "payload[][].date": {
-      "seen": 154,
-      "non_empty": 154,
+      "seen": 10,
+      "non_empty": 10,
       "types": {
-        "string": 154
+        "string": 10
       }
     },
     "payload[][].department_id": {
-      "seen": 154,
-      "non_empty": 154,
+      "seen": 10,
+      "non_empty": 10,
       "types": {
-        "number": 154
-      }
+        "number": 10
+      },
+      "non_zero": 10,
+      "min": 745,
+      "max": 2092,
+      "sum": 11491
     },
     "payload[][].department_name": {
-      "seen": 154,
-      "non_empty": 154,
+      "seen": 10,
+      "non_empty": 10,
       "types": {
-        "string": 154
+        "string": 10
       }
     },
     "payload[][].discounts": {
-      "seen": 154,
+      "seen": 10,
       "non_empty": 0,
       "types": {
-        "array": 154
+        "array": 10
       }
     },
     "payload[][].item_name": {
-      "seen": 154,
-      "non_empty": 154,
+      "seen": 10,
+      "non_empty": 10,
       "types": {
-        "string": 154
+        "string": 10
       }
     },
     "payload[][].item_sku_code": {
-      "seen": 154,
-      "non_empty": 154,
+      "seen": 10,
+      "non_empty": 10,
       "types": {
-        "string": 154
+        "string": 10
       }
     },
     "payload[][].merchant_id": {
-      "seen": 85,
-      "non_empty": 85,
+      "seen": 7,
+      "non_empty": 7,
       "types": {
-        "number": 85
-      }
+        "number": 7
+      },
+      "non_zero": 7,
+      "min": 19495,
+      "max": 19495,
+      "sum": 136465
     },
     "payload[][].modifiers": {
-      "seen": 154,
+      "seen": 10,
       "non_empty": 0,
       "types": {
-        "array": 154
+        "array": 10
       }
     },
     "payload[][].net_sales": {
-      "seen": 154,
-      "non_empty": 154,
+      "seen": 10,
+      "non_empty": 10,
       "types": {
-        "number": 154
-      }
+        "number": 10
+      },
+      "non_zero": 10,
+      "min": 4.59,
+      "max": 19.29,
+      "sum": 139.09
     },
     "payload[][].opening_date": {
-      "seen": 85,
-      "non_empty": 85,
+      "seen": 7,
+      "non_empty": 7,
       "types": {
-        "string": 85
+        "string": 7
       }
     },
     "payload[][].opening_time": {
-      "seen": 85,
-      "non_empty": 85,
+      "seen": 7,
+      "non_empty": 7,
       "types": {
-        "string": 85
+        "string": 7
       }
     },
     "payload[][].operator_name": {
-      "seen": 154,
-      "non_empty": 154,
+      "seen": 10,
+      "non_empty": 10,
       "types": {
-        "string": 154
+        "string": 10
       }
     },
     "payload[][].order_ref": {
-      "seen": 85,
-      "non_empty": 10,
+      "seen": 7,
+      "non_empty": 2,
       "types": {
-        "string": 10,
-        "null": 75
+        "null": 5,
+        "string": 2
       }
     },
     "payload[][].order_type": {
-      "seen": 85,
-      "non_empty": 85,
+      "seen": 7,
+      "non_empty": 7,
       "types": {
-        "string": 85
+        "string": 7
       }
     },
     "payload[][].outlet_id": {
-      "seen": 239,
-      "non_empty": 239,
+      "seen": 17,
+      "non_empty": 17,
       "types": {
-        "number": 239
-      }
+        "number": 17
+      },
+      "non_zero": 17,
+      "min": 162050,
+      "max": 400005267,
+      "sum": 4001191408
     },
     "payload[][].price_per_unit": {
-      "seen": 154,
-      "non_empty": 154,
+      "seen": 10,
+      "non_empty": 10,
       "types": {
-        "number": 154
-      }
+        "number": 10
+      },
+      "non_zero": 10,
+      "min": 4.49,
+      "max": 19.29,
+      "sum": 125.8
     },
     "payload[][].returns": {
-      "seen": 154,
+      "seen": 10,
       "non_empty": 0,
       "types": {
-        "array": 154
+        "array": 10
       }
     },
     "payload[][].seat_num": {
-      "seen": 154,
-      "non_empty": 154,
+      "seen": 10,
+      "non_empty": 10,
       "types": {
-        "number": 154
-      }
+        "number": 10
+      },
+      "non_zero": 10,
+      "min": 1,
+      "max": 1,
+      "sum": 10
     },
     "payload[][].section_name": {
-      "seen": 154,
-      "non_empty": 154,
+      "seen": 10,
+      "non_empty": 10,
       "types": {
-        "string": 154
+        "string": 10
       }
     },
     "payload[][].service_charge_amt": {
-      "seen": 154,
-      "non_empty": 154,
+      "seen": 10,
+      "non_empty": 10,
       "types": {
-        "number": 154
-      }
+        "number": 10
+      },
+      "non_zero": 0,
+      "min": 0,
+      "max": 0,
+      "sum": 0
     },
     "payload[][].service_charge_tax": {
-      "seen": 154,
-      "non_empty": 154,
+      "seen": 10,
+      "non_empty": 10,
       "types": {
-        "number": 154
-      }
+        "number": 10
+      },
+      "non_zero": 0,
+      "min": 0,
+      "max": 0,
+      "sum": 0
     },
     "payload[][].store_name": {
-      "seen": 85,
-      "non_empty": 85,
+      "seen": 7,
+      "non_empty": 7,
       "types": {
-        "string": 85
+        "string": 7
       }
     },
     "payload[][].store_ref": {
-      "seen": 85,
-      "non_empty": 85,
+      "seen": 7,
+      "non_empty": 7,
       "types": {
-        "string": 85
+        "string": 7
       }
     },
     "payload[][].subcat_name": {
-      "seen": 154,
-      "non_empty": 154,
+      "seen": 10,
+      "non_empty": 10,
       "types": {
-        "string": 154
+        "string": 10
       }
     },
     "payload[][].table_num": {
-      "seen": 239,
-      "non_empty": 239,
+      "seen": 17,
+      "non_empty": 17,
       "types": {
-        "string": 85,
-        "number": 154
-      }
+        "string": 7,
+        "number": 10
+      },
+      "non_zero": 10,
+      "min": 10,
+      "max": 1019,
+      "sum": 2556
     },
     "payload[][].time": {
-      "seen": 154,
-      "non_empty": 154,
+      "seen": 10,
+      "non_empty": 10,
       "types": {
-        "string": 154
+        "string": 10
       }
     },
     "payload[][].total_amt": {
-      "seen": 154,
-      "non_empty": 154,
+      "seen": 10,
+      "non_empty": 10,
       "types": {
-        "number": 154
-      }
+        "number": 10
+      },
+      "non_zero": 10,
+      "min": 5.23,
+      "max": 22.18,
+      "sum": 159.17
     },
     "payload[][].total_tax": {
-      "seen": 154,
-      "non_empty": 154,
+      "seen": 10,
+      "non_empty": 10,
       "types": {
-        "number": 154
-      }
+        "number": 10
+      },
+      "non_zero": 10,
+      "min": 0.64,
+      "max": 2.89,
+      "sum": 20.08
     },
     "payload[][].type": {
-      "seen": 154,
-      "non_empty": 154,
+      "seen": 10,
+      "non_empty": 10,
       "types": {
-        "string": 154
+        "string": 10
       }
     },
     "payload[][].units": {
-      "seen": 154,
-      "non_empty": 154,
+      "seen": 10,
+      "non_empty": 10,
       "types": {
-        "number": 154
-      }
+        "number": 10
+      },
+      "non_zero": 10,
+      "min": 1,
+      "max": 1,
+      "sum": 10
     },
     "payload[][].vxl_bill_ids": {
-      "seen": 154,
-      "non_empty": 154,
+      "seen": 10,
+      "non_empty": 10,
       "types": {
-        "array": 154
+        "array": 10
       }
     },
     "payload[][].vxl_order_id": {
-      "seen": 239,
-      "non_empty": 239,
+      "seen": 17,
+      "non_empty": 17,
       "types": {
-        "number": 239
-      }
+        "number": 17
+      },
+      "non_zero": 17,
+      "min": 46706,
+      "max": 419520,
+      "sum": 4307335
     },
     "payload[][].vxl_order_line_id": {
-      "seen": 154,
-      "non_empty": 154,
+      "seen": 10,
+      "non_empty": 10,
       "types": {
-        "number": 154
-      }
+        "number": 10
+      },
+      "non_zero": 10,
+      "min": 309523,
+      "max": 2177479,
+      "sum": 12841766
     },
     "SequenceID": {
-      "seen": 85,
-      "non_empty": 85,
+      "seen": 7,
+      "non_empty": 7,
       "types": {
-        "number": 85
-      }
+        "number": 7
+      },
+      "non_zero": 7,
+      "min": 1788365373,
+      "max": 1788365417,
+      "sum": 12518557765
     }
   },
   "classification_values": {
+    "bill_status": [
+      "Paid"
+    ],
+    "payment_method": [
+      "DEBIT",
+      "DoorDash",
+      "MASTERCARD",
+      "VISA"
+    ],
     "order_type": [
-      "Delivery",
       "QSR",
-      "Retail",
       "Take-Out"
     ],
     "subcat_name": [
-      "Beverages",
-      "Bowls",
       "Combos",
-      "Combos (Wrap)",
-      "Dessert",
-      "Kid's Menu",
-      "Lunch Plates",
       "Plates",
-      "Poutines",
-      "Salad",
-      "Sides",
       "Wraps"
     ],
     "category_group_name": [
-      "Beverages",
       "Food"
     ],
     "category_name": [
-      "Beverages",
-      "Bowls",
-      "Dessert",
-      "Kids Menu",
-      "Lunch Plates",
-      "Poutines",
-      "Salads",
-      "Sides",
       "Signature Plates",
-      "Wrap Combos",
       "Wraps"
     ],
+    "type": [
+      "sale"
+    ],
     "department_name": [
-      "Door Dash - Delivery",
       "Door Dash - Pickup",
-      "Drive Through",
+      "Eat - In"
+    ],
+    "section_name": [
+      "Door Dash - Pickup",
       "Eat - In",
-      "Skip The Dishes",
-      "Take - Out"
+      "Eat-In"
     ],
     "action": [
       "bill_info"
