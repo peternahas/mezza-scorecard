@@ -1,0 +1,62 @@
+name: Verify Givex sync v2 against live data
+
+# Runs the v2 sync in VERIFY_ONLY mode: it rebuilds every order from
+# D1 and writes data/givex-sales-data.verify.json, touching neither
+# the live feed nor the saved state.
+#
+# Why a separate step rather than just shipping v2: a wrong field name
+# in this pipeline does not throw, it produces a plausible wrong
+# number. The only safe way to change it is to build the new numbers
+# alongside the old ones and diff them before switching over.
+#
+# The unit tests run first, so a broken script never reaches the API.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-givex-data
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Unit tests
+        run: |
+          mkdir -p /tmp/synctest && cd /tmp/synctest
+          cp "$GITHUB_WORKSPACE/scripts/sync-givex-to-json.v2.mjs" sync.mjs
+          cp "$GITHUB_WORKSPACE/scripts/store-mapping.json" .
+          cp "$GITHUB_WORKSPACE/scripts/test-sync-v2.mjs" test.mjs
+          node test.mjs
+
+      - name: Rebuild from D1 into a scratch file
+        env:
+          GIVEX_WEBHOOK_URL: ${{ secrets.GIVEX_WEBHOOK_URL }}
+          GIVEX_SHARED_SECRET: ${{ secrets.GIVEX_SHARED_SECRET }}
+          VERIFY_ONLY: "true"
+        run: node scripts/sync-givex-to-json.v2.mjs
+
+      - name: Compare against the feed currently on the scorecard
+        run: node scripts/compare-givex-feeds.mjs
+
+      - name: Commit the verify output and the comparison
+        run: |
+          git config user.name "mezza-scorecard-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/givex-sales-data.verify.json data/givex-feed-comparison.json
+          if git diff --cached --quiet; then
+            echo "No change."
+          else
+            git commit -m "Verify Givex sync v2 ($(date -u +'%Y-%m-%dT%H:%M:%SZ'))"
+            git pull --rebase origin main
+            git push
+          fi
