@@ -1,0 +1,579 @@
+{
+  "probed_at": "2026-09-02T16:06:20.024Z",
+  "payloads_sampled": 85,
+  "highest_d1_row_id": 19044,
+  "note": "Keys, types and how often each path was non-empty. Values are listed ONLY for classification fields (department, order type, payment method, category, day part). No customer, member, staff, amount or card data is emitted.",
+  "fields": {
+    "action": {
+      "seen": 85,
+      "non_empty": 85,
+      "types": {
+        "string": 85
+      }
+    },
+    "BusinessDate": {
+      "seen": 85,
+      "non_empty": 85,
+      "types": {
+        "string": 85
+      }
+    },
+    "client_id": {
+      "seen": 85,
+      "non_empty": 85,
+      "types": {
+        "number": 85
+      }
+    },
+    "ClientID": {
+      "seen": 85,
+      "non_empty": 85,
+      "types": {
+        "number": 85
+      }
+    },
+    "MerchantID": {
+      "seen": 85,
+      "non_empty": 85,
+      "types": {
+        "number": 85
+      }
+    },
+    "OnlineOrderID": {
+      "seen": 85,
+      "non_empty": 0,
+      "types": {
+        "string": 85
+      }
+    },
+    "OrderID": {
+      "seen": 85,
+      "non_empty": 85,
+      "types": {
+        "number": 85
+      }
+    },
+    "OutletID": {
+      "seen": 85,
+      "non_empty": 85,
+      "types": {
+        "number": 85
+      }
+    },
+    "payload": {
+      "seen": 85,
+      "non_empty": 85,
+      "types": {
+        "array": 85
+      }
+    },
+    "payload[][].addons": {
+      "seen": 154,
+      "non_empty": 139,
+      "types": {
+        "array": 154
+      }
+    },
+    "payload[][].addons[].adj_gross_sales": {
+      "seen": 351,
+      "non_empty": 351,
+      "types": {
+        "number": 351
+      }
+    },
+    "payload[][].addons[].date": {
+      "seen": 351,
+      "non_empty": 351,
+      "types": {
+        "string": 351
+      }
+    },
+    "payload[][].addons[].discounts": {
+      "seen": 351,
+      "non_empty": 0,
+      "types": {
+        "array": 351
+      }
+    },
+    "payload[][].addons[].item_name": {
+      "seen": 351,
+      "non_empty": 351,
+      "types": {
+        "string": 351
+      }
+    },
+    "payload[][].addons[].item_sku_code": {
+      "seen": 351,
+      "non_empty": 351,
+      "types": {
+        "string": 351
+      }
+    },
+    "payload[][].addons[].modifiers": {
+      "seen": 351,
+      "non_empty": 0,
+      "types": {
+        "array": 351
+      }
+    },
+    "payload[][].addons[].price_per_unit": {
+      "seen": 351,
+      "non_empty": 351,
+      "types": {
+        "number": 351
+      }
+    },
+    "payload[][].addons[].time": {
+      "seen": 351,
+      "non_empty": 351,
+      "types": {
+        "string": 351
+      }
+    },
+    "payload[][].addons[].units": {
+      "seen": 351,
+      "non_empty": 351,
+      "types": {
+        "number": 351
+      }
+    },
+    "payload[][].adj_gross_sales": {
+      "seen": 154,
+      "non_empty": 154,
+      "types": {
+        "number": 154
+      }
+    },
+    "payload[][].bills": {
+      "seen": 85,
+      "non_empty": 85,
+      "types": {
+        "array": 85
+      }
+    },
+    "payload[][].bills[].bill_amount": {
+      "seen": 85,
+      "non_empty": 85,
+      "types": {
+        "number": 85
+      }
+    },
+    "payload[][].bills[].bill_online_order_id": {
+      "seen": 85,
+      "non_empty": 10,
+      "types": {
+        "number": 10,
+        "null": 75
+      }
+    },
+    "payload[][].bills[].bill_status": {
+      "seen": 85,
+      "non_empty": 85,
+      "types": {
+        "string": 85
+      }
+    },
+    "payload[][].bills[].bill_tax": {
+      "seen": 85,
+      "non_empty": 85,
+      "types": {
+        "number": 85
+      }
+    },
+    "payload[][].bills[].coupon_pretax": {
+      "seen": 85,
+      "non_empty": 85,
+      "types": {
+        "number": 85
+      }
+    },
+    "payload[][].bills[].customer_id": {
+      "seen": 85,
+      "non_empty": 0,
+      "types": {
+        "string": 85
+      }
+    },
+    "payload[][].bills[].customer_name": {
+      "seen": 85,
+      "non_empty": 0,
+      "types": {
+        "string": 85
+      }
+    },
+    "payload[][].bills[].discount_pretax": {
+      "seen": 85,
+      "non_empty": 85,
+      "types": {
+        "number": 85
+      }
+    },
+    "payload[][].bills[].member_number": {
+      "seen": 85,
+      "non_empty": 0,
+      "types": {
+        "string": 85
+      }
+    },
+    "payload[][].bills[].num_seats": {
+      "seen": 85,
+      "non_empty": 85,
+      "types": {
+        "number": 85
+      }
+    },
+    "payload[][].bills[].order_subtotal": {
+      "seen": 85,
+      "non_empty": 85,
+      "types": {
+        "number": 85
+      }
+    },
+    "payload[][].bills[].payments": {
+      "seen": 85,
+      "non_empty": 85,
+      "types": {
+        "array": 85
+      }
+    },
+    "payload[][].bills[].vxl_bill_id": {
+      "seen": 85,
+      "non_empty": 85,
+      "types": {
+        "number": 85
+      }
+    },
+    "payload[][].category_group_name": {
+      "seen": 154,
+      "non_empty": 154,
+      "types": {
+        "string": 154
+      }
+    },
+    "payload[][].category_id": {
+      "seen": 154,
+      "non_empty": 154,
+      "types": {
+        "number": 154
+      }
+    },
+    "payload[][].category_name": {
+      "seen": 154,
+      "non_empty": 154,
+      "types": {
+        "string": 154
+      }
+    },
+    "payload[][].closing_date": {
+      "seen": 85,
+      "non_empty": 85,
+      "types": {
+        "string": 85
+      }
+    },
+    "payload[][].closing_time": {
+      "seen": 85,
+      "non_empty": 85,
+      "types": {
+        "string": 85
+      }
+    },
+    "payload[][].coupons": {
+      "seen": 154,
+      "non_empty": 0,
+      "types": {
+        "array": 154
+      }
+    },
+    "payload[][].date": {
+      "seen": 154,
+      "non_empty": 154,
+      "types": {
+        "string": 154
+      }
+    },
+    "payload[][].department_id": {
+      "seen": 154,
+      "non_empty": 154,
+      "types": {
+        "number": 154
+      }
+    },
+    "payload[][].department_name": {
+      "seen": 154,
+      "non_empty": 154,
+      "types": {
+        "string": 154
+      }
+    },
+    "payload[][].discounts": {
+      "seen": 154,
+      "non_empty": 0,
+      "types": {
+        "array": 154
+      }
+    },
+    "payload[][].item_name": {
+      "seen": 154,
+      "non_empty": 154,
+      "types": {
+        "string": 154
+      }
+    },
+    "payload[][].item_sku_code": {
+      "seen": 154,
+      "non_empty": 154,
+      "types": {
+        "string": 154
+      }
+    },
+    "payload[][].merchant_id": {
+      "seen": 85,
+      "non_empty": 85,
+      "types": {
+        "number": 85
+      }
+    },
+    "payload[][].modifiers": {
+      "seen": 154,
+      "non_empty": 0,
+      "types": {
+        "array": 154
+      }
+    },
+    "payload[][].net_sales": {
+      "seen": 154,
+      "non_empty": 154,
+      "types": {
+        "number": 154
+      }
+    },
+    "payload[][].opening_date": {
+      "seen": 85,
+      "non_empty": 85,
+      "types": {
+        "string": 85
+      }
+    },
+    "payload[][].opening_time": {
+      "seen": 85,
+      "non_empty": 85,
+      "types": {
+        "string": 85
+      }
+    },
+    "payload[][].operator_name": {
+      "seen": 154,
+      "non_empty": 154,
+      "types": {
+        "string": 154
+      }
+    },
+    "payload[][].order_ref": {
+      "seen": 85,
+      "non_empty": 10,
+      "types": {
+        "string": 10,
+        "null": 75
+      }
+    },
+    "payload[][].order_type": {
+      "seen": 85,
+      "non_empty": 85,
+      "types": {
+        "string": 85
+      }
+    },
+    "payload[][].outlet_id": {
+      "seen": 239,
+      "non_empty": 239,
+      "types": {
+        "number": 239
+      }
+    },
+    "payload[][].price_per_unit": {
+      "seen": 154,
+      "non_empty": 154,
+      "types": {
+        "number": 154
+      }
+    },
+    "payload[][].returns": {
+      "seen": 154,
+      "non_empty": 0,
+      "types": {
+        "array": 154
+      }
+    },
+    "payload[][].seat_num": {
+      "seen": 154,
+      "non_empty": 154,
+      "types": {
+        "number": 154
+      }
+    },
+    "payload[][].section_name": {
+      "seen": 154,
+      "non_empty": 154,
+      "types": {
+        "string": 154
+      }
+    },
+    "payload[][].service_charge_amt": {
+      "seen": 154,
+      "non_empty": 154,
+      "types": {
+        "number": 154
+      }
+    },
+    "payload[][].service_charge_tax": {
+      "seen": 154,
+      "non_empty": 154,
+      "types": {
+        "number": 154
+      }
+    },
+    "payload[][].store_name": {
+      "seen": 85,
+      "non_empty": 85,
+      "types": {
+        "string": 85
+      }
+    },
+    "payload[][].store_ref": {
+      "seen": 85,
+      "non_empty": 85,
+      "types": {
+        "string": 85
+      }
+    },
+    "payload[][].subcat_name": {
+      "seen": 154,
+      "non_empty": 154,
+      "types": {
+        "string": 154
+      }
+    },
+    "payload[][].table_num": {
+      "seen": 239,
+      "non_empty": 239,
+      "types": {
+        "string": 85,
+        "number": 154
+      }
+    },
+    "payload[][].time": {
+      "seen": 154,
+      "non_empty": 154,
+      "types": {
+        "string": 154
+      }
+    },
+    "payload[][].total_amt": {
+      "seen": 154,
+      "non_empty": 154,
+      "types": {
+        "number": 154
+      }
+    },
+    "payload[][].total_tax": {
+      "seen": 154,
+      "non_empty": 154,
+      "types": {
+        "number": 154
+      }
+    },
+    "payload[][].type": {
+      "seen": 154,
+      "non_empty": 154,
+      "types": {
+        "string": 154
+      }
+    },
+    "payload[][].units": {
+      "seen": 154,
+      "non_empty": 154,
+      "types": {
+        "number": 154
+      }
+    },
+    "payload[][].vxl_bill_ids": {
+      "seen": 154,
+      "non_empty": 154,
+      "types": {
+        "array": 154
+      }
+    },
+    "payload[][].vxl_order_id": {
+      "seen": 239,
+      "non_empty": 239,
+      "types": {
+        "number": 239
+      }
+    },
+    "payload[][].vxl_order_line_id": {
+      "seen": 154,
+      "non_empty": 154,
+      "types": {
+        "number": 154
+      }
+    },
+    "SequenceID": {
+      "seen": 85,
+      "non_empty": 85,
+      "types": {
+        "number": 85
+      }
+    }
+  },
+  "classification_values": {
+    "order_type": [
+      "Delivery",
+      "QSR",
+      "Retail",
+      "Take-Out"
+    ],
+    "subcat_name": [
+      "Beverages",
+      "Bowls",
+      "Combos",
+      "Combos (Wrap)",
+      "Dessert",
+      "Kid's Menu",
+      "Lunch Plates",
+      "Plates",
+      "Poutines",
+      "Salad",
+      "Sides",
+      "Wraps"
+    ],
+    "category_group_name": [
+      "Beverages",
+      "Food"
+    ],
+    "category_name": [
+      "Beverages",
+      "Bowls",
+      "Dessert",
+      "Kids Menu",
+      "Lunch Plates",
+      "Poutines",
+      "Salads",
+      "Sides",
+      "Signature Plates",
+      "Wrap Combos",
+      "Wraps"
+    ],
+    "department_name": [
+      "Door Dash - Delivery",
+      "Door Dash - Pickup",
+      "Drive Through",
+      "Eat - In",
+      "Skip The Dishes",
+      "Take - Out"
+    ],
+    "action": [
+      "bill_info"
+    ]
+  }
+}
