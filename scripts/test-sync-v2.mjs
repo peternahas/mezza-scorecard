@@ -413,5 +413,107 @@ console.log("\n10. Fields the production payload does not populate");
   });
 }
 
+
+/* ══════════ 11. pre-D1 legacy history ═══════════════════════════
+   The highest-risk part of the rewrite. D1 holds nothing before the
+   2026-08-26 cutover, so a rebuild that reads only D1 silently drops
+   twelve days of real sales. These tests exist because that failure
+   is invisible -- the feed still looks healthy, just shorter.       */
+console.log("\n11. Pre-D1 legacy history");
+{
+  const legacy = {
+    authoritative_through: "2026-08-26",
+    days: [
+      { Location_Name:"Burnside", Location_Type:"Corp", Business_Date:"2026-08-20",
+        Total_Sales:5000, InStore_Sales:4000, Online_Sales:1000, Orders:200,
+        Avg_Ticket:25, Order_Type_Sales:{QSR:5000}, Day_Part_Sales:{Lunch:5000},
+        Payment_Mix:{VISA:5600}, Tips_Total:150 },
+      { Location_Name:"Burnside", Location_Type:"Corp", Business_Date:"2026-08-26",
+        Total_Sales:6000, InStore_Sales:5000, Online_Sales:1000, Orders:240,
+        Avg_Ticket:25, Order_Type_Sales:{QSR:6000}, Day_Part_Sales:{Lunch:6000},
+        Payment_Mix:{VISA:6700}, Tips_Total:180 },
+    ],
+  };
+  const writeLegacy = async () => {
+    await mkdir("data", { recursive: true });
+    await (await import("node:fs/promises")).writeFile("data/givex-legacy-days.json", JSON.stringify(legacy));
+  };
+
+  // D1 carries a cutover-day order (already inside the legacy total)
+  // and a post-cutover one (not).
+  const cutoverDay = order({ ...BURNSIDE, date: "2026-08-26", lines: [PLATE] });
+  const afterCutover = order({ ...BURNSIDE, date: "2026-08-27", lines: [WRAP] });
+
+  const runWithLegacy = async (payloads, opts) => {
+    await rm("data", { recursive: true, force: true });
+    await writeLegacy();
+    return run(payloads, Object.assign({ keepState: true }, opts));
+  };
+
+  const { data, out } = await runWithLegacy([cutoverDay, afterCutover]);
+  const byDate = {};
+  data.days.forEach((d) => (byDate[d.Business_Date] = d));
+
+  check("pre-cutover history is present, not silently dropped", () =>
+    assert.strictEqual(byDate["2026-08-20"].Total_Sales, 5000));
+  check("its orders, channel split and tender come through", () => {
+    assert.strictEqual(byDate["2026-08-20"].Orders, 200);
+    assert.strictEqual(byDate["2026-08-20"].InStore_Sales, 4000);
+    assert.strictEqual(byDate["2026-08-20"].Payment_Mix.VISA, 5600);
+  });
+  check("the cutover day is NOT double counted", () => {
+    // The legacy row already contains that afternoon's D1 orders, so
+    // the D1 copy must be skipped rather than added.
+    assert.strictEqual(byDate["2026-08-26"].Total_Sales, 6000);
+    assert.strictEqual(byDate["2026-08-26"].Orders, 240);
+  });
+  check("D1 payloads on or before the cutover are reported as skipped", () =>
+    assert.strictEqual(data.legacy_payloads_skipped_this_run, 1));
+  check("the day after the cutover comes from D1", () =>
+    assert.strictEqual(byDate["2026-08-27"].Total_Sales, 12.99));
+  check("legacy days are tagged so the UI can say detail is missing", () => {
+    assert.strictEqual(byDate["2026-08-20"].Legacy_Sales_Only, true);
+    assert.ok(!byDate["2026-08-27"].Legacy_Sales_Only);
+  });
+  check("the feed states where legacy history ends", () =>
+    assert.strictEqual(data.legacy_authoritative_through, "2026-08-26"));
+  check("the seeding is announced in the run log", () =>
+    assert.ok(/Seeded 2 pre-D1 store-day/.test(out)));
+
+  // Re-seeding on every run would double the history each time. This
+  // is the failure that would look like spectacular growth.
+  const again = await run([cutoverDay, afterCutover], { keepState: true });
+  const b2 = {};
+  again.data.days.forEach((d) => (b2[d.Business_Date] = d));
+  check("an incremental run does not re-seed and double the history", () => {
+    assert.strictEqual(b2["2026-08-20"].Total_Sales, 5000);
+    assert.strictEqual(b2["2026-08-26"].Total_Sales, 6000);
+  });
+  check("network total is legacy plus D1, counted once", () => {
+    const total = again.data.days.reduce((s, d) => s + d.Total_Sales, 0);
+    assert.strictEqual(Math.round(total * 100) / 100, 5000 + 6000 + 12.99);
+  });
+
+  const resync = await run([cutoverDay, afterCutover], { fullResync: true, keepState: true });
+  const b3 = {};
+  resync.data.days.forEach((d) => (b3[d.Business_Date] = d));
+  check("a full resync re-seeds exactly once, not twice", () => {
+    assert.strictEqual(b3["2026-08-20"].Total_Sales, 5000);
+    assert.strictEqual(b3["2026-08-26"].Total_Sales, 6000);
+    assert.strictEqual(b3["2026-08-27"].Total_Sales, 12.99);
+  });
+}
+{
+  // No legacy file at all must still work -- this is what a fresh
+  // deployment somewhere else looks like.
+  await rm("data", { recursive: true, force: true });
+  const { data, out } = await run([order({ ...BURNSIDE, date: D, lines: [WRAP] })]);
+  check("a missing legacy file degrades quietly instead of throwing", () => {
+    assert.strictEqual(data.days.length, 1);
+    assert.strictEqual(data.legacy_authoritative_through, null);
+    assert.ok(/No pre-D1 legacy snapshot/.test(out));
+  });
+}
+
 console.log(`\n${PASS} passed, ${FAIL} failed.`);
 process.exit(FAIL ? 1 : 0);

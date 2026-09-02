@@ -122,6 +122,15 @@ const STATE_PATH = "data/givex-sync-state.json";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const STORE_MAPPING_PATH = path.join(__dirname, "store-mapping.json");
 
+// Pre-D1 history. The Worker moved from Workers KV to D1 on
+// 2026-08-26; D1 holds nothing before that afternoon, because the KV
+// store was never migrated. The v1 sync only still had 2026-08-14 to
+// 2026-08-26 because its own state file had accumulated those days
+// while KV was live -- so rebuilding from D1 alone silently drops
+// twelve days and roughly $520k of recorded sales. This file is that
+// history, frozen once, and seeded in on any rebuild.
+const LEGACY_PATH = "data/givex-legacy-days.json";
+
 // How long an order stays individually re-writable before its day is
 // frozen. Givex repolls target recent business days; three weeks is a
 // generous margin. Raising this raises state file size ~linearly.
@@ -496,7 +505,7 @@ function newDayBucket(loc, type, date) {
     Hour_Sales: {}, Hour_Orders: {},
     Category_Sales: {}, Category_Group_Sales: {}, Subcategory_Sales: {},
     Department_Sales: {}, Line_Types: {},
-    _svcSum: 0, _svcN: 0, _ops: {}, _opnExtra: 0,
+    _svcSum: 0, _svcN: 0, _ops: {}, _opnExtra: 0, _legacy: false,
   };
 }
 
@@ -601,6 +610,10 @@ function sealDay(b) {
     Department_Sales: rMap(b.Department_Sales),
     Line_Types: b.Line_Types,
     Operator_Count: Object.keys(b._ops).length + (b._opnExtra || 0),
+    // True where the day predates D1 and therefore has sales, orders,
+    // channel, day part and tender but none of the item, hour,
+    // ticket-time or operator detail.
+    Legacy_Sales_Only: b._legacy ? true : undefined,
   };
 }
 
@@ -660,6 +673,44 @@ async function loadState() {
   }
 }
 
+/* ── pre-D1 history ─────────────────────────────────────────────
+   Seeded into frozenDays, which is exactly what frozenDays is for: a
+   finished day whose individual orders are no longer available. These
+   rows carry only the measures v1 extracted, and are tagged so the
+   dashboard can say the newer dimensions do not exist for them rather
+   than drawing an empty chart and letting someone read it as zero. */
+
+async function loadLegacy(state) {
+  let file;
+  try {
+    file = JSON.parse(await readFile(LEGACY_PATH, "utf8"));
+  } catch (err) {
+    if (err.code === "ENOENT") {
+      console.log("No pre-D1 legacy snapshot found — history will start wherever D1 starts.");
+      return { through: null, count: 0 };
+    }
+    throw err;
+  }
+  const through = file.authoritative_through || null;
+  const days = file.days || [];
+
+  // Only seed when the state is fresh. On an incremental run these
+  // days are already sitting in frozenDays from the rebuild that
+  // seeded them, and re-adding would double them.
+  const alreadySeeded = Object.keys(state.frozenDays).length > 0;
+  if (!alreadySeeded) {
+    for (const d of days) {
+      state.frozenDays[`${d.Location_Name}|${d.Business_Date}`] = Object.assign({}, d, {
+        Legacy_Sales_Only: true,
+      });
+    }
+    if (days.length) {
+      console.log(`Seeded ${days.length} pre-D1 store-day(s) through ${through} from ${LEGACY_PATH}.`);
+    }
+  }
+  return { through, count: days.length };
+}
+
 /* ═════════════════════════════════════════════════════════════════
    MAIN
    ═════════════════════════════════════════════════════════════════ */
@@ -670,12 +721,13 @@ async function main() {
 
   const mapping = JSON.parse(await readFile(STORE_MAPPING_PATH, "utf8"));
   const state = await loadState();
+  const legacy = await loadLegacy(state);
 
   console.log(`Fetching payloads changed since D1 row id ${state.cursor}...`);
   const { rows, nextSince } = await fetchChanges(state.cursor);
   console.log(`${rows.length} new or updated payload(s).`);
 
-  let processedThisRun = 0, skippedThisRun = 0;
+  let processedThisRun = 0, skippedThisRun = 0, legacySkipped = 0;
 
   for (const row of rows) {
     let payload;
@@ -691,6 +743,13 @@ async function main() {
     const lineItems = payload.payload?.[1] || [];
     const businessDate = payload.BusinessDate;
     if (!orders.length || !lineItems.length || !businessDate) { skippedThisRun++; continue; }
+
+    // Business days the legacy snapshot already owns are skipped
+    // entirely. The v1 feed those rows came from was itself reading
+    // the D1-backed Worker after the cutover, so its cutover-day
+    // total already includes that afternoon's D1 orders -- counting
+    // them again here would double them.
+    if (legacy.through && businessDate <= legacy.through) { legacySkipped++; continue; }
 
     // Index line items by order once per payload. v1 filtered the
     // whole line-item array per order, which is O(n^2) on a payload
@@ -937,6 +996,14 @@ async function main() {
     orders_total: Object.keys(state.orders).length,
     orders_live_window_days: RETAIN_ORDER_DAYS,
     frozen_through: state.frozenThrough,
+    // Dates on or before this came from the pre-D1 snapshot and carry
+    // only the v1 measures. Anything the dashboard shows from the v2
+    // dimensions -- item mix, hours, ticket time, operator -- starts
+    // the day after. Saying so in the feed is cheaper than letting
+    // someone read an empty item chart as a business fact.
+    legacy_authoritative_through: legacy.through,
+    legacy_store_days: legacy.count,
+    legacy_payloads_skipped_this_run: legacySkipped,
     latest_business_date: latestDate,
     days,
     weeks,
@@ -971,7 +1038,8 @@ async function main() {
   console.log(
     `Wrote ${OUTPUT_PATH}: ${days.length} store-days, ${weeks.length} store-weeks, ` +
     `${items.length} item-days, ${operatorRows.length} operator rows. ` +
-    `${processedThisRun} payloads this run; ${output.orders_total} live snapshots.`
+    `${processedThisRun} payloads this run; ${output.orders_total} live snapshots.` +
+    (legacySkipped ? ` ${legacySkipped} payload(s) skipped as already covered by the pre-D1 snapshot.` : "")
   );
   for (const [f, c] of Object.entries(output.field_coverage)) {
     if (c.found === 0) console.warn(`  [!] FIELD NEVER FOUND: ${f} (missing on ${c.missing} reads)`);
@@ -1008,6 +1076,7 @@ function reviveFrozen(s) {
   // Beverage_Orders is derivable back from the attach percentage.
   b.Beverage_Orders = Math.round(((s.Beverage_Attach_Pct || 0) / 100) * (s.Orders || 0));
   b._opnExtra = s.Operator_Count || 0;
+  b._legacy = !!s.Legacy_Sales_Only;
   if (s.Avg_Service_Minutes != null && s.Orders) {
     b._svcSum = s.Avg_Service_Minutes * s.Orders;
     b._svcN = s.Orders;
@@ -1024,6 +1093,7 @@ function mergeWorking(a, b) {
     "Coupon_Total","Tendered_Total","Table_Orders","_svcSum","_svcN","_opnExtra",
   ];
   for (const k of scalars) a[k] = (a[k] || 0) + (b[k] || 0);
+  a._legacy = a._legacy || b._legacy;
   const maps = [
     "Order_Type_Sales","Day_Part_Sales","Payment_Mix","Hour_Sales","Hour_Orders",
     "Category_Sales","Category_Group_Sales","Subcategory_Sales","Department_Sales","Line_Types",
