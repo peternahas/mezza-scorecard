@@ -1,0 +1,70 @@
+name: Sync labour and lead data
+
+# Both of these move on a scale of days, not minutes, so once a day is
+# the right cadence. They are in one workflow because they are one
+# question -- how well is the business being run, and is it growing --
+# and because a labour API that is currently blocked should not have
+# its own permanently-red workflow on the Actions tab.
+
+on:
+  schedule:
+    - cron: "40 11 * * *"   # ~08:40 Atlantic, after the Google sync
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-growth-data
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # continue-on-error on both: these are independent sources and a
+      # missing secret on one must not stop the other. Each script
+      # writes its own status into its own file, so a failure is
+      # visible in the data rather than only in a build log.
+      - name: Push Operations labour
+        id: push
+        continue-on-error: true
+        env:
+          PUSH_BEARER_TOKEN: ${{ secrets.PUSH_BEARER_TOKEN }}
+        run: |
+          if [ -z "$PUSH_BEARER_TOKEN" ]; then
+            echo "PUSH_BEARER_TOKEN not set — skipping. Add it as a repo secret to enable labour."
+            exit 0
+          fi
+          node scripts/sync-push-labour.mjs
+
+      - name: HubSpot leads
+        id: hubspot
+        continue-on-error: true
+        env:
+          HUBSPOT_TOKEN: ${{ secrets.HUBSPOT_TOKEN }}
+        run: |
+          if [ -z "$HUBSPOT_TOKEN" ]; then
+            echo "HUBSPOT_TOKEN not set — skipping. Add it as a repo secret to enable lead flow."
+            exit 0
+          fi
+          node scripts/sync-hubspot-to-json.mjs
+
+      - name: Commit whatever updated
+        if: always()
+        run: |
+          git config user.name "mezza-scorecard-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A data/push-labour-data.json data/hubspot-data.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Sync labour and lead data ($(date -u +'%Y-%m-%dT%H:%M:%SZ'))"
+            git pull --rebase origin main
+            git push
+          fi
