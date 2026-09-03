@@ -64,6 +64,10 @@ const COMPANIES = {
   25154: "Burnside",
   25633: "Clayton Park",
   27757: "Barrington",
+  // Christian at Push added this on 2026-09-03. "Mezza - 690 University"
+  // is 690 University Ave Unit 2, Charlottetown PE -- confirmed against
+  // the store's own address, not matched by name.
+  28602: "Charlottetown",
 };
 // Real Push companies that are not stores. Kept visible rather than
 // dropped: overhead labour is a real cost, it just does not belong in
@@ -72,15 +76,71 @@ const OVERHEAD = { 25560: "Corporate", 25555: "Production Centre" };
 // Franchisee locations on this token. Not pulled by default -- see above.
 const FRANCHISEE = { 29923: "Mount Pearl" };
 
-const KNOWN_GAPS = [
-  {
-    location: "Charlottetown",
-    reason:
-      "Not on this token yet. Christian at Push offered to add it on 2026-09-03 once Mezza confirms the site is '690 University Ave' -- which it is (690 University Ave Unit 2, Charlottetown PE, opened Aug 2025). Once he does, it appears in /companies and this run reports its id under unmapped_companies; add one line to COMPANIES and it flows. Listed as a gap rather than silently absent, because a missing location in a labour report reads as a store with no labour cost.",
-  },
-];
+// Empty on purpose. Charlottetown was the only entry and it is now on
+// the token as company 28602. Kept as a list rather than deleted,
+// because the next store to open will sit here until Push adds it, and
+// a missing location in a labour report reads as a store with no
+// labour cost rather than as a store nobody wired up.
+const KNOWN_GAPS = [];
 
 function iso(d) { return d.toISOString().slice(0, 10); }
+
+/* ── SHAPE, NOT VALUES ────────────────────────────────────────────
+   The entitlement landing revealed that nobody had ever seen a real
+   labour-actuals response -- the parser was written against the shape
+   the docs implied, and the first live call threw "rows is not
+   iterable". So the run records the response's STRUCTURE: keys, types,
+   array lengths, and nothing else. No hours, no dollars, no names, no
+   employee anything. Same rule as the Givex schema probe: enough to
+   write a correct parser, and nothing that should not be in a repo. */
+/* Push's labour response has never been seen from this side, so the
+   collector is deliberately shape-agnostic: it walks the payload and
+   picks up any object that carries a recognisable hours-or-cost field.
+   That is more forgiving than a fixed path, and the alternative -- one
+   assumed path -- is what threw "rows is not iterable" on the first
+   live call. Once response_shape has been read from a real run this
+   can be narrowed to the real path. */
+const HOUR_KEYS = ["totalHours", "hours", "totalHrs", "actualHours", "total_hours"];
+const COST_KEYS = ["totalCosts", "totalCost", "cost", "actualCost", "totalLabourCost", "totalLaborCost", "total_cost"];
+
+function firstNumber(obj, keys) {
+  for (const k of keys) {
+    const v = obj && obj[k];
+    if (v === null || v === undefined || v === "") continue;
+    const n = Number(v);
+    if (Number.isFinite(n)) return n;
+  }
+  return null;
+}
+
+function looksLikeLabourRow(o) {
+  return o && typeof o === "object" && !Array.isArray(o) &&
+    (firstNumber(o, HOUR_KEYS) !== null || firstNumber(o, COST_KEYS) !== null);
+}
+
+function collectRows(d, depth) {
+  depth = depth || 0;
+  if (depth > 6 || d === null || typeof d !== "object") return [];
+  if (looksLikeLabourRow(d)) return [d];
+  const out = [];
+  const values = Array.isArray(d) ? d : Object.values(d);
+  for (const v of values) out.push(...collectRows(v, depth + 1));
+  return out;
+}
+
+function shapeOf(v, depth) {
+  depth = depth || 0;
+  if (depth > 6) return "…";
+  if (v === null) return "null";
+  if (Array.isArray(v)) return v.length ? [`array(${v.length})`, shapeOf(v[0], depth + 1)] : "array(0)";
+  if (typeof v === "object") {
+    const out = {};
+    for (const k of Object.keys(v).slice(0, 40)) out[k] = shapeOf(v[k], depth + 1);
+    return out;
+  }
+  return typeof v;
+}
+
 
 async function push(pathAndQuery) {
   const res = await fetch(`${BASE}${pathAndQuery}`, {
@@ -159,6 +219,7 @@ async function main() {
   const days = {};        // "Location|Date" -> accumulator
   const errors = [];
   let anySuccess = false;
+  let responseShape = null;
 
   for (const [companyId, location] of Object.entries(COMPANIES)) {
     for (const [from, to] of chunks) {
@@ -166,18 +227,34 @@ async function main() {
         const d = await push(
           `/analytics/summary/labour-actuals?company=${companyId}&start=${from}&end=${to}`
         );
-        anySuccess = true;
-        // The response shape carries totalHours/totalCosts plus a
-        // per-department breakdown. Only the totals are kept: the
-        // scorecard needs a location number, and per-employee payroll
-        // detail has no business in a dashboard.
-        const rows = Array.isArray(d) ? d : (d.data || d.results || [d]);
+        // Record the shape of the first response only -- one is enough
+        // to write a parser against, and 126 copies of it is noise.
+        if (!responseShape) responseShape = shapeOf(d);
+
+        // Only the totals are kept: the scorecard needs a location
+        // number, and per-employee payroll detail has no business in a
+        // dashboard.
+        //
+        // A 200 is NOT success. The previous version set anySuccess
+        // here, before parsing, so the file reported status "ok" with
+        // zero location-days and 126 errors -- precisely the "looks
+        // like it worked" failure this script exists to prevent.
+        // anySuccess now means rows were actually read.
+        const rows = collectRows(d);
+        if (!rows.length) {
+          errors.push({ company: companyId, location, from, to,
+            error: "200 OK but no labour rows could be read from the response. See response_shape in this file." });
+        }
         for (const r of rows) {
-          const date = r.date || r.day || r.businessDate || from;
+          const date = r.date || r.day || r.businessDate || r.businessDay || r.workDate || from;
+          const hours = firstNumber(r, ["totalHours", "hours", "totalHrs", "actualHours", "total_hours"]);
+          const cost  = firstNumber(r, ["totalCosts", "totalCost", "cost", "actualCost", "totalLabourCost", "totalLaborCost", "total_cost"]);
+          if (hours === null && cost === null) continue;   // not a labour row
+          anySuccess = true;
           const key = `${location}|${date}`;
           const b = days[key] || (days[key] = { Location_Name: location, Date: date, Hours: 0, Cost: 0 });
-          b.Hours += Number(r.totalHours ?? r.hours ?? 0);
-          b.Cost += Number(r.totalCosts ?? r.cost ?? 0);
+          b.Hours += hours || 0;
+          b.Cost += cost || 0;
         }
       } catch (err) {
         errors.push({ company: companyId, location, from, to, error: err.message });
@@ -206,8 +283,13 @@ async function main() {
           : "failed",
     status_detail: permissionBlocked
       ? "Push returns HTTP 200 with status=failed / 'Insufficient permissions' on /analytics/summary/labour-actuals. The token authenticates and can list companies, so this is a per-endpoint entitlement on Push's side, not a bad credential. Christian at Push enabled the department endpoint on 2026-09-03, so if this is showing again the entitlement has been lost or the token has been rotated -- go back to Christian rather than changing this code."
-      : anySuccess ? null : "No labour rows returned and no permission error either — check the errors array.",
+      : anySuccess ? null
+      : "The labour endpoint answered but no hours or cost could be read out of the response. This is a parsing problem at our end, not a permission one — read response_shape in this file and narrow collectRows() to the real path.",
     companies_endpoint_error: companiesError,
+    // Structure of the first labour response: keys, types, array
+    // lengths. No hours, no dollars, no names. This is how the parser
+    // gets narrowed from "walk the payload" to the real path.
+    response_shape: responseShape,
     companies_seen: companiesSeen,
     // Companies on the token with no home in this script. Not pulled,
     // and not guessed at by name.

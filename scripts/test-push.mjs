@@ -66,6 +66,27 @@ async function run({ mode = "ok", days = 5 } = {}) {
       if (mode === "blocked") return send(200, { status: "failed", message: "Insufficient permissions" });
       if (mode === "badtoken") return send(401, { message: "Unauthorized" });
       const start = u.searchParams.get("start");
+      // The first live call after Push granted the entitlement threw
+      // "rows is not iterable", because the real payload is nested and
+      // the parser assumed a top-level array. These shapes stand in for
+      // what a payroll API plausibly returns, so the parser is proven
+      // against more than the one the docs implied.
+      if (mode === "nested") {
+        return send(200, { status: "success", data: {
+          summary: { departments: [
+            { name: "Kitchen", totalHours: 5, totalCosts: 90, date: start },
+            { name: "Front", totalHours: 3, totalCosts: 50, date: start },
+          ]},
+        }});
+      }
+      if (mode === "objectdata") {
+        // data as an object, not an array -- this is the shape that threw
+        return send(200, { status: "success", data: { date: start, totalHours: 8, totalCosts: 140 } });
+      }
+      if (mode === "unreadable") {
+        // 200, well-formed, and carrying nothing we can use
+        return send(200, { status: "success", data: { message: "no records for range" } });
+      }
       return send(200, [{ date: start, totalHours: 8, totalCosts: 140 }]);
     }
     send(404, { error: "unexpected " + u.pathname });
@@ -113,8 +134,13 @@ console.log("\n1. What Push returns TODAY: 200 with status=failed");
   check("it gives up after the first refusal instead of hammering payroll", () =>
     assert.ok(labourCalls <= 8, `made ${labourCalls} calls`));
   check("the refusal is surfaced in the log", () => assert.match(out, /Insufficient permissions/));
-  check("Charlottetown is recorded as a known gap, not silently absent", () => {
-    assert.ok(data.known_gaps.some((g) => g.location === "Charlottetown"));
+  check("Charlottetown is mapped now, not a known gap", () => {
+    // It was the only KNOWN_GAPS entry for two months. Push added it as
+    // company 28602 ("Mezza - 690 University") on 2026-09-03, so the
+    // assertion flips: it must be a real mapped location, and the gap
+    // list must be empty rather than still naming it.
+    assert.ok(Object.values(data.mapped_locations).includes("Charlottetown"));
+    assert.ok(!data.known_gaps.some((g) => g.location === "Charlottetown"));
   });
 }
 
@@ -131,8 +157,12 @@ console.log("\n2. When Push opens it up");
     assert.ok(r.Location_Name && r.Date);
     assert.ok(r.Hours > 0 && r.Cost > 0);
   });
-  check("all seven Corp locations are covered", () =>
-    assert.strictEqual(new Set(data.days.map((d) => d.Location_Name)).size, 7));
+  check("every mapped location is covered, none dropped", () =>
+    // Counted off COMPANIES rather than hardcoded, so adding a store
+    // does not silently loosen this into a test of nothing.
+    assert.strictEqual(
+      new Set(data.days.map((d) => d.Location_Name)).size,
+      Object.keys(data.mapped_locations).length));
   check("franchisee companies are listed but deliberately not pulled", () => {
     assert.ok("Mount Pearl" in Object.values(data.franchisee_companies_not_pulled)
       ? true : Object.values(data.franchisee_companies_not_pulled).includes("Mount Pearl"));
@@ -141,6 +171,52 @@ console.log("\n2. When Push opens it up");
   check("overhead companies are kept visible but out of the store rows", () => {
     assert.ok(Object.values(data.overhead_companies).includes("Production Centre"));
     assert.ok(!data.days.some((d) => d.Location_Name === "Production Centre"));
+  });
+}
+
+console.log("\n6. a 200 with an unexpected shape is not success");
+{
+  // The bug this replaces: anySuccess was set on the HTTP 200, before
+  // parsing. The file reported status "ok" with zero location-days and
+  // 126 errors -- the exact "looks like it worked" outcome this script
+  // exists to prevent.
+  const { data } = await run({ mode: "unreadable", days: 2 });
+  check("status is NOT ok when nothing could be read", () =>
+    assert.notStrictEqual(data.status, "ok"));
+  check("no rows are invented", () => assert.strictEqual(data.days.length, 0));
+  check("the detail blames our parser, not Push's permissions", () => {
+    assert.match(String(data.status_detail), /parsing problem at our end/);
+  });
+  check("and the response shape is recorded so it can be fixed", () => {
+    assert.ok(data.response_shape, "response_shape missing");
+    assert.match(JSON.stringify(data.response_shape), /"data"/);
+  });
+  check("the shape carries types, never values", () => {
+    const j = JSON.stringify(data.response_shape);
+    assert.match(j, /string|number/);
+    assert.ok(!/no records for range/.test(j), "a value leaked into response_shape");
+  });
+}
+{
+  const { data } = await run({ mode: "nested", days: 2 });
+  check("a nested payload is read, not thrown on", () => {
+    assert.strictEqual(data.status, "ok");
+    assert.ok(data.days.length > 0, "no rows read from nested payload");
+  });
+  check("departments are summed into one location-day total", () => {
+    const row = data.days[0];
+    assert.strictEqual(row.Hours, 8);   // 5 + 3
+    assert.strictEqual(row.Cost, 140);  // 90 + 50
+  });
+  check("no department detail is carried into the output", () => {
+    assert.ok(!/Kitchen|Front/.test(JSON.stringify(data.days)));
+  });
+}
+{
+  const { data } = await run({ mode: "objectdata", days: 2 });
+  check("data as an object rather than an array is read", () => {
+    assert.strictEqual(data.status, "ok");
+    assert.strictEqual(data.days[0].Hours, 8);
   });
 }
 
