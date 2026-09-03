@@ -14,6 +14,33 @@ import { spawn } from "node:child_process";
 import { readFile, rm, mkdir } from "node:fs/promises";
 import assert from "node:assert";
 
+// ---------------------------------------------------------------------
+// These tests rm -rf ./data before every case, because each case needs a
+// clean output directory. Run from the repo root and that wipes the real
+// data/ -- including givex-legacy-days.json, which holds 12 days of
+// pre-D1 sales history that CANNOT be re-fetched from anywhere.
+//
+// Git got it back the one time this happened. That is luck, not a
+// safety net, so: refuse to run anywhere that looks like a working
+// tree. CI copies the two scripts into an empty /tmp dir; do the same
+// locally.
+// ---------------------------------------------------------------------
+import { existsSync } from "node:fs";
+for (const marker of [".git", "scripts", "data/givex-legacy-days.json", "data/givex-sync-state.json"]) {
+  if (existsSync(marker)) {
+    console.error(
+      `\nRefusing to run here: found ./${marker}, so this looks like the repo, ` +
+      `and these tests delete ./data.\n\n` +
+      `Run them in a scratch directory instead:\n` +
+      `  mkdir -p /tmp/t && cd /tmp/t \\\n` +
+      `    && cp <repo>/scripts/<the-sync-script>.mjs sync.mjs \\\n` +
+      `    && cp <repo>/scripts/<this-test>.mjs test.mjs && node test.mjs\n`
+    );
+    process.exit(2);
+  }
+}
+
+
 const SECRET = "test-secret";
 let PASS = 0, FAIL = 0;
 function check(name, fn) {

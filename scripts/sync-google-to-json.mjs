@@ -185,6 +185,14 @@ async function fetchReviews(accountName, locationId) {
   // this is not an oversight to be corrected later.
   const all = [];
   let pageToken = "";
+  // Google's own lifetime figures come back on every page of this
+  // response. They are the numbers a customer sees on Maps, and they
+  // are NOT the same as an average over the reviews we happen to read
+  // (see truncated, below) — so take them from the API rather than
+  // recomputing them from a partial page set.
+  let googleAverage = null;
+  let googleTotal = null;
+  let truncated = false;
   for (let page = 0; page < REVIEW_PAGES; page++) {
     const qs = new URLSearchParams({
       pageSize: "50",
@@ -194,11 +202,17 @@ async function fetchReviews(accountName, locationId) {
     const d = await api(
       `https://mybusiness.googleapis.com/v4/${accountName}/${locationId}/reviews?${qs}`
     );
+    if (typeof d.averageRating === "number") googleAverage = d.averageRating;
+    if (typeof d.totalReviewCount === "number") googleTotal = d.totalReviewCount;
     all.push(...(d.reviews || []));
     pageToken = d.nextPageToken || "";
     if (!pageToken) break;
+    // Ran out of pages before Google ran out of reviews. The busiest
+    // stores hit this, so anything derived from `all` describes the
+    // most recent REVIEW_PAGES*50 reviews, not the store's history.
+    if (page === REVIEW_PAGES - 1) truncated = true;
   }
-  return all;
+  return { reviews: all, googleAverage, googleTotal, truncated };
 }
 
 /* ── performance ─────────────────────────────────────────────────── */
@@ -336,8 +350,13 @@ async function main() {
         locality: loc.storefrontAddress?.locality || "" });
 
       let reviews = [], perf = [];
+      let googleAverage = null, googleTotal = null, truncated = false;
       try {
-        reviews = await fetchReviews(acct.name, locationId);
+        const rr = await fetchReviews(acct.name, locationId);
+        reviews = rr.reviews;
+        googleAverage = rr.googleAverage;
+        googleTotal = rr.googleTotal;
+        truncated = rr.truncated;
       } catch (err) {
         console.warn(`    [!] reviews failed for ${title}: ${err.message}`);
         fetchErrors.push({ kind: "reviews", location: title, id: shortId,
@@ -362,12 +381,19 @@ async function main() {
         Google_Location_Id: shortId,
         Account: acct.name,
         Locality: loc.storefrontAddress?.locality || "",
-        Rating: stars.length ? Math.round((stars.reduce((a, b) => a + b, 0) / stars.length) * 100) / 100 : null,
-        Review_Count: reviews.length,
-        // The count Google shows publicly can exceed what the API
-        // returns, because the API pages and this stops at
-        // REVIEW_PAGES. Reported as "reviews read", not "all reviews".
+        // Google's published lifetime rating and count — what a customer
+        // sees on Maps. Use these for the headline number.
+        Rating: googleAverage != null ? Math.round(googleAverage * 100) / 100 : (stars.length ? Math.round((stars.reduce((a, b) => a + b, 0) / stars.length) * 100) / 100 : null),
+        Review_Count: googleTotal != null ? googleTotal : reviews.length,
+        // What this sync actually read. On the busiest stores the API
+        // pages out before the history does, so Reviews_Read < the
+        // published count and `Truncated` is true. Everything below
+        // that is derived from the reviews themselves (unanswered
+        // counts, reply lag, 7/30-day windows) describes the reviews
+        // read, not the store's whole history.
         Reviews_Read: reviews.length,
+        Truncated: truncated,
+        Rating_Read: stars.length ? Math.round((stars.reduce((a, b) => a + b, 0) / stars.length) * 100) / 100 : null,
         Unanswered: unanswered.length,
         Unanswered_Negative: unanswered.filter((r) => (STAR[r.starRating] || 0) <= 2).length,
         Oldest_Unanswered_Days: unanswered.length

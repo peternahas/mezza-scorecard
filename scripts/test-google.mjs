@@ -14,6 +14,33 @@ import { createServer } from "node:http";
 import { readFile, rm, mkdir, writeFile } from "node:fs/promises";
 import assert from "node:assert";
 
+// ---------------------------------------------------------------------
+// These tests rm -rf ./data before every case, because each case needs a
+// clean output directory. Run from the repo root and that wipes the real
+// data/ -- including givex-legacy-days.json, which holds 12 days of
+// pre-D1 sales history that CANNOT be re-fetched from anywhere.
+//
+// Git got it back the one time this happened. That is luck, not a
+// safety net, so: refuse to run anywhere that looks like a working
+// tree. CI copies the two scripts into an empty /tmp dir; do the same
+// locally.
+// ---------------------------------------------------------------------
+import { existsSync } from "node:fs";
+for (const marker of [".git", "scripts", "data/givex-legacy-days.json", "data/givex-sync-state.json"]) {
+  if (existsSync(marker)) {
+    console.error(
+      `\nRefusing to run here: found ./${marker}, so this looks like the repo, ` +
+      `and these tests delete ./data.\n\n` +
+      `Run them in a scratch directory instead:\n` +
+      `  mkdir -p /tmp/t && cd /tmp/t \\\n` +
+      `    && cp <repo>/scripts/<the-sync-script>.mjs sync.mjs \\\n` +
+      `    && cp <repo>/scripts/<this-test>.mjs test.mjs && node test.mjs\n`
+    );
+    process.exit(2);
+  }
+}
+
+
 let PASS = 0, FAIL = 0;
 const check = (name, fn) => {
   try { fn(); console.log(`  ok   ${name}`); PASS++; }
@@ -97,7 +124,24 @@ async function run(opts = {}) {
       // did, and what let "0 reviews" pass as a successful run.
       if (noReviews) return send(200, {});
       const seed = Number(u.pathname.match(/locations\/(\d+)/)[1]) - 1000;
-      return send(200, { reviews: reviewsFor(seed, 7) });
+      if (opts.reviewsPageForever) {
+        // Google keeps handing back a nextPageToken. A real store with
+        // more reviews than REVIEW_PAGES*50 behaves exactly like this.
+        return send(200, {
+          reviews: reviewsFor(seed, 50),
+          averageRating: 4.4,
+          totalReviewCount: 1234,
+          nextPageToken: "more",
+        });
+      }
+      return send(200, {
+        reviews: reviewsFor(seed, 7),
+        // The lifetime rating and count Google publishes. Deliberately
+        // NOT the average of the 7 reviews above, so a regression that
+        // recomputes the headline rating from the page is visible.
+        averageRating: 4.4,
+        totalReviewCount: 1234,
+      });
     }
     if (u.pathname.includes("fetchMultiDailyMetricsTimeSeries")) {
       const mk = (metric, base) => ({
@@ -304,6 +348,41 @@ console.log("\n3. The failure modes that actually happen");
     assert.strictEqual(code, 0, out.slice(-500));
     assert.strictEqual(data.locations.length, 2);
     assert.match(out, /backing off/);
+  });
+}
+
+console.log("\n7. the headline rating is Google's, not ours");
+{
+  const { code, data } = await run();
+  check("exits 0", () => assert.strictEqual(code, 0));
+  check("Rating is Google's published lifetime average", () => {
+    for (const L of data.locations) assert.strictEqual(L.Rating, 4.4);
+  });
+  check("Review_Count is Google's published total, not what we read", () => {
+    for (const L of data.locations) {
+      assert.strictEqual(L.Review_Count, 1234);
+      assert.strictEqual(L.Reviews_Read, 7);
+    }
+  });
+  check("Rating_Read is kept separately, and differs", () => {
+    for (const L of data.locations) assert.notStrictEqual(L.Rating_Read, 4.4);
+  });
+  check("a store we read completely is not flagged truncated", () => {
+    for (const L of data.locations) assert.strictEqual(L.Truncated, false);
+  });
+}
+{
+  const { code, data } = await run({ reviewsPageForever: true });
+  check("a store with more history than we page is flagged truncated", () => {
+    assert.strictEqual(code, 0);
+    for (const L of data.locations) assert.strictEqual(L.Truncated, true);
+  });
+  check("and its published count still comes from Google, not the pages read", () => {
+    for (const L of data.locations) {
+      assert.strictEqual(L.Review_Count, 1234);
+      assert.ok(L.Reviews_Read > 100, `read ${L.Reviews_Read}`);
+      assert.ok(L.Reviews_Read < 1234);
+    }
   });
 }
 
