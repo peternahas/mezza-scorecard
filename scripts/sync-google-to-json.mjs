@@ -270,7 +270,7 @@ async function main() {
   // guessing is how a store's reviews get filed under another store.
   // Unmapped locations are reported, never guessed at — the same rule
   // the Givex outlet mapping follows.
-  let mapping = { byTitle: {}, byLocationId: {} };
+  let mapping = { byTitle: {}, byLocationId: {}, excludeLocationIds: {} };
   try {
     mapping = JSON.parse(await readFile(MAPPING_PATH, "utf8"));
   } catch (err) {
@@ -285,6 +285,7 @@ async function main() {
   const reviewsOut = [];
   const perfOut = [];
   const unmapped = [];
+  const excluded = [];
   const fetchErrors = [];
 
   // The SAME location is reachable through more than one account:
@@ -311,6 +312,19 @@ async function main() {
       const locationId = loc.name;                    // "locations/12345"
       const shortId = locationId.split("/").pop();
       const title = loc.title || "";
+      // Deliberately excluded locations -- the production centre has a
+      // real Google listing but no sales, so joining it to a store row
+      // would be wrong. Skipped entirely and counted, the same way the
+      // Givex outlet mapping handles its test outlets, rather than
+      // sitting in the output as "unmapped" and looking like an
+      // oversight someone should go and fix.
+      const excludeReason =
+        mapping.excludeLocationIds?.[shortId] || mapping.excludeLocationIds?.[locationId];
+      if (excludeReason) {
+        excluded.push({ google_location_id: shortId, google_title: title, reason: excludeReason });
+        continue;
+      }
+
       const mezza =
         mapping.byLocationId?.[shortId] ||
         mapping.byLocationId?.[locationId] ||
@@ -409,6 +423,7 @@ async function main() {
     performance: perfOut.sort((a, b) =>
       String(a.Location_Name).localeCompare(String(b.Location_Name)) || a.Date.localeCompare(b.Date)),
     unmapped_locations: unmapped,
+    excluded_locations: excluded,
   };
 
   await mkdir("data", { recursive: true });
@@ -427,6 +442,10 @@ async function main() {
       (why ? `First reviews error: ${why.error}` :
              "No error was raised either -- the API returned empty review lists.")
     );
+  }
+  if (excluded.length) {
+    console.log(`Deliberately excluded ${excluded.length} non-store location(s): ` +
+      excluded.map((e) => e.google_title).join(", "));
   }
   if (unmapped.length) {
     console.warn(`\nWARNING: ${unmapped.length} Google location(s) are not mapped to a Mezza Location_Name.`);

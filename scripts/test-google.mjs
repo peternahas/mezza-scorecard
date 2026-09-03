@@ -251,6 +251,29 @@ console.log("\n5. reviews returning nothing is a failure, not a pass");
   });
 }
 
+
+console.log("\n6. deliberately excluded locations");
+{
+  const { code, data } = await run({ mapping: {
+    byLocationId: { "1001": "Halifax Shopping Centre" },
+    byTitle: {},
+    excludeLocationIds: { "1002": "Production Centre -- not a customer-facing store" },
+  }});
+  check("exits 0", () => assert.strictEqual(code, 0));
+  check("the excluded location is not in locations[]", () =>
+    assert.ok(!data.locations.some((l) => l.Google_Location_Id === "1002")));
+  check("it is recorded as excluded, with the reason", () => {
+    assert.strictEqual(data.excluded_locations.length, 1);
+    assert.match(data.excluded_locations[0].reason, /not a customer-facing store/);
+  });
+  check("and NOT reported as unmapped, which would look like an oversight", () =>
+    assert.strictEqual(data.unmapped_locations.length, 0));
+  check("no reviews or metrics are fetched for it", () => {
+    assert.ok(!data.reviews.some((r) => r.Google_Title === "16 Garland"));
+    assert.ok(!data.performance.some((p) => p.Google_Title === "16 Garland"));
+  });
+}
+
 console.log("\n3. The failure modes that actually happen");
 {
   const { code, out } = await run({ tokenFails: true });
