@@ -89,11 +89,6 @@ const PERF_METRICS = [
 ];
 const IMPRESSION_METRICS = new Set(PERF_METRICS.filter((m) => m.startsWith("BUSINESS_IMPRESSIONS")));
 
-function need(name, v) {
-  if (!v) throw new Error(`Missing required environment variable: ${name}`);
-  return v;
-}
-
 /* ── auth ────────────────────────────────────────────────────────── */
 
 let accessToken = null;
@@ -250,9 +245,25 @@ async function fetchPerformance(locationId) {
 /* ── main ────────────────────────────────────────────────────────── */
 
 async function main() {
-  need("GOOGLE_CLIENT_ID", GOOGLE_CLIENT_ID);
-  need("GOOGLE_CLIENT_SECRET", GOOGLE_CLIENT_SECRET);
-  need("GOOGLE_REFRESH_TOKEN", GOOGLE_REFRESH_TOKEN);
+  // All three are checked together rather than one at a time. Failing
+  // on the first missing secret means each run teaches you exactly one
+  // fact, and three runs to learn three -- when the script already
+  // knows all of it on the first.
+  const missing = [
+    ["GOOGLE_CLIENT_ID", GOOGLE_CLIENT_ID],
+    ["GOOGLE_CLIENT_SECRET", GOOGLE_CLIENT_SECRET],
+    ["GOOGLE_REFRESH_TOKEN", GOOGLE_REFRESH_TOKEN],
+  ].filter(([, v]) => !v).map(([k]) => k);
+  if (missing.length) {
+    throw new Error(
+      `Missing required environment variable(s): ${missing.join(", ")}. ` +
+      `Set them as REPOSITORY secrets on peternahas/mezza-scorecard ` +
+      `(Settings -> Secrets and variables -> Actions -> New repository secret). ` +
+      `Names are case-sensitive and must not have trailing whitespace. ` +
+      `Note that environment secrets and organisation secrets are not the same thing ` +
+      `as repository secrets, and this workflow reads repository secrets.`
+    );
+  }
 
   // Google's own location titles will not match the Location_Name the
   // Givex feed uses ("7001 Mumford" vs "Halifax Shopping Centre"), and
@@ -430,7 +441,7 @@ function diagnose(msg) {
     return `A required Google API is not enabled on the Cloud project${which ? ": " + which.trim() : ""}.`;
   }
   if (/PERMISSION_DENIED|\b403\b/.test(msg)) return "Authenticated, but this Google account may not have access to the Mezza Business Profile locations.";
-  if (/Missing required environment variable/.test(msg)) return "A repo secret is missing.";
+  if (/Missing required environment variable/.test(msg)) return "One or more repo secrets are not set. The error names which.";
   if (/\b401\b/.test(msg)) return "The access token was rejected.";
   if (/\b429\b/.test(msg)) return "Google rate-limited us past the retry budget.";
   return "Unrecognised failure — see the error text.";
@@ -440,7 +451,7 @@ function remedy(msg) {
   if (/invalid_grant/.test(msg)) return "Re-run google-oauth/Get Google Refresh Token.command and update the GOOGLE_REFRESH_TOKEN secret.";
   if (/invalid_client/.test(msg)) return "Re-copy both values from Cloud Console -> APIs & Services -> Credentials into the repo secrets.";
   if (/SERVICE_DISABLED|has not been used in project/.test(msg)) return "Cloud Console -> APIs & Services -> Library -> enable it, wait a minute, re-run. All four are needed: Account Management, Business Information, Google My Business (legacy, for reviews), Business Profile Performance.";
-  if (/Missing required environment variable/.test(msg)) return "Add the named secret under Settings -> Secrets and variables -> Actions.";
+  if (/Missing required environment variable/.test(msg)) return "Add the named secrets as REPOSITORY secrets: Settings -> Secrets and variables -> Actions -> New repository secret, on peternahas/mezza-scorecard.";
   return "See scripts/GOOGLE-OAUTH-SETUP.md.";
 }
 
