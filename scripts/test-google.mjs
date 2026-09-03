@@ -351,6 +351,34 @@ console.log("\n3. The failure modes that actually happen");
   });
 }
 
+console.log("\n8. a store whose listing we cannot see, with the reason");
+{
+  const { code, data } = await run({ mapping: {
+    byLocationId: { "1001": "Mumford" },
+    excludeLocationIds: { "1002": "closed, listing still live" },
+    storesWithoutListing: { "Larry Uteck": "the franchisee owns the listing and has not shared it" },
+  }});
+  check("exits 0", () => assert.strictEqual(code, 0));
+  check("the reason travels with the data, not just the mapping file", () => {
+    assert.strictEqual(data.stores_without_listing["Larry Uteck"],
+      "the franchisee owns the listing and has not shared it");
+  });
+  check("an excluded listing is still reported, with its reason", () => {
+    const ex = data.excluded_locations.find((e) => e.google_location_id === "1002");
+    assert.ok(ex, "excluded listing missing from output");
+    assert.match(ex.reason, /closed/);
+  });
+  check("and an excluded listing is not counted as unmapped", () => {
+    assert.ok(!data.unmapped_locations.some((u) => u.google_location_id === "1002"));
+  });
+}
+{
+  const { data } = await run();
+  check("with no such stores the field is present and empty, not absent", () => {
+    assert.deepStrictEqual(data.stores_without_listing, {});
+  });
+}
+
 console.log("\n7. the headline rating is Google's, not ours");
 {
   const { code, data } = await run();

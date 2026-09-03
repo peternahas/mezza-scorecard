@@ -26,9 +26,11 @@
   },
   "byTitle": {},
   "excludeLocationIds": {
-    "12151035443143094217": "Production Centre, 63 Jim Connors Ave -- the 15,000 sq ft plant, not a customer-facing store. Its Google listing is real but it has no sales in the POS feed, so joining it to a store row would be wrong."
+    "12151035443143094217": "Production Centre, 63 Jim Connors Ave -- the 15,000 sq ft plant, not a customer-facing store. Its Google listing is real but it has no sales in the POS feed, so joining it to a store row would be wrong.",
+    "7866692448696251318": "6136 University Ave, Halifax -- the Dalhousie campus outlet, PERMANENTLY CLOSED. Confirmed by Peter 2026-09-03. Its Google listing is still live and still carries the Mezza name with a 2.0 rating from 25 reviews (4 negative and unanswered, complaints about opening hours running to 2026-03), so it still surfaces in search. Excluded from every scorecard figure because a closed store has no operating performance to report, but the listing itself is worth marking permanently closed on Google -- that is what stops it ranking."
   },
-  "_UNRESOLVED": {
-    "7866692448696251318": "6136 University Ave, Halifax -- the one location I will not guess. Now that reviews are flowing there is evidence rather than arithmetic. It has 25 reviews, a 2.0 Google rating, and complaints running from 2019 to 2026-03 that say things like 'never open at the scheduled time' and 'for students who need to be in class on time'. 6136 University Ave is the Dalhousie campus. So this reads as a campus outlet with restricted hours, NOT as Larry Uteck -- Larry Uteck Blvd is in Bedford, and it is implausible that a Bedford store's reviews complain about getting to class. The likelier picture is that this is a separate outlet with no rows in the POS feed, and that Larry Uteck's Google listing sits in an account this sync cannot see. Two questions for Peter: (1) is the Dalhousie outlet ours, a licensee's, or closed with a live listing; (2) who holds the Larry Uteck listing. Until then it stays unmapped, is excluded from the network rating, and is shown separately on the dashboard -- because filing one store's reviews against another is worse than leaving it unmatched."
-  }
+  "storesWithoutListing": {
+    "Larry Uteck": "The franchisee owns this Google Business Profile and it is not shared with the Mezza account, so this sync cannot read it. Confirmed by Peter 2026-09-03. Its rating and its unanswered reviews are therefore ABSENT from every review figure -- absent, not zero. Fix is access, not code: the owner can add the Mezza account as a manager on the listing, or transfer it into the organisation account."
+  },
+  "_note_gaps": "Two kinds of gap are tracked explicitly rather than left to look like bugs. excludeLocationIds: a real Google listing that should not appear in the scorecard. storesWithoutListing: a store that trades in the POS feed but whose listing this sync cannot see -- the dangerous direction, because missing data looks like nothing to do."
 }

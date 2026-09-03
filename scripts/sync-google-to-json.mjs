@@ -450,6 +450,13 @@ async function main() {
       String(a.Location_Name).localeCompare(String(b.Location_Name)) || a.Date.localeCompare(b.Date)),
     unmapped_locations: unmapped,
     excluded_locations: excluded,
+    // Stores that trade in the POS feed but whose Google listing this
+    // sync cannot see, with the reason. This is the dangerous direction
+    // of gap: an absent rating and an absent unanswered pile look
+    // identical to a clean one unless something says otherwise, so the
+    // reason travels with the data rather than living only in a
+    // mapping file nobody opens.
+    stores_without_listing: mapping.storesWithoutListing || {},
   };
 
   await mkdir("data", { recursive: true });
