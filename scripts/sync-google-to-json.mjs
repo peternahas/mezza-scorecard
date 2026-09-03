@@ -383,7 +383,72 @@ async function main() {
   }
 }
 
-main().catch((err) => {
+/* ── Never fail without leaving a reason behind ──────────────────
+   The workflow's commit step is skipped when this throws, which means
+   a failed run leaves nothing but an Actions log -- and an Actions log
+   is not readable from every environment this gets debugged from. So
+   the reason is written into the repo, next to the data, where anyone
+   (or any tool) can see it.
+
+   Redacted first. Google's error bodies do not normally carry
+   credentials, but "does not normally" is not a basis for committing
+   an error string to a repo. */
+
+function redact(text) {
+  let out = String(text == null ? "" : text);
+  for (const secret of [GOOGLE_REFRESH_TOKEN, GOOGLE_CLIENT_SECRET, GOOGLE_CLIENT_ID]) {
+    if (secret && secret.length > 8) out = out.split(secret).join("[redacted]");
+  }
+  return out
+    .replace(/ya29\.[\w.\-]+/g, "[redacted access token]")
+    .replace(/1\/\/[\w.\-]+/g, "[redacted refresh token]")
+    .replace(/GOCSPX-[\w.\-]+/g, "[redacted client secret]");
+}
+
+async function writeStatus(status, err) {
+  const body = {
+    ran_at: new Date().toISOString(),
+    status,
+    error: err ? redact(err.message || String(err)) : null,
+    // The likely cause, named. A 403 SERVICE_DISABLED and an
+    // invalid_grant need completely different fixes, and the person
+    // reading this at 8am should not have to work out which they have.
+    likely_cause: err ? diagnose(err.message || String(err)) : null,
+    what_to_do: err ? remedy(err.message || String(err)) : null,
+  };
+  try {
+    await mkdir("data", { recursive: true });
+    await writeFile("data/google-sync-status.json", JSON.stringify(body, null, 2) + "\n", "utf8");
+  } catch { /* nothing useful left to do */ }
+}
+
+function diagnose(msg) {
+  if (/invalid_grant/.test(msg)) return "The refresh token is no longer valid, or it was issued to a different OAuth client.";
+  if (/invalid_client/.test(msg)) return "GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET do not match each other.";
+  if (/SERVICE_DISABLED|has not been used in project/.test(msg)) {
+    const which = (msg.match(/([A-Za-z ]*API) has not been used/) || [])[1];
+    return `A required Google API is not enabled on the Cloud project${which ? ": " + which.trim() : ""}.`;
+  }
+  if (/PERMISSION_DENIED|\b403\b/.test(msg)) return "Authenticated, but this Google account may not have access to the Mezza Business Profile locations.";
+  if (/Missing required environment variable/.test(msg)) return "A repo secret is missing.";
+  if (/\b401\b/.test(msg)) return "The access token was rejected.";
+  if (/\b429\b/.test(msg)) return "Google rate-limited us past the retry budget.";
+  return "Unrecognised failure — see the error text.";
+}
+
+function remedy(msg) {
+  if (/invalid_grant/.test(msg)) return "Re-run google-oauth/Get Google Refresh Token.command and update the GOOGLE_REFRESH_TOKEN secret.";
+  if (/invalid_client/.test(msg)) return "Re-copy both values from Cloud Console -> APIs & Services -> Credentials into the repo secrets.";
+  if (/SERVICE_DISABLED|has not been used in project/.test(msg)) return "Cloud Console -> APIs & Services -> Library -> enable it, wait a minute, re-run. All four are needed: Account Management, Business Information, Google My Business (legacy, for reviews), Business Profile Performance.";
+  if (/Missing required environment variable/.test(msg)) return "Add the named secret under Settings -> Secrets and variables -> Actions.";
+  return "See scripts/GOOGLE-OAUTH-SETUP.md.";
+}
+
+try {
+  await main();
+  await writeStatus("ok", null);
+} catch (err) {
   console.error(err);
+  await writeStatus("failed", err);
   process.exit(1);
-});
+}

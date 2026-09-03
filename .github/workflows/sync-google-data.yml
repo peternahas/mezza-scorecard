@@ -36,18 +36,24 @@ jobs:
           cp "$GITHUB_WORKSPACE/scripts/test-google.mjs" test-google.mjs
           node test-google.mjs
 
+      # continue-on-error, then a gate at the end. The point is that a
+      # FAILED run still commits its reason -- otherwise the only record
+      # is an Actions log, and the whole run has to be repeated blind.
       - name: Pull reviews and Business Profile metrics
+        id: pull
+        continue-on-error: true
         env:
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
           GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
         run: node scripts/sync-google-to-json.mjs
 
-      - name: Commit changes if data updated
+      - name: Commit data and status
+        if: always()
         run: |
           git config user.name "mezza-scorecard-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data/google-data.json
+          git add data/google-data.json data/google-sync-status.json 2>/dev/null || git add data/google-sync-status.json
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
@@ -55,3 +61,10 @@ jobs:
             git pull --rebase origin main
             git push
           fi
+
+      - name: Fail if the sync did not succeed
+        if: steps.pull.outcome == 'failure'
+        run: |
+          echo "The sync failed. Its reason is committed to data/google-sync-status.json."
+          cat data/google-sync-status.json 2>/dev/null || true
+          exit 1
