@@ -1,0 +1,7 @@
+{
+  "ran_at": "2026-09-03T15:33:46.657Z",
+  "status": "failed",
+  "error": "Missing required environment variable: GOOGLE_CLIENT_ID",
+  "likely_cause": "A repo secret is missing.",
+  "what_to_do": "Add the named secret under Settings -> Secrets and variables -> Actions."
+}
