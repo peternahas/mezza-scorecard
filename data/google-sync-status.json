@@ -1,7 +1,7 @@
 {
-  "ran_at": "2026-09-03T15:33:46.657Z",
+  "ran_at": "2026-09-03T15:35:55.745Z",
   "status": "failed",
-  "error": "Missing required environment variable: GOOGLE_CLIENT_ID",
-  "likely_cause": "A repo secret is missing.",
-  "what_to_do": "Add the named secret under Settings -> Secrets and variables -> Actions."
+  "error": "Missing required environment variable(s): GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_REFRESH_TOKEN. Set them as REPOSITORY secrets on peternahas/mezza-scorecard (Settings -> Secrets and variables -> Actions -> New repository secret). Names are case-sensitive and must not have trailing whitespace. Note that environment secrets and organisation secrets are not the same thing as repository secrets, and this workflow reads repository secrets.",
+  "likely_cause": "One or more repo secrets are not set. The error names which.",
+  "what_to_do": "Add the named secrets as REPOSITORY secrets: Settings -> Secrets and variables -> Actions -> New repository secret, on peternahas/mezza-scorecard."
 }
