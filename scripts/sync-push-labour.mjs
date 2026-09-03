@@ -47,7 +47,11 @@
 
 import { writeFile, mkdir } from "node:fs/promises";
 
-const { PUSH_BEARER_TOKEN, PUSH_DAYS } = process.env;
+const { PUSH_BEARER_TOKEN, PUSH_DAYS, PUSH_PACE_MS } = process.env;
+// Pace between calls. Overridable so the test suite is not 144 real
+// waits long -- the tests stub the network, so there is nothing to be
+// polite to.
+const PACE_MS = Number.parseInt(PUSH_PACE_MS || "400", 10);
 const BASE = "https://api.pushoperations.com/platform/api/v1";
 const OUTPUT_PATH = "data/push-labour-data.json";
 const DAYS = Number.parseInt(PUSH_DAYS || "35", 10);
@@ -100,8 +104,8 @@ function iso(d) { return d.toISOString().slice(0, 10); }
    assumed path -- is what threw "rows is not iterable" on the first
    live call. Once response_shape has been read from a real run this
    can be narrowed to the real path. */
-const HOUR_KEYS = ["totalHours", "hours", "totalHrs", "actualHours", "total_hours"];
-const COST_KEYS = ["totalCosts", "totalCost", "cost", "actualCost", "totalLabourCost", "totalLaborCost", "total_cost"];
+const HOUR_KEYS = ["hours", "totalHours", "totalHrs", "actualHours", "total_hours"];
+const COST_KEYS = ["costs", "totalCosts", "totalCost", "cost", "actualCost", "totalLabourCost", "totalLaborCost", "total_cost"];
 
 function firstNumber(obj, keys) {
   for (const k of keys) {
@@ -128,6 +132,38 @@ function collectRows(d, depth) {
   return out;
 }
 
+/* ── THE REAL SHAPE, NOW THAT IT HAS BEEN SEEN ────────────────────
+   A probe run against the live endpoint returned:
+
+     data: { companyId, totalHours, totalCosts,
+             labourActualByDate: [ {date, hours, costs,
+                                    departmentId, departmentName} ] }
+
+   Both levels carry hours and costs, and that mattered. The tolerant
+   walker stopped at `data` -- because `data` itself looks like a labour
+   row -- and never descended, so each 2-day request produced ONE row
+   holding the 2-day TOTAL, filed under the first date. Every other
+   calendar day was missing and every present day was roughly double.
+   Burnside read 103 hours on a Thursday, which is wrong in a way that
+   looks entirely plausible, which is the dangerous kind.
+
+   So the per-date array is read explicitly, departments summed per
+   date, and the top-level totals used only to CHECK that sum -- never
+   as a row. The tolerant walker stays as a fallback for a shape change,
+   but it is no longer the primary path. */
+function extractLabour(payload) {
+  const data = (payload && payload.data) || payload || {};
+  const byDate = data.labourActualByDate || data.labourActualsByDate || data.byDate;
+  if (Array.isArray(byDate)) {
+    return {
+      rows: byDate,
+      totals: { hours: firstNumber(data, ["totalHours"]), cost: firstNumber(data, ["totalCosts"]) },
+      path: "labourActualByDate",
+    };
+  }
+  return { rows: collectRows(payload), totals: null, path: "fallback-walk" };
+}
+
 function shapeOf(v, depth) {
   depth = depth || 0;
   if (depth > 6) return "…";
@@ -142,13 +178,33 @@ function shapeOf(v, depth) {
 }
 
 
-async function push(pathAndQuery) {
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// A 35-day window across 8 companies is ~144 calls, and Push rate
+// limits: the first full run lost 95 of them to 429s. Retried with
+// backoff, honouring Retry-After where Push sends it. A dropped call is
+// a missing labour day, and a missing labour day reads as a store that
+// paid nobody.
+let rateLimitHits = 0;
+
+async function push(pathAndQuery, attempt) {
+  attempt = attempt || 0;
   const res = await fetch(`${BASE}${pathAndQuery}`, {
     headers: { Authorization: `Bearer ${PUSH_BEARER_TOKEN}`, Accept: "application/json" },
   });
   const text = await res.text();
   let body;
   try { body = text ? JSON.parse(text) : {}; } catch { body = { raw: text }; }
+  if (res.status === 429 && attempt < 5) {
+    rateLimitHits += 1;
+    const retryAfter = Number(res.headers.get("retry-after"));
+    const waitMs = Number.isFinite(retryAfter) && retryAfter > 0
+      ? retryAfter * 1000
+      : Math.min(30000, 1500 * Math.pow(2, attempt));
+    console.log(`    [429] backing off ${Math.round(waitMs / 1000)}s (attempt ${attempt + 1})`);
+    await sleep(waitMs);
+    return push(pathAndQuery, attempt + 1);
+  }
   if (!res.ok) throw new Error(`${pathAndQuery} -> ${res.status} ${text.slice(0, 300)}`);
   // Push answers HTTP 200 with {"status":"failed"} for an entitlement
   // problem. Treating 200 as success is how the earlier attempt looked
@@ -220,6 +276,8 @@ async function main() {
   const errors = [];
   let anySuccess = false;
   let responseShape = null;
+  let fallbackWalkUsed = 0;
+  const totalsMismatches = [];
 
   for (const [companyId, location] of Object.entries(COMPANIES)) {
     for (const [from, to] of chunks) {
@@ -240,21 +298,44 @@ async function main() {
         // zero location-days and 126 errors -- precisely the "looks
         // like it worked" failure this script exists to prevent.
         // anySuccess now means rows were actually read.
-        const rows = collectRows(d);
+        const { rows, totals, path } = extractLabour(d);
+        if (path === "fallback-walk") fallbackWalkUsed += 1;
         if (!rows.length) {
           errors.push({ company: companyId, location, from, to,
             error: "200 OK but no labour rows could be read from the response. See response_shape in this file." });
         }
+
+        let chunkHours = 0, chunkCost = 0;
         for (const r of rows) {
-          const date = r.date || r.day || r.businessDate || r.businessDay || r.workDate || from;
-          const hours = firstNumber(r, ["totalHours", "hours", "totalHrs", "actualHours", "total_hours"]);
-          const cost  = firstNumber(r, ["totalCosts", "totalCost", "cost", "actualCost", "totalLabourCost", "totalLaborCost", "total_cost"]);
+          const date = String(r.date || r.day || r.businessDate || r.businessDay || r.workDate || from).slice(0, 10);
+          const hours = firstNumber(r, HOUR_KEYS);
+          const cost  = firstNumber(r, COST_KEYS);
           if (hours === null && cost === null) continue;   // not a labour row
           anySuccess = true;
+          chunkHours += hours || 0;
+          chunkCost += cost || 0;
           const key = `${location}|${date}`;
           const b = days[key] || (days[key] = { Location_Name: location, Date: date, Hours: 0, Cost: 0 });
+          // Departments are summed into one location-day figure. Push
+          // returns departmentId/departmentName per row; neither is
+          // carried into the output, because a per-department payroll
+          // breakdown is not what a scorecard is for.
           b.Hours += hours || 0;
           b.Cost += cost || 0;
+        }
+
+        // Push sends the range totals alongside the per-date rows, so
+        // the sum can be checked against the source rather than trusted.
+        // This is the guard that would have caught the double-count: a
+        // 2-day total filed as one day still sums correctly per chunk,
+        // but it is cheap insurance against the next shape change.
+        if (totals && totals.hours !== null) {
+          const drift = Math.abs(chunkHours - totals.hours);
+          if (drift > 0.05 + Math.abs(totals.hours) * 0.001) {
+            totalsMismatches.push({ company: companyId, location, from, to,
+              summed_hours: Math.round(chunkHours * 100) / 100,
+              push_total_hours: totals.hours });
+          }
         }
       } catch (err) {
         errors.push({ company: companyId, location, from, to, error: err.message });
@@ -263,7 +344,10 @@ async function main() {
         // requests against a payroll API.
         if (err.pushFailure) break;
       }
-      await new Promise((r) => setTimeout(r, 120));
+      // Paced, not parallel. 120ms cost 95 of 144 calls to 429s on the
+      // first real run; a payroll API is not the place to find the
+      // limit by hitting it.
+      await sleep(PACE_MS);
     }
   }
 
@@ -290,6 +374,16 @@ async function main() {
     // lengths. No hours, no dollars, no names. This is how the parser
     // gets narrowed from "walk the payload" to the real path.
     response_shape: responseShape,
+    // Sum-vs-Push's-own-total checks. Non-empty means the per-date rows
+    // do not add up to the range total Push reports, which is a parsing
+    // problem and not a rounding one.
+    totals_mismatches: totalsMismatches.slice(0, 20),
+    totals_mismatch_count: totalsMismatches.length,
+    // Non-zero means the documented per-date array was absent and the
+    // tolerant walker was used instead -- worth knowing before trusting
+    // the numbers.
+    fallback_walk_used: fallbackWalkUsed,
+    rate_limit_retries: rateLimitHits,
     companies_seen: companiesSeen,
     // Companies on the token with no home in this script. Not pulled,
     // and not guessed at by name.

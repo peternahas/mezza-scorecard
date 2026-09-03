@@ -71,6 +71,33 @@ async function run({ mode = "ok", days = 5 } = {}) {
       // the parser assumed a top-level array. These shapes stand in for
       // what a payroll API plausibly returns, so the parser is proven
       // against more than the one the docs implied.
+      if (mode === "real") {
+        // The shape a probe run actually returned. Note that BOTH levels
+        // carry hours and costs -- that is what produced the
+        // double-count. Two departments per calendar day, over the
+        // distinct days the request actually covers (the last chunk of a
+        // window can be a single day, where start === end).
+        const end = u.searchParams.get("end");
+        const dates = start === end ? [start] : [start, end];
+        const rows = [];
+        for (const dt of dates) {
+          rows.push({ date: dt, hours: 5, costs: 90, departmentId: 1, departmentName: null });
+          rows.push({ date: dt, hours: 3, costs: 50, departmentId: 2, departmentName: null });
+        }
+        return send(200, { data: {
+          companyId: 25154,
+          totalHours: 8 * dates.length,
+          totalCosts: 140 * dates.length,
+          labourActualByDate: rows,
+        }});
+      }
+      if (mode === "totalsdrift") {
+        // Per-date rows that do not add up to Push's own range total.
+        return send(200, { data: {
+          companyId: 25154, totalHours: 99, totalCosts: 999,
+          labourActualByDate: [{ date: start, hours: 5, costs: 90, departmentId: 1, departmentName: null }],
+        }});
+      }
       if (mode === "nested") {
         return send(200, { status: "success", data: {
           summary: { departments: [
@@ -101,7 +128,7 @@ async function run({ mode = "ok", days = 5 } = {}) {
   await writeFile("push.local.mjs", src);
 
   const child = spawn(process.execPath, ["push.local.mjs"], {
-    env: { ...process.env, PUSH_BEARER_TOKEN: "tok", PUSH_DAYS: String(days) },
+    env: { ...process.env, PUSH_BEARER_TOKEN: "tok", PUSH_DAYS: String(days), PUSH_PACE_MS: "0" },
     stdio: ["ignore", "pipe", "pipe"],
   });
   let out = "";
@@ -171,6 +198,52 @@ console.log("\n2. When Push opens it up");
   check("overhead companies are kept visible but out of the store rows", () => {
     assert.ok(Object.values(data.overhead_companies).includes("Production Centre"));
     assert.ok(!data.days.some((d) => d.Location_Name === "Production Centre"));
+  });
+}
+
+console.log("\n7. the real response shape, and the double-count it caused");
+{
+  // REGRESSION. The tolerant walker stopped at `data` -- which itself
+  // carries totalHours/totalCosts -- and never descended into
+  // labourActualByDate. Each 2-day request produced ONE row holding the
+  // 2-day total, filed under the first date: every other calendar day
+  // missing, every present day roughly double. Burnside read 103 hours
+  // on a Thursday. Wrong in a way that looks entirely plausible.
+  const { data } = await run({ mode: "real", days: 4 });
+  const one = data.days.filter((r) => r.Location_Name === "Burnside");
+  check("status ok", () => assert.strictEqual(data.status, "ok"));
+  check("EVERY calendar day in the window gets its own row", () => {
+    // The bug lost every second day. A 4-day window must produce 4 (or
+    // 5, counting today) consecutive dates for one store -- never 2.
+    const dates = one.map((r) => r.Date).sort();
+    assert.ok(dates.length >= 4, `only ${dates.length} day(s): ${dates.join(",")}`);
+    assert.strictEqual(new Set(dates).size, dates.length, "duplicate dates: " + dates.join(","));
+  });
+  check("each day holds ONE day of labour, not a 2-day total", () => {
+    for (const r of one) {
+      assert.strictEqual(r.Hours, 8, `${r.Date} -> ${r.Hours}h`);   // 5 + 3, two departments
+      assert.strictEqual(r.Cost, 140);
+    }
+  });
+  check("the range total is not added as a row of its own", () => {
+    // Doubling would show as 16h days; a phantom total row would show
+    // as an extra date carrying a multiple of a day.
+    assert.ok(one.every((r) => r.Hours === 8));
+  });
+  check("the documented path was used, not the fallback walker", () =>
+    assert.strictEqual(data.fallback_walk_used, 0));
+  check("no department detail reaches the output", () =>
+    assert.ok(!/department/i.test(JSON.stringify(data.days))));
+  check("sum matches Push's own range total, so no mismatch recorded", () =>
+    assert.strictEqual(data.totals_mismatch_count, 0));
+}
+{
+  const { data } = await run({ mode: "totalsdrift", days: 2 });
+  check("rows that do not add up to Push's total are flagged", () => {
+    assert.ok(data.totals_mismatch_count > 0);
+    const m = data.totals_mismatches[0];
+    assert.strictEqual(m.push_total_hours, 99);
+    assert.strictEqual(m.summed_hours, 5);
   });
 }
 
