@@ -1,11 +1,28 @@
 {
- "generated_at": "2026-09-03T18:23:48.608Z",
+ "generated_at": "2026-09-03T18:28:55.423Z",
  "source": "push-operations",
  "schema_version": 1,
  "window_days": 35,
  "status": "ok",
  "status_detail": null,
  "companies_endpoint_error": null,
+ "response_shape": {
+  "data": {
+   "companyId": "number",
+   "totalCosts": "number",
+   "totalHours": "number",
+   "labourActualByDate": [
+    "array(2)",
+    {
+     "date": "string",
+     "costs": "number",
+     "hours": "number",
+     "departmentId": "number",
+     "departmentName": "null"
+    }
+   ]
+  }
+ },
  "companies_seen": [
   {
    "id": 25154,
@@ -52,13 +69,303 @@
    "name": "Mezza - 50 Commonwealth"
   }
  ],
- "unmapped_companies": [
+ "unmapped_companies": [],
+ "days": [
   {
-   "id": 28602,
-   "name": "Mezza - 690 University"
+   "Location_Name": "Burnside",
+   "Date": "2026-07-30",
+   "Hours": 103.19,
+   "Cost": 1972.5472
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-01",
+   "Hours": 71.34,
+   "Cost": 1246.4296
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-03",
+   "Hours": 86.81,
+   "Cost": 1641.224
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-05",
+   "Hours": 112.21,
+   "Cost": 2148.5464
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-07",
+   "Hours": 83.19,
+   "Cost": 1538.056
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-09",
+   "Hours": 80.43,
+   "Cost": 1503.2472
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-11",
+   "Hours": 115.87,
+   "Cost": 2233.4416
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-13",
+   "Hours": 114.37,
+   "Cost": 2192.0704
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-15",
+   "Hours": 55.94,
+   "Cost": 998.5872
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-17",
+   "Hours": 118.83,
+   "Cost": 2302.3728
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-19",
+   "Hours": 124.64,
+   "Cost": 2390.7832
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-21",
+   "Hours": 87.27,
+   "Cost": 1630.9904
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-23",
+   "Hours": 77.8,
+   "Cost": 1452.9736
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-25",
+   "Hours": 116.36,
+   "Cost": 2248.584
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-27",
+   "Hours": 123.22,
+   "Cost": 2379.3744
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-29",
+   "Hours": 65.29,
+   "Cost": 1315.3712
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-31",
+   "Hours": 126.63,
+   "Cost": 2431.0416
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-09-02",
+   "Hours": 90.38,
+   "Cost": 1738.4536
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-07-30",
+   "Hours": 113.09857142857,
+   "Cost": 2117.7568
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-01",
+   "Hours": 87.808571428571,
+   "Cost": 2074.3064
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-03",
+   "Hours": 90.788571428571,
+   "Cost": 1725.3232
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-05",
+   "Hours": 113.00857142857,
+   "Cost": 2111.9432
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-07",
+   "Hours": 120.80857142857,
+   "Cost": 2251.2512
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-09",
+   "Hours": 79.038571428571,
+   "Cost": 1443.484
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-11",
+   "Hours": 101.12857142857,
+   "Cost": 1767.4032
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-13",
+   "Hours": 118.27857142857,
+   "Cost": 2207.2904
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-15",
+   "Hours": 89.888571428571,
+   "Cost": 1762.0144
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-17",
+   "Hours": 124.50857142857,
+   "Cost": 2359.536
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-19",
+   "Hours": 127.23857142857,
+   "Cost": 2407.584
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-21",
+   "Hours": 129.06857142857,
+   "Cost": 2441.488
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-23",
+   "Hours": 103.52857142857,
+   "Cost": 1967.4768
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-25",
+   "Hours": 117.35857142857,
+   "Cost": 2271.7496
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-27",
+   "Hours": 132.81857142857,
+   "Cost": 2589.6256
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-29",
+   "Hours": 106.10857142857,
+   "Cost": 3067.1204
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-31",
+   "Hours": 75.948571428571,
+   "Cost": 1479.124
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-09-02",
+   "Hours": 82.938571428571,
+   "Cost": 1657.276
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-07-30",
+   "Hours": 79.27,
+   "Cost": 1485.2448
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-01",
+   "Hours": 61.74,
+   "Cost": 1095.0992
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-03",
+   "Hours": 73.66,
+   "Cost": 1367.392
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-05",
+   "Hours": 89.09,
+   "Cost": 1640.1424
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-07",
+   "Hours": 81.17,
+   "Cost": 1490.7256
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-09",
+   "Hours": 69.19,
+   "Cost": 1249.2376
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-11",
+   "Hours": 76.71,
+   "Cost": 1409.8968
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-13",
+   "Hours": 81.98,
+   "Cost": 1509.4664
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-15",
+   "Hours": 61.13,
+   "Cost": 1293.1152
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-17",
+   "Hours": 75.7,
+   "Cost": 1404.5824
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-19",
+   "Hours": 78.23,
+   "Cost": 1468.5008
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-21",
+   "Hours": 66.9,
+   "Cost": 1216.8104
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-23",
+   "Hours": 62.34,
+   "Cost": 1132.1128
   }
  ],
- "days": [],
  "mapped_locations": {
   "25154": "Burnside",
   "25554": "Halifax Shopping Centre",
@@ -66,7 +373,8 @@
   "25557": "Scotia Square",
   "25558": "Herring Cove (Spryfield)",
   "25633": "Clayton Park",
-  "27757": "Barrington"
+  "27757": "Barrington",
+  "28602": "Charlottetown"
  },
  "overhead_companies": {
   "25555": "Production Centre",
@@ -75,363 +383,358 @@
  "franchisee_companies_not_pulled": {
   "29923": "Mount Pearl"
  },
- "known_gaps": [
-  {
-   "location": "Charlottetown",
-   "reason": "Not on this token yet. Christian at Push offered to add it on 2026-09-03 once Mezza confirms the site is '690 University Ave' -- which it is (690 University Ave Unit 2, Charlottetown PE, opened Aug 2025). Once he does, it appears in /companies and this run reports its id under unmapped_companies; add one line to COMPANIES and it flows. Listed as a gap rather than silently absent, because a missing location in a labour report reads as a store with no labour cost."
-  }
- ],
+ "known_gaps": [],
  "errors": [
-  {
-   "company": "25154",
-   "location": "Burnside",
-   "from": "2026-07-30",
-   "to": "2026-07-31",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25154",
-   "location": "Burnside",
-   "from": "2026-08-01",
-   "to": "2026-08-02",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25154",
-   "location": "Burnside",
-   "from": "2026-08-03",
-   "to": "2026-08-04",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25154",
-   "location": "Burnside",
-   "from": "2026-08-05",
-   "to": "2026-08-06",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25154",
-   "location": "Burnside",
-   "from": "2026-08-07",
-   "to": "2026-08-08",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25154",
-   "location": "Burnside",
-   "from": "2026-08-09",
-   "to": "2026-08-10",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25154",
-   "location": "Burnside",
-   "from": "2026-08-11",
-   "to": "2026-08-12",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25154",
-   "location": "Burnside",
-   "from": "2026-08-13",
-   "to": "2026-08-14",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25154",
-   "location": "Burnside",
-   "from": "2026-08-15",
-   "to": "2026-08-16",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25154",
-   "location": "Burnside",
-   "from": "2026-08-17",
-   "to": "2026-08-18",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25154",
-   "location": "Burnside",
-   "from": "2026-08-19",
-   "to": "2026-08-20",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25154",
-   "location": "Burnside",
-   "from": "2026-08-21",
-   "to": "2026-08-22",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25154",
-   "location": "Burnside",
-   "from": "2026-08-23",
-   "to": "2026-08-24",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25154",
-   "location": "Burnside",
-   "from": "2026-08-25",
-   "to": "2026-08-26",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25154",
-   "location": "Burnside",
-   "from": "2026-08-27",
-   "to": "2026-08-28",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25154",
-   "location": "Burnside",
-   "from": "2026-08-29",
-   "to": "2026-08-30",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25154",
-   "location": "Burnside",
-   "from": "2026-08-31",
-   "to": "2026-09-01",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25154",
-   "location": "Burnside",
-   "from": "2026-09-02",
-   "to": "2026-09-03",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25554",
-   "location": "Halifax Shopping Centre",
-   "from": "2026-07-30",
-   "to": "2026-07-31",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25554",
-   "location": "Halifax Shopping Centre",
-   "from": "2026-08-01",
-   "to": "2026-08-02",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25554",
-   "location": "Halifax Shopping Centre",
-   "from": "2026-08-03",
-   "to": "2026-08-04",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25554",
-   "location": "Halifax Shopping Centre",
-   "from": "2026-08-05",
-   "to": "2026-08-06",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25554",
-   "location": "Halifax Shopping Centre",
-   "from": "2026-08-07",
-   "to": "2026-08-08",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25554",
-   "location": "Halifax Shopping Centre",
-   "from": "2026-08-09",
-   "to": "2026-08-10",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25554",
-   "location": "Halifax Shopping Centre",
-   "from": "2026-08-11",
-   "to": "2026-08-12",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25554",
-   "location": "Halifax Shopping Centre",
-   "from": "2026-08-13",
-   "to": "2026-08-14",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25554",
-   "location": "Halifax Shopping Centre",
-   "from": "2026-08-15",
-   "to": "2026-08-16",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25554",
-   "location": "Halifax Shopping Centre",
-   "from": "2026-08-17",
-   "to": "2026-08-18",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25554",
-   "location": "Halifax Shopping Centre",
-   "from": "2026-08-19",
-   "to": "2026-08-20",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25554",
-   "location": "Halifax Shopping Centre",
-   "from": "2026-08-21",
-   "to": "2026-08-22",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25554",
-   "location": "Halifax Shopping Centre",
-   "from": "2026-08-23",
-   "to": "2026-08-24",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25554",
-   "location": "Halifax Shopping Centre",
-   "from": "2026-08-25",
-   "to": "2026-08-26",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25554",
-   "location": "Halifax Shopping Centre",
-   "from": "2026-08-27",
-   "to": "2026-08-28",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25554",
-   "location": "Halifax Shopping Centre",
-   "from": "2026-08-29",
-   "to": "2026-08-30",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25554",
-   "location": "Halifax Shopping Centre",
-   "from": "2026-08-31",
-   "to": "2026-09-01",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25554",
-   "location": "Halifax Shopping Centre",
-   "from": "2026-09-02",
-   "to": "2026-09-03",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25556",
-   "location": "Lower Sackville",
-   "from": "2026-07-30",
-   "to": "2026-07-31",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25556",
-   "location": "Lower Sackville",
-   "from": "2026-08-01",
-   "to": "2026-08-02",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25556",
-   "location": "Lower Sackville",
-   "from": "2026-08-03",
-   "to": "2026-08-04",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25556",
-   "location": "Lower Sackville",
-   "from": "2026-08-05",
-   "to": "2026-08-06",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25556",
-   "location": "Lower Sackville",
-   "from": "2026-08-07",
-   "to": "2026-08-08",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25556",
-   "location": "Lower Sackville",
-   "from": "2026-08-09",
-   "to": "2026-08-10",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25556",
-   "location": "Lower Sackville",
-   "from": "2026-08-11",
-   "to": "2026-08-12",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25556",
-   "location": "Lower Sackville",
-   "from": "2026-08-13",
-   "to": "2026-08-14",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25556",
-   "location": "Lower Sackville",
-   "from": "2026-08-15",
-   "to": "2026-08-16",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25556",
-   "location": "Lower Sackville",
-   "from": "2026-08-17",
-   "to": "2026-08-18",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25556",
-   "location": "Lower Sackville",
-   "from": "2026-08-19",
-   "to": "2026-08-20",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25556",
-   "location": "Lower Sackville",
-   "from": "2026-08-21",
-   "to": "2026-08-22",
-   "error": "rows is not iterable"
-  },
-  {
-   "company": "25556",
-   "location": "Lower Sackville",
-   "from": "2026-08-23",
-   "to": "2026-08-24",
-   "error": "rows is not iterable"
-  },
   {
    "company": "25556",
    "location": "Lower Sackville",
    "from": "2026-08-25",
    "to": "2026-08-26",
    "error": "/analytics/summary/labour-actuals?company=25556&start=2026-08-25&end=2026-08-26 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25556",
+   "location": "Lower Sackville",
+   "from": "2026-08-27",
+   "to": "2026-08-28",
+   "error": "/analytics/summary/labour-actuals?company=25556&start=2026-08-27&end=2026-08-28 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25556",
+   "location": "Lower Sackville",
+   "from": "2026-08-29",
+   "to": "2026-08-30",
+   "error": "/analytics/summary/labour-actuals?company=25556&start=2026-08-29&end=2026-08-30 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25556",
+   "location": "Lower Sackville",
+   "from": "2026-08-31",
+   "to": "2026-09-01",
+   "error": "/analytics/summary/labour-actuals?company=25556&start=2026-08-31&end=2026-09-01 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25556",
+   "location": "Lower Sackville",
+   "from": "2026-09-02",
+   "to": "2026-09-03",
+   "error": "/analytics/summary/labour-actuals?company=25556&start=2026-09-02&end=2026-09-03 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25557",
+   "location": "Scotia Square",
+   "from": "2026-07-30",
+   "to": "2026-07-31",
+   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-07-30&end=2026-07-31 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25557",
+   "location": "Scotia Square",
+   "from": "2026-08-01",
+   "to": "2026-08-02",
+   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-01&end=2026-08-02 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25557",
+   "location": "Scotia Square",
+   "from": "2026-08-03",
+   "to": "2026-08-04",
+   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-03&end=2026-08-04 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25557",
+   "location": "Scotia Square",
+   "from": "2026-08-05",
+   "to": "2026-08-06",
+   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-05&end=2026-08-06 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25557",
+   "location": "Scotia Square",
+   "from": "2026-08-07",
+   "to": "2026-08-08",
+   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-07&end=2026-08-08 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25557",
+   "location": "Scotia Square",
+   "from": "2026-08-09",
+   "to": "2026-08-10",
+   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-09&end=2026-08-10 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25557",
+   "location": "Scotia Square",
+   "from": "2026-08-11",
+   "to": "2026-08-12",
+   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-11&end=2026-08-12 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25557",
+   "location": "Scotia Square",
+   "from": "2026-08-13",
+   "to": "2026-08-14",
+   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-13&end=2026-08-14 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25557",
+   "location": "Scotia Square",
+   "from": "2026-08-15",
+   "to": "2026-08-16",
+   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-15&end=2026-08-16 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25557",
+   "location": "Scotia Square",
+   "from": "2026-08-17",
+   "to": "2026-08-18",
+   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-17&end=2026-08-18 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25557",
+   "location": "Scotia Square",
+   "from": "2026-08-19",
+   "to": "2026-08-20",
+   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-19&end=2026-08-20 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25557",
+   "location": "Scotia Square",
+   "from": "2026-08-21",
+   "to": "2026-08-22",
+   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-21&end=2026-08-22 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25557",
+   "location": "Scotia Square",
+   "from": "2026-08-23",
+   "to": "2026-08-24",
+   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-23&end=2026-08-24 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25557",
+   "location": "Scotia Square",
+   "from": "2026-08-25",
+   "to": "2026-08-26",
+   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-25&end=2026-08-26 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25557",
+   "location": "Scotia Square",
+   "from": "2026-08-27",
+   "to": "2026-08-28",
+   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-27&end=2026-08-28 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25557",
+   "location": "Scotia Square",
+   "from": "2026-08-29",
+   "to": "2026-08-30",
+   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-29&end=2026-08-30 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25557",
+   "location": "Scotia Square",
+   "from": "2026-08-31",
+   "to": "2026-09-01",
+   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-31&end=2026-09-01 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25557",
+   "location": "Scotia Square",
+   "from": "2026-09-02",
+   "to": "2026-09-03",
+   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-09-02&end=2026-09-03 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25558",
+   "location": "Herring Cove (Spryfield)",
+   "from": "2026-07-30",
+   "to": "2026-07-31",
+   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-07-30&end=2026-07-31 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25558",
+   "location": "Herring Cove (Spryfield)",
+   "from": "2026-08-01",
+   "to": "2026-08-02",
+   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-01&end=2026-08-02 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25558",
+   "location": "Herring Cove (Spryfield)",
+   "from": "2026-08-03",
+   "to": "2026-08-04",
+   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-03&end=2026-08-04 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25558",
+   "location": "Herring Cove (Spryfield)",
+   "from": "2026-08-05",
+   "to": "2026-08-06",
+   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-05&end=2026-08-06 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25558",
+   "location": "Herring Cove (Spryfield)",
+   "from": "2026-08-07",
+   "to": "2026-08-08",
+   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-07&end=2026-08-08 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25558",
+   "location": "Herring Cove (Spryfield)",
+   "from": "2026-08-09",
+   "to": "2026-08-10",
+   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-09&end=2026-08-10 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25558",
+   "location": "Herring Cove (Spryfield)",
+   "from": "2026-08-11",
+   "to": "2026-08-12",
+   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-11&end=2026-08-12 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25558",
+   "location": "Herring Cove (Spryfield)",
+   "from": "2026-08-13",
+   "to": "2026-08-14",
+   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-13&end=2026-08-14 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25558",
+   "location": "Herring Cove (Spryfield)",
+   "from": "2026-08-15",
+   "to": "2026-08-16",
+   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-15&end=2026-08-16 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25558",
+   "location": "Herring Cove (Spryfield)",
+   "from": "2026-08-17",
+   "to": "2026-08-18",
+   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-17&end=2026-08-18 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25558",
+   "location": "Herring Cove (Spryfield)",
+   "from": "2026-08-19",
+   "to": "2026-08-20",
+   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-19&end=2026-08-20 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25558",
+   "location": "Herring Cove (Spryfield)",
+   "from": "2026-08-21",
+   "to": "2026-08-22",
+   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-21&end=2026-08-22 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25558",
+   "location": "Herring Cove (Spryfield)",
+   "from": "2026-08-23",
+   "to": "2026-08-24",
+   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-23&end=2026-08-24 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25558",
+   "location": "Herring Cove (Spryfield)",
+   "from": "2026-08-25",
+   "to": "2026-08-26",
+   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-25&end=2026-08-26 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25558",
+   "location": "Herring Cove (Spryfield)",
+   "from": "2026-08-27",
+   "to": "2026-08-28",
+   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-27&end=2026-08-28 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25558",
+   "location": "Herring Cove (Spryfield)",
+   "from": "2026-08-29",
+   "to": "2026-08-30",
+   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-29&end=2026-08-30 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25558",
+   "location": "Herring Cove (Spryfield)",
+   "from": "2026-08-31",
+   "to": "2026-09-01",
+   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-31&end=2026-09-01 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25558",
+   "location": "Herring Cove (Spryfield)",
+   "from": "2026-09-02",
+   "to": "2026-09-03",
+   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-09-02&end=2026-09-03 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25633",
+   "location": "Clayton Park",
+   "from": "2026-07-30",
+   "to": "2026-07-31",
+   "error": "/analytics/summary/labour-actuals?company=25633&start=2026-07-30&end=2026-07-31 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25633",
+   "location": "Clayton Park",
+   "from": "2026-08-01",
+   "to": "2026-08-02",
+   "error": "/analytics/summary/labour-actuals?company=25633&start=2026-08-01&end=2026-08-02 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25633",
+   "location": "Clayton Park",
+   "from": "2026-08-03",
+   "to": "2026-08-04",
+   "error": "/analytics/summary/labour-actuals?company=25633&start=2026-08-03&end=2026-08-04 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25633",
+   "location": "Clayton Park",
+   "from": "2026-08-05",
+   "to": "2026-08-06",
+   "error": "/analytics/summary/labour-actuals?company=25633&start=2026-08-05&end=2026-08-06 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25633",
+   "location": "Clayton Park",
+   "from": "2026-08-07",
+   "to": "2026-08-08",
+   "error": "/analytics/summary/labour-actuals?company=25633&start=2026-08-07&end=2026-08-08 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25633",
+   "location": "Clayton Park",
+   "from": "2026-08-09",
+   "to": "2026-08-10",
+   "error": "/analytics/summary/labour-actuals?company=25633&start=2026-08-09&end=2026-08-10 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25633",
+   "location": "Clayton Park",
+   "from": "2026-08-11",
+   "to": "2026-08-12",
+   "error": "/analytics/summary/labour-actuals?company=25633&start=2026-08-11&end=2026-08-12 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25633",
+   "location": "Clayton Park",
+   "from": "2026-08-13",
+   "to": "2026-08-14",
+   "error": "/analytics/summary/labour-actuals?company=25633&start=2026-08-13&end=2026-08-14 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  },
+  {
+   "company": "25633",
+   "location": "Clayton Park",
+   "from": "2026-08-15",
+   "to": "2026-08-16",
+   "error": "/analytics/summary/labour-actuals?company=25633&start=2026-08-15&end=2026-08-16 -> 429 {\"errors\":\"Rate limit exceeded\"}"
   }
  ],
- "error_count": 126
+ "error_count": 95
 }
