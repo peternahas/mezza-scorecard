@@ -144,10 +144,14 @@ async function run(opts = {}) {
       });
     }
     if (u.pathname.includes("fetchMultiDailyMetricsTimeSeries")) {
+      // opts.perfTrailingZeros stands in for Google's reporting lag:
+      // the API answers for days it has not processed yet, with zeros.
+      const zeroDays = opts.perfTrailingZeros || 0;
       const mk = (metric, base) => ({
         dailyMetric: metric,
-        timeSeries: { datedValues: Array.from({ length: 3 }, (_, i) => ({
-          date: { year: 2026, month: 8, day: 20 + i }, value: String(base + i),
+        timeSeries: { datedValues: Array.from({ length: 3 + zeroDays }, (_, i) => ({
+          date: { year: 2026, month: 8, day: 20 + i },
+          value: String(i < 3 ? base + i : 0),
         })) },
       });
       return send(200, { multiDailyMetricTimeSeries: [{ dailyMetricTimeSeries: [
@@ -349,6 +353,31 @@ console.log("\n3. The failure modes that actually happen");
     assert.strictEqual(data.locations.length, 2);
     assert.match(out, /backing off/);
   });
+}
+
+console.log("\n9. Google's reporting lag is not drawn as zeros");
+{
+  const { code, data } = await run({ perfTrailingZeros: 3 });
+  check("exits 0", () => assert.strictEqual(code, 0));
+  check("trailing all-zero days are dropped, not carried as rows", () => {
+    // The API answers for days it has not processed yet, with zeros.
+    // Drawn, those produce a chart that falls off a cliff to the axis
+    // -- which reads as the phones having stopped ringing.
+    assert.ok(data.performance.length > 0, "all performance rows were dropped");
+    const dates = [...new Set(data.performance.map((r) => r.Date))].sort();
+    assert.strictEqual(dates[dates.length - 1], data.performance_through);
+  });
+  check("how many days were dropped is reported", () =>
+    assert.strictEqual(data.performance_lag_days, 3));
+  check("performance_through names the last day with real data", () =>
+    assert.ok(/^\d{4}-\d{2}-\d{2}$/.test(data.performance_through)));
+  check("a real day of metrics survives", () =>
+    assert.ok(data.performance.some((r) => (r.Profile_Views || 0) > 0)));
+}
+{
+  const { data } = await run();
+  check("with no lag nothing is trimmed", () =>
+    assert.strictEqual(data.performance_lag_days, 0));
 }
 
 console.log("\n8. a store whose listing we cannot see, with the reason");

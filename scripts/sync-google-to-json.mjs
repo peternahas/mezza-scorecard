@@ -216,6 +216,45 @@ async function fetchReviews(accountName, locationId) {
 }
 
 /* ── performance ─────────────────────────────────────────────────── */
+/* ── GOOGLE'S REPORTING LAG IS NOT A COLLAPSE IN DEMAND ───────────
+   Business Profile Performance runs about three to four days behind.
+   The API answers for those days anyway, with zeros, so the feed
+   carried rows reading zero profile views, zero calls and zero
+   direction requests for every store -- and the dashboard drew them,
+   producing a chart that falls off a cliff to the axis at the right
+   hand edge. That looks like the phones stopped ringing.
+
+   A zero here means "not reported yet", not "nobody looked", so the
+   trailing dates where the WHOLE NETWORK is zero on every metric are
+   dropped. Network-wide, not per store: one store can legitimately
+   take no calls on a Tuesday, but twenty-two stores taking none, and
+   getting no impressions either, is an absence of data.
+   performance_through says how far the metrics actually reach. */
+function trimPerformanceLag(rows) {
+  const metricKeys = (r) => Object.keys(r).filter(
+    (k) => k !== "Date" && k !== "Location_Name" && k !== "Google_Title"
+  );
+  const totals = new Map();
+  for (const r of rows) {
+    let sum = 0;
+    for (const k of metricKeys(r)) { const v = Number(r[k]); if (Number.isFinite(v)) sum += v; }
+    totals.set(r.Date, (totals.get(r.Date) || 0) + sum);
+  }
+  const dates = [...totals.keys()].sort();
+  let lastReal = null;
+  for (let i = dates.length - 1; i >= 0; i--) {
+    if (totals.get(dates[i]) > 0) { lastReal = dates[i]; break; }
+  }
+  if (!lastReal) return { rows, through: null, trimmedDays: 0, trimmedRows: 0 };
+  const kept = rows.filter((r) => r.Date <= lastReal);
+  return {
+    rows: kept,
+    through: lastReal,
+    trimmedDays: dates.filter((d) => d > lastReal).length,
+    trimmedRows: rows.length - kept.length,
+  };
+}
+
 
 function ymd(d) {
   return { year: d.getUTCFullYear(), month: d.getUTCMonth() + 1, day: d.getUTCDate() };
@@ -440,6 +479,15 @@ async function main() {
     }
   }
 
+  const perfTrim = trimPerformanceLag(perfOut);
+  if (perfTrim.trimmedDays) {
+    console.log(
+      `[i] Dropped ${perfTrim.trimmedDays} trailing day(s) of performance metrics ` +
+      `(${perfTrim.trimmedRows} rows) where the whole network read zero -- Google's reporting lag, ` +
+      `not a collapse in demand. Metrics reach ${perfTrim.through}.`
+    );
+  }
+
   const output = {
     generated_at: new Date().toISOString(),
     source: "google-business-profile",
@@ -451,11 +499,16 @@ async function main() {
     // behind an overall "ok". reviews_ok / performance_ok say plainly
     // whether each half of this integration actually worked.
     reviews_ok: reviewsOut.length > 0,
-    performance_ok: perfOut.length > 0,
+    performance_ok: perfTrim.rows.length > 0,
+    // How far the visibility metrics actually reach, and how many
+    // trailing days were dropped as not-yet-reported rather than drawn
+    // as zeros. Google runs about 3-4 days behind.
+    performance_through: perfTrim.through,
+    performance_lag_days: perfTrim.trimmedDays,
     fetch_errors: fetchErrors.slice(0, 40),
     fetch_error_count: fetchErrors.length,
     reviews: reviewsOut.sort((a, b) => String(b.Created).localeCompare(String(a.Created))),
-    performance: perfOut.sort((a, b) =>
+    performance: perfTrim.rows.sort((a, b) =>
       String(a.Location_Name).localeCompare(String(b.Location_Name)) || a.Date.localeCompare(b.Date)),
     unmapped_locations: unmapped,
     excluded_locations: excluded,
@@ -472,7 +525,7 @@ async function main() {
   await writeFile(OUTPUT_PATH, JSON.stringify(output) + "\n", "utf8");
   console.log(
     `Wrote ${OUTPUT_PATH}: ${locations.length} location(s), ${reviewsOut.length} review(s), ` +
-    `${perfOut.length} performance row(s), ${duplicatesSkipped} duplicate location(s) skipped.`
+    `${perfTrim.rows.length} performance row(s) through ${perfTrim.through || 'n/a'}, ${duplicatesSkipped} duplicate location(s) skipped.`
   );
   // Half this integration silently returning nothing is not "ok".
   if (!reviewsOut.length) {
@@ -480,7 +533,7 @@ async function main() {
     throw new Error(
       "No reviews were returned for ANY location, so the review half of this " +
       "integration is not working. Performance metrics " +
-      (perfOut.length ? "DID" : "did not") + " come through. " +
+      (perfTrim.rows.length ? "DID" : "did not") + " come through. " +
       (why ? `First reviews error: ${why.error}` :
              "No error was raised either -- the API returned empty review lists.")
     );
