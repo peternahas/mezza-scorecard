@@ -530,6 +530,70 @@ console.log("\n11. Pre-D1 legacy history");
     assert.strictEqual(b3["2026-08-27"].Total_Sales, 12.99);
   });
 }
+/* ══════════ 11b. recovering ONE day out of the snapshot ══════════
+   Givex re-pushed 2026-08-20 on 2026-09-03 and it landed in D1. Using
+   it meant the snapshot could no longer be treated as one contiguous
+   block: moving a single `authoritative_through` scalar back past
+   Aug 20 would also have un-skipped Aug 21-26, where D1 holds nothing,
+   deleting six days from the scorecard -- and would have double
+   counted Aug 26, where D1 holds a partial day next to a fuller
+   legacy row. Hence the per-date rule. These tests are that rule.  */
+console.log("\n11b. Recovering one day out of the snapshot");
+{
+  const writeLegacyDays = async (days) => {
+    await mkdir("data", { recursive: true });
+    await (await import("node:fs/promises")).writeFile(
+      "data/givex-legacy-days.json",
+      JSON.stringify({ authoritative_through: "2026-08-26", days })
+    );
+  };
+  const legacyRow = (date, sales, orders) => ({
+    Location_Name:"Burnside", Location_Type:"Corp", Business_Date:date,
+    Total_Sales:sales, InStore_Sales:sales, Online_Sales:0, Orders:orders,
+    Avg_Ticket:25, Order_Type_Sales:{QSR:sales}, Day_Part_Sales:{Lunch:sales},
+    Payment_Mix:{VISA:sales}, Tips_Total:0 });
+
+  // The repolled day, now genuinely in D1, plus a still-damaged day
+  // that only the snapshot has.
+  const repolled = order({ ...BURNSIDE, date: "2026-08-20", lines: [PLATE] });
+  const cutover  = order({ ...BURNSIDE, date: "2026-08-26", lines: [WRAP] });
+
+  // BEFORE: the snapshot still owns Aug 20, so D1's copy is ignored.
+  await rm("data", { recursive: true, force: true });
+  await writeLegacyDays([legacyRow("2026-08-20", 5000, 200), legacyRow("2026-08-26", 6000, 240)]);
+  const before = await run([repolled, cutover], { keepState: true });
+  const b = {}; before.data.days.forEach((d) => (b[d.Business_Date] = d));
+  check("while the snapshot owns a date, D1 is ignored for it", () =>
+    assert.strictEqual(b["2026-08-20"].Total_Sales, 5000));
+  check("both owned dates are reported so it is visible which are old", () =>
+    assert.deepStrictEqual(before.data.legacy_owned_dates, ["2026-08-20", "2026-08-26"]));
+
+  // AFTER: Aug 20 archived out of the snapshot. Nothing else changes --
+  // no scalar moved, no other date touched.
+  await rm("data", { recursive: true, force: true });
+  await writeLegacyDays([legacyRow("2026-08-26", 6000, 240)]);
+  const after = await run([repolled, cutover], { keepState: true });
+  const a = {}; after.data.days.forEach((d) => (a[d.Business_Date] = d));
+  check("removing a date from the snapshot switches it to D1", () => {
+    assert.strictEqual(a["2026-08-20"].Total_Sales, 19.29);   // the PLATE order
+    assert.ok(!a["2026-08-20"].Legacy_Sales_Only,
+      "recovered day is still tagged as legacy-only, so the UI would hide its detail");
+  });
+  check("the recovered day is NOT added on top of the old total", () =>
+    assert.notStrictEqual(a["2026-08-20"].Total_Sales, 5000 + 19.29));
+  check("a date still in the snapshot is untouched by the recovery", () => {
+    assert.strictEqual(a["2026-08-26"].Total_Sales, 6000);
+    assert.strictEqual(a["2026-08-26"].Legacy_Sales_Only, true);
+  });
+  check("dates the snapshot never held are NOT skipped as a side effect", () => {
+    // The old scalar skipped everything on or before Aug 26 whether the
+    // snapshot held it or not. That is what would have deleted Aug 21-26.
+    assert.ok(!after.data.legacy_owned_dates.includes("2026-08-21"));
+  });
+  check("only the still-owned date is reported as skipped", () =>
+    assert.strictEqual(after.data.legacy_payloads_skipped_this_run, 1));
+}
+
 {
   // No legacy file at all must still work -- this is what a fresh
   // deployment somewhere else looks like.

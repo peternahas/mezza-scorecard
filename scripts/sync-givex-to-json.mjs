@@ -730,7 +730,28 @@ async function loadLegacy(state) {
       console.log(`Seeded ${days.length} pre-D1 store-day(s) through ${through} from ${LEGACY_PATH}.`);
     }
   }
-  return { through, count: days.length };
+
+  /* ── WHICH DATES THE SNAPSHOT OWNS, DATE BY DATE ──────────────────
+     This used to be a single `authoritative_through` scalar: skip any
+     D1 order dated on or before it. That works while the snapshot is
+     one contiguous block, and breaks the moment part of it is
+     recovered.
+
+     Concretely, on 2026-09-03 Givex re-pushed 2026-08-20 and it landed
+     in D1. To use it, the cutover had to move from Aug 26 back to
+     Aug 19 -- which would also have un-skipped Aug 21-26, where D1
+     holds nothing, so those six days would have vanished from the
+     scorecard entirely. And Aug 26, where D1 DOES hold a partial day
+     alongside a fuller legacy row, would have been counted twice.
+
+     So the rule is now per date: a D1 order is skipped if the snapshot
+     still holds that business date. Recovering a day is then one edit
+     -- archive that date's rows out of the snapshot file -- and it
+     switches to D1 on the next run, with no scalar to get wrong and
+     no double count. `authoritative_through` is kept for reporting
+     only; it is no longer what decides anything. */
+  const ownedDates = new Set(days.map((d) => d.Business_Date));
+  return { through, count: days.length, ownedDates };
 }
 
 /* ═════════════════════════════════════════════════════════════════
@@ -771,7 +792,8 @@ async function main() {
     // the D1-backed Worker after the cutover, so its cutover-day
     // total already includes that afternoon's D1 orders -- counting
     // them again here would double them.
-    if (legacy.through && businessDate <= legacy.through) { legacySkipped++; continue; }
+    // Per business date, not a cutover scalar -- see loadLegacy().
+    if (legacy.ownedDates && legacy.ownedDates.has(businessDate)) { legacySkipped++; continue; }
 
     // Index line items by order once per payload. v1 filtered the
     // whole line-item array per order, which is O(n^2) on a payload
@@ -1024,6 +1046,11 @@ async function main() {
     // the day after. Saying so in the feed is cheaper than letting
     // someone read an empty item chart as a business fact.
     legacy_authoritative_through: legacy.through,
+    // The business dates the pre-D1 snapshot still owns. A D1 order on
+    // one of these is skipped. Remove a date from the snapshot file and
+    // it switches to D1 -- this list is how to see which days are still
+    // on the old record.
+    legacy_owned_dates: legacy.ownedDates ? [...legacy.ownedDates].sort() : [],
     legacy_store_days: legacy.count,
     legacy_payloads_skipped_this_run: legacySkipped,
     latest_business_date: latestDate,
