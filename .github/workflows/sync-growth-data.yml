@@ -38,6 +38,12 @@ jobs:
           cp "$GITHUB_WORKSPACE/scripts/test-push.mjs" test-push.mjs
           node test-push.mjs
 
+      # A missing secret writes a status file rather than only echoing
+      # into a log. Skipping quietly made this workflow report success
+      # while doing nothing at all, and nothing downstream could tell
+      # "labour is not configured" from "labour has not been looked at".
+      # Actions logs are not readable from where this gets debugged, so
+      # the state has to land in the data.
       - name: Push Operations labour
         id: push
         continue-on-error: true
@@ -45,7 +51,17 @@ jobs:
           PUSH_BEARER_TOKEN: ${{ secrets.PUSH_BEARER_TOKEN }}
         run: |
           if [ -z "$PUSH_BEARER_TOKEN" ]; then
-            echo "PUSH_BEARER_TOKEN not set — skipping. Add it as a repo secret to enable labour."
+            mkdir -p data
+            cat > data/push-labour-data.json <<'JSON'
+          {
+           "source": "push-operations",
+           "status": "not_configured",
+           "status_detail": "PUSH_BEARER_TOKEN is not set as a repository secret, so no labour call was attempted. This is not a reading of zero labour. Settings -> Secrets and variables -> Actions -> New repository secret, name PUSH_BEARER_TOKEN, then re-run 'Sync labour and lead data'. Push (Christian) enabled the department endpoint on 2026-09-03, so the entitlement side is done.",
+           "days": []
+          }
+          JSON
+            node -e "const f='data/push-labour-data.json';const d=require('./'+f);d.generated_at=new Date().toISOString();require('fs').writeFileSync(f,JSON.stringify(d,null,1)+'\n')"
+            echo "PUSH_BEARER_TOKEN not set — wrote status=not_configured and skipped."
             exit 0
           fi
           node scripts/sync-push-labour.mjs
@@ -57,7 +73,16 @@ jobs:
           HUBSPOT_TOKEN: ${{ secrets.HUBSPOT_TOKEN }}
         run: |
           if [ -z "$HUBSPOT_TOKEN" ]; then
-            echo "HUBSPOT_TOKEN not set — skipping. Add it as a repo secret to enable lead flow."
+            mkdir -p data
+            cat > data/hubspot-data.json <<'JSON'
+          {
+           "source": "hubspot",
+           "status": "not_configured",
+           "status_detail": "HUBSPOT_TOKEN is not set as a repository secret, so no lead call was attempted. This is not a reading of zero leads. Settings -> Secrets and variables -> Actions -> New repository secret, name HUBSPOT_TOKEN, then re-run 'Sync labour and lead data'."
+          }
+          JSON
+            node -e "const f='data/hubspot-data.json';const d=require('./'+f);d.generated_at=new Date().toISOString();require('fs').writeFileSync(f,JSON.stringify(d,null,1)+'\n')"
+            echo "HUBSPOT_TOKEN not set — wrote status=not_configured and skipped."
             exit 0
           fi
           node scripts/sync-hubspot-to-json.mjs

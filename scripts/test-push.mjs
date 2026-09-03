@@ -55,7 +55,11 @@ async function run({ mode = "ok", days = 5 } = {}) {
 
     if (u.pathname.endsWith("/companies")) {
       if (mode === "badtoken") return send(401, { message: "Unauthorized" });
-      return send(200, [{ id: 25154, name: "16 Garland" }, { id: 25554, name: "7001 Mumford" }]);
+      // 99999 is deliberately unaccounted for: it stands in for a
+      // location Push has just added to the token (Charlottetown) whose
+      // company id nobody can know in advance.
+      return send(200, [{ id: 25154, name: "16 Garland" }, { id: 25554, name: "7001 Mumford" },
+                        { id: 99999, name: "690 University Ave" }]);
     }
     if (u.pathname.endsWith("/labour-actuals")) {
       labourCalls++;
@@ -98,9 +102,13 @@ console.log("\n1. What Push returns TODAY: 200 with status=failed");
     assert.strictEqual(data.status, "blocked_insufficient_permissions"));
   check("no zero-valued labour rows are written", () =>
     assert.strictEqual(data.days.length, 0));
-  check("the detail explains the ask, not just the error", () => {
+  check("the detail explains what to do, not just the error", () => {
     assert.match(data.status_detail, /entitlement on Push's side/);
-    assert.match(data.status_detail, /department-level/);
+    // The entitlement was granted on 2026-09-03, so if this fires
+    // again it is a revocation or a rotated token -- a conversation
+    // with Push, not an edit to this file. The detail has to say so,
+    // or the next person spends a day debugging working code.
+    assert.match(data.status_detail, /go back to Christian rather than changing this code/);
   });
   check("it gives up after the first refusal instead of hammering payroll", () =>
     assert.ok(labourCalls <= 8, `made ${labourCalls} calls`));
@@ -133,6 +141,25 @@ console.log("\n2. When Push opens it up");
   check("overhead companies are kept visible but out of the store rows", () => {
     assert.ok(Object.values(data.overhead_companies).includes("Production Centre"));
     assert.ok(!data.days.some((d) => d.Location_Name === "Production Centre"));
+  });
+}
+
+console.log("\n5. a company on the token with no home in the script");
+{
+  const { data } = await run({ mode: "ok" });
+  check("every company the token can see is recorded", () => {
+    assert.ok(data.companies_seen.some((c) => String(c.id) === "99999"));
+  });
+  check("one with no mapping is reported, not guessed at by name", () => {
+    const un = data.unmapped_companies.find((c) => String(c.id) === "99999");
+    assert.ok(un, "unmapped company missing from output");
+    assert.strictEqual(un.name, "690 University Ave");
+  });
+  check("and its labour is NOT pulled", () => {
+    assert.ok(!data.days.some((d) => /University/.test(d.Location_Name)));
+  });
+  check("a mapped company is not reported as unmapped", () => {
+    assert.ok(!data.unmapped_companies.some((c) => String(c.id) === "25154"));
   });
 }
 

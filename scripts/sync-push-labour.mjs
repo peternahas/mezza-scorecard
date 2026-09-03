@@ -10,26 +10,25 @@
  * Everything else on the dashboard describes demand; this is the first
  * measure of how well demand was served.
  *
- * ── THIS IS BLOCKED ON PUSH, NOT ON US ───────────────────────────
+ * ── THE ENTITLEMENT IS NOW GRANTED ───────────────────────────────
  *
- * As of the last attempt (2026-07-02) `/analytics/summary/labour-actuals`
- * returned, for every location:
+ * Until 2026-09-03 `/analytics/summary/labour-actuals` returned, for
+ * every location:
  *
  *   {"status":"failed","message":"Insufficient permissions"}
  *
- * The token authenticates fine and CAN list companies — so it is a
- * per-endpoint entitlement on Push's side, not a bad credential.
- * Push support (Christian) added company-level access and asked
- * whether Mezza wants labour by employee or by department. Department
- * is the right answer: the scorecard needs location totals, not
- * per-person detail, and per-person payroll data has no business
+ * The token authenticated fine and COULD list companies, so it was a
+ * per-endpoint entitlement on Push's side rather than a bad credential.
+ * Christian at Push confirmed on 2026-09-03 that the department
+ * endpoint is now on the Mezza token, giving Total Labour Cost and
+ * Total Hours per company. Department was the right ask: the scorecard
+ * needs location totals, and per-person payroll detail has no business
  * sitting in a dashboard.
  *
- * This script is written and tested against that shape so that the
- * moment Push enables the endpoint it is one workflow run away, rather
- * than a fresh build. It reports the permission error clearly instead
- * of writing zeros — a zero labour cost would quietly show every store
- * at 0% labour and a perfect prime cost.
+ * The permission-error handling below stays. Entitlements get revoked,
+ * tokens get rotated, and the failure mode that matters is a zero
+ * labour cost quietly showing every store at 0% labour and a perfect
+ * prime cost. This script reports the error instead of writing zeros.
  *
  * ── TWO API QUIRKS THAT SHAPE THE CODE ───────────────────────────
  *
@@ -77,7 +76,7 @@ const KNOWN_GAPS = [
   {
     location: "Charlottetown",
     reason:
-      "Does not appear in this token's /companies list. Likely on a separate Push account (PEI). Needs either adding to this account or a second token.",
+      "Not on this token yet. Christian at Push offered to add it on 2026-09-03 once Mezza confirms the site is '690 University Ave' -- which it is (690 University Ave Unit 2, Charlottetown PE, opened Aug 2025). Once he does, it appears in /companies and this run reports its id under unmapped_companies; add one line to COMPANIES and it flows. Listed as a gap rather than silently absent, because a missing location in a labour report reads as a store with no labour cost.",
   },
 ];
 
@@ -128,10 +127,30 @@ async function main() {
   // only labour-actuals fails it is the entitlement.
   let companies = null;
   let companiesError = null;
+  let companiesSeen = [];
+  let unmappedCompanies = [];
   try {
     companies = await push(`/companies?include=organization,location`);
-    const n = Array.isArray(companies) ? companies.length : (companies?.data?.length ?? "?");
-    console.log(`Token authenticates. /companies returned ${n} company record(s).`);
+    const rows = Array.isArray(companies) ? companies : (companies?.data || []);
+    console.log(`Token authenticates. /companies returned ${rows.length} company record(s).`);
+    // Record every company the token can see, and which of them this
+    // script has no home for. Push adds locations to the token over
+    // time -- Charlottetown is being added now -- and the id is not
+    // knowable until it appears. Reporting it means the next run tells
+    // us the id instead of the location staying silently absent, and
+    // means no name has to be guessed at.
+    companiesSeen = rows.map((r) => ({ id: r.id ?? r.companyId ?? null, name: r.name ?? r.companyName ?? "" }));
+    const accountedFor = new Set(
+      [...Object.keys(COMPANIES), ...Object.keys(OVERHEAD), ...Object.keys(FRANCHISEE)].map(String)
+    );
+    unmappedCompanies = companiesSeen.filter((c) => !accountedFor.has(String(c.id)));
+    if (unmappedCompanies.length) {
+      console.log(
+        `[i] ${unmappedCompanies.length} company/companies on this token are not in COMPANIES, OVERHEAD or FRANCHISEE: ` +
+        unmappedCompanies.map((c) => `${c.id} "${c.name}"`).join(", ") +
+        ". Their labour is NOT pulled until one line is added -- deliberately, because matching a payroll company to a store by name is how one store's labour lands against another."
+      );
+    }
   } catch (err) {
     companiesError = err.message;
     console.warn(`[!] /companies failed: ${err.message}`);
@@ -186,9 +205,13 @@ async function main() {
           : anySuccess ? "ok"
           : "failed",
     status_detail: permissionBlocked
-      ? "Push returns HTTP 200 with status=failed / 'Insufficient permissions' on /analytics/summary/labour-actuals. The token authenticates and can list companies, so this is a per-endpoint entitlement on Push's side. Ask Push (Christian) to enable department-level labour actuals for every Mezza company on this token."
+      ? "Push returns HTTP 200 with status=failed / 'Insufficient permissions' on /analytics/summary/labour-actuals. The token authenticates and can list companies, so this is a per-endpoint entitlement on Push's side, not a bad credential. Christian at Push enabled the department endpoint on 2026-09-03, so if this is showing again the entitlement has been lost or the token has been rotated -- go back to Christian rather than changing this code."
       : anySuccess ? null : "No labour rows returned and no permission error either — check the errors array.",
     companies_endpoint_error: companiesError,
+    companies_seen: companiesSeen,
+    // Companies on the token with no home in this script. Not pulled,
+    // and not guessed at by name.
+    unmapped_companies: unmappedCompanies,
     days: Object.values(days).sort((a, b) =>
       a.Location_Name.localeCompare(b.Location_Name) || a.Date.localeCompare(b.Date)),
     mapped_locations: COMPANIES,
