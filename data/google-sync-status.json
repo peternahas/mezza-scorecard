@@ -1,7 +1,7 @@
 {
-  "ran_at": "2026-09-03T17:09:33.716Z",
-  "status": "ok",
-  "error": null,
-  "likely_cause": null,
-  "what_to_do": null
+  "ran_at": "2026-09-03T17:13:17.107Z",
+  "status": "failed",
+  "error": "No reviews were returned for ANY location, so the review half of this integration is not working. Performance metrics DID come through. First reviews error: https://mybusiness.googleapis.com/v4/accounts/113594755805913031483/locations/3414738952777220669/reviews?pageSize=50&orderBy=updateTime+desc -> 403 {\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Google My Business API has not been used in project 710647115064 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/mybusiness.googleapis.com/overview?project=",
+  "likely_cause": "A required Google API is not enabled on the Cloud project: Google My Business API.",
+  "what_to_do": "Cloud Console -> APIs & Services -> Library -> enable it, wait a minute, re-run. All four are needed: Account Management, Business Information, Google My Business (legacy, for reviews), Business Profile Performance."
 }
