@@ -1,16 +1,31 @@
 {
-  "_comment": "Budgeted labour cost as a percentage of net sales, per Corp location. Peter asked for per-store targets rather than one network number, because stores carry different fixed rotas -- a store doing $1,256 a day cannot run the same labour percentage as one doing $4,551 however well it is managed. Set each value from the budget and the scorecard measures against it; leave a value null and that store falls back to network_target, and if that is null too it falls back to the Corp average, which shows the spread but never says whether the network is where it should be.",
-  "_owner": "Ashley Gillis (CFO) supplies these from the budget. One edit to this file, no code change, and the next sync picks them up.",
-  "_units": "percent of net sales, e.g. 25.5",
-  "network_target": null,
-  "targets": {
-    "Barrington": null,
-    "Burnside": null,
-    "Charlottetown": null,
-    "Clayton Park": null,
-    "Halifax Shopping Centre": null,
-    "Herring Cove (Spryfield)": null,
-    "Lower Sackville": null,
-    "Scotia Square": null
-  }
+ "_comment": "Budgeted labour cost as a percentage of sales, per location. These are the FY27 budget figures Ashley maintains, lifted from the Consolidated dashboard (consolidated.mezzascorecard.com, TB_STORES -> each entity's 'Labour %' row -> fy27). Peter asked for per-store targets rather than one network number, and the spread here is why: 21% at Halifax Shopping Centre against 31% at Mount Pearl is not variation in how well they are run, it is variation in what their volume can carry.",
+ "_source": "consolidated.mezzascorecard.com, FY27 budget, read 2026-09-03",
+ "_refresh": "Re-run scripts/extract-labour-targets.mjs against a fresh copy of consolidated/index.html whenever Ashley updates the budget. The FY27 monthly figures are flat, so the annual number is the monthly target.",
+ "_basis_check": "Worth confirming with Ashley: the P&L Labour % denominator, and whether it includes payroll burden while Push's totalCosts may be wages only. Against FY26 P&L actuals our measure runs +0.6 points on average across the eight Corp stores and scatters both ways (-4.4 to +5.0), so there is no systematic gap of the kind a burden difference would produce -- but the periods are not the same, so this is reassurance rather than proof.",
+ "_units": "percent of net sales, e.g. 24.0",
+ "network_target": null,
+ "_fy26_actual_for_reference": {
+  "Burnside": 23,
+  "Lower Sackville": 25,
+  "Herring Cove (Spryfield)": 28,
+  "Mount Pearl": 31,
+  "Barrington": 26,
+  "Scotia Square": 27,
+  "Halifax Shopping Centre": 22,
+  "Charlottetown": 33,
+  "Clayton Park": 23
+ },
+ "targets": {
+  "Barrington": 24,
+  "Burnside": 24,
+  "Charlottetown": 26,
+  "Clayton Park": 22,
+  "Halifax Shopping Centre": 21,
+  "Herring Cove (Spryfield)": 25,
+  "Lower Sackville": 24,
+  "Mount Pearl": 31,
+  "Scotia Square": 25
+ },
+ "_note_mount_pearl": "Mount Pearl is a franchisee location and its labour is not pulled from Push -- a franchisee's payroll is their own business. The target is kept here so it is ready if that ever changes, and so this file matches the Consolidated dashboard rather than quietly diverging."
 }
