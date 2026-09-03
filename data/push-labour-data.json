@@ -1,7 +1,437 @@
 {
+ "generated_at": "2026-09-03T18:23:48.608Z",
  "source": "push-operations",
- "status": "not_configured",
- "status_detail": "PUSH_BEARER_TOKEN is not set as a repository secret, so no labour call was attempted. This is not a reading of zero labour. Settings -> Secrets and variables -> Actions -> New repository secret, name PUSH_BEARER_TOKEN, then re-run 'Sync labour and lead data'. Push (Christian) enabled the department endpoint on 2026-09-03, so the entitlement side is done.",
+ "schema_version": 1,
+ "window_days": 35,
+ "status": "ok",
+ "status_detail": null,
+ "companies_endpoint_error": null,
+ "companies_seen": [
+  {
+   "id": 25154,
+   "name": "Mezza - 16 Garland"
+  },
+  {
+   "id": 25554,
+   "name": "Mezza - 7001 Mumford"
+  },
+  {
+   "id": 25555,
+   "name": "Mezza - Production Centre"
+  },
+  {
+   "id": 25556,
+   "name": "Mezza - 752 Sackville"
+  },
+  {
+   "id": 25557,
+   "name": "Mezza - 5201 Duke"
+  },
+  {
+   "id": 25558,
+   "name": "Mezza - 349 Herring Cove"
+  },
+  {
+   "id": 25560,
+   "name": "Mezza - Corporate"
+  },
+  {
+   "id": 25633,
+   "name": "Mezza - 278 Lacewood"
+  },
+  {
+   "id": 27757,
+   "name": "Mezza - 1558 Barrington"
+  },
+  {
+   "id": 28602,
+   "name": "Mezza - 690 University"
+  },
+  {
+   "id": 29923,
+   "name": "Mezza - 50 Commonwealth"
+  }
+ ],
+ "unmapped_companies": [
+  {
+   "id": 28602,
+   "name": "Mezza - 690 University"
+  }
+ ],
  "days": [],
- "generated_at": "2026-09-03T18:07:26.804Z"
+ "mapped_locations": {
+  "25154": "Burnside",
+  "25554": "Halifax Shopping Centre",
+  "25556": "Lower Sackville",
+  "25557": "Scotia Square",
+  "25558": "Herring Cove (Spryfield)",
+  "25633": "Clayton Park",
+  "27757": "Barrington"
+ },
+ "overhead_companies": {
+  "25555": "Production Centre",
+  "25560": "Corporate"
+ },
+ "franchisee_companies_not_pulled": {
+  "29923": "Mount Pearl"
+ },
+ "known_gaps": [
+  {
+   "location": "Charlottetown",
+   "reason": "Not on this token yet. Christian at Push offered to add it on 2026-09-03 once Mezza confirms the site is '690 University Ave' -- which it is (690 University Ave Unit 2, Charlottetown PE, opened Aug 2025). Once he does, it appears in /companies and this run reports its id under unmapped_companies; add one line to COMPANIES and it flows. Listed as a gap rather than silently absent, because a missing location in a labour report reads as a store with no labour cost."
+  }
+ ],
+ "errors": [
+  {
+   "company": "25154",
+   "location": "Burnside",
+   "from": "2026-07-30",
+   "to": "2026-07-31",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25154",
+   "location": "Burnside",
+   "from": "2026-08-01",
+   "to": "2026-08-02",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25154",
+   "location": "Burnside",
+   "from": "2026-08-03",
+   "to": "2026-08-04",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25154",
+   "location": "Burnside",
+   "from": "2026-08-05",
+   "to": "2026-08-06",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25154",
+   "location": "Burnside",
+   "from": "2026-08-07",
+   "to": "2026-08-08",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25154",
+   "location": "Burnside",
+   "from": "2026-08-09",
+   "to": "2026-08-10",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25154",
+   "location": "Burnside",
+   "from": "2026-08-11",
+   "to": "2026-08-12",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25154",
+   "location": "Burnside",
+   "from": "2026-08-13",
+   "to": "2026-08-14",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25154",
+   "location": "Burnside",
+   "from": "2026-08-15",
+   "to": "2026-08-16",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25154",
+   "location": "Burnside",
+   "from": "2026-08-17",
+   "to": "2026-08-18",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25154",
+   "location": "Burnside",
+   "from": "2026-08-19",
+   "to": "2026-08-20",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25154",
+   "location": "Burnside",
+   "from": "2026-08-21",
+   "to": "2026-08-22",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25154",
+   "location": "Burnside",
+   "from": "2026-08-23",
+   "to": "2026-08-24",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25154",
+   "location": "Burnside",
+   "from": "2026-08-25",
+   "to": "2026-08-26",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25154",
+   "location": "Burnside",
+   "from": "2026-08-27",
+   "to": "2026-08-28",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25154",
+   "location": "Burnside",
+   "from": "2026-08-29",
+   "to": "2026-08-30",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25154",
+   "location": "Burnside",
+   "from": "2026-08-31",
+   "to": "2026-09-01",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25154",
+   "location": "Burnside",
+   "from": "2026-09-02",
+   "to": "2026-09-03",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25554",
+   "location": "Halifax Shopping Centre",
+   "from": "2026-07-30",
+   "to": "2026-07-31",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25554",
+   "location": "Halifax Shopping Centre",
+   "from": "2026-08-01",
+   "to": "2026-08-02",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25554",
+   "location": "Halifax Shopping Centre",
+   "from": "2026-08-03",
+   "to": "2026-08-04",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25554",
+   "location": "Halifax Shopping Centre",
+   "from": "2026-08-05",
+   "to": "2026-08-06",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25554",
+   "location": "Halifax Shopping Centre",
+   "from": "2026-08-07",
+   "to": "2026-08-08",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25554",
+   "location": "Halifax Shopping Centre",
+   "from": "2026-08-09",
+   "to": "2026-08-10",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25554",
+   "location": "Halifax Shopping Centre",
+   "from": "2026-08-11",
+   "to": "2026-08-12",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25554",
+   "location": "Halifax Shopping Centre",
+   "from": "2026-08-13",
+   "to": "2026-08-14",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25554",
+   "location": "Halifax Shopping Centre",
+   "from": "2026-08-15",
+   "to": "2026-08-16",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25554",
+   "location": "Halifax Shopping Centre",
+   "from": "2026-08-17",
+   "to": "2026-08-18",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25554",
+   "location": "Halifax Shopping Centre",
+   "from": "2026-08-19",
+   "to": "2026-08-20",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25554",
+   "location": "Halifax Shopping Centre",
+   "from": "2026-08-21",
+   "to": "2026-08-22",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25554",
+   "location": "Halifax Shopping Centre",
+   "from": "2026-08-23",
+   "to": "2026-08-24",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25554",
+   "location": "Halifax Shopping Centre",
+   "from": "2026-08-25",
+   "to": "2026-08-26",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25554",
+   "location": "Halifax Shopping Centre",
+   "from": "2026-08-27",
+   "to": "2026-08-28",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25554",
+   "location": "Halifax Shopping Centre",
+   "from": "2026-08-29",
+   "to": "2026-08-30",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25554",
+   "location": "Halifax Shopping Centre",
+   "from": "2026-08-31",
+   "to": "2026-09-01",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25554",
+   "location": "Halifax Shopping Centre",
+   "from": "2026-09-02",
+   "to": "2026-09-03",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25556",
+   "location": "Lower Sackville",
+   "from": "2026-07-30",
+   "to": "2026-07-31",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25556",
+   "location": "Lower Sackville",
+   "from": "2026-08-01",
+   "to": "2026-08-02",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25556",
+   "location": "Lower Sackville",
+   "from": "2026-08-03",
+   "to": "2026-08-04",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25556",
+   "location": "Lower Sackville",
+   "from": "2026-08-05",
+   "to": "2026-08-06",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25556",
+   "location": "Lower Sackville",
+   "from": "2026-08-07",
+   "to": "2026-08-08",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25556",
+   "location": "Lower Sackville",
+   "from": "2026-08-09",
+   "to": "2026-08-10",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25556",
+   "location": "Lower Sackville",
+   "from": "2026-08-11",
+   "to": "2026-08-12",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25556",
+   "location": "Lower Sackville",
+   "from": "2026-08-13",
+   "to": "2026-08-14",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25556",
+   "location": "Lower Sackville",
+   "from": "2026-08-15",
+   "to": "2026-08-16",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25556",
+   "location": "Lower Sackville",
+   "from": "2026-08-17",
+   "to": "2026-08-18",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25556",
+   "location": "Lower Sackville",
+   "from": "2026-08-19",
+   "to": "2026-08-20",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25556",
+   "location": "Lower Sackville",
+   "from": "2026-08-21",
+   "to": "2026-08-22",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25556",
+   "location": "Lower Sackville",
+   "from": "2026-08-23",
+   "to": "2026-08-24",
+   "error": "rows is not iterable"
+  },
+  {
+   "company": "25556",
+   "location": "Lower Sackville",
+   "from": "2026-08-25",
+   "to": "2026-08-26",
+   "error": "/analytics/summary/labour-actuals?company=25556&start=2026-08-25&end=2026-08-26 -> 429 {\"errors\":\"Rate limit exceeded\"}"
+  }
+ ],
+ "error_count": 126
 }
