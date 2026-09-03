@@ -26,6 +26,16 @@ jobs:
         with:
           node-version: "20"
 
+      # The tests run before the API is touched. This script had never
+      # been executed against anything, and a bug here would waste a
+      # one-time OAuth consent flow.
+      - name: Unit tests
+        run: |
+          mkdir -p /tmp/gtest && cd /tmp/gtest
+          cp "$GITHUB_WORKSPACE/scripts/sync-google-to-json.mjs" sync.mjs
+          cp "$GITHUB_WORKSPACE/scripts/test-google.mjs" test-google.mjs
+          node test-google.mjs
+
       - name: Pull reviews and Business Profile metrics
         env:
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}

@@ -31,6 +31,13 @@ jobs:
       # missing secret on one must not stop the other. Each script
       # writes its own status into its own file, so a failure is
       # visible in the data rather than only in a build log.
+      - name: Unit tests
+        run: |
+          mkdir -p /tmp/ptest && cd /tmp/ptest
+          cp "$GITHUB_WORKSPACE/scripts/sync-push-labour.mjs" push.mjs
+          cp "$GITHUB_WORKSPACE/scripts/test-push.mjs" test-push.mjs
+          node test-push.mjs
+
       - name: Push Operations labour
         id: push
         continue-on-error: true
