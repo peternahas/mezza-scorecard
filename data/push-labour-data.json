@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-03T18:28:55.423Z",
+ "generated_at": "2026-09-03T18:40:04.719Z",
  "source": "push-operations",
  "schema_version": 1,
  "window_days": 35,
@@ -23,6 +23,10 @@
    ]
   }
  },
+ "totals_mismatches": [],
+ "totals_mismatch_count": 0,
+ "fallback_walk_used": 0,
+ "rate_limit_retries": 7,
  "companies_seen": [
   {
    "id": 25154,
@@ -72,298 +76,1696 @@
  "unmapped_companies": [],
  "days": [
   {
+   "Location_Name": "Barrington",
+   "Date": "2026-07-30",
+   "Hours": 53.43,
+   "Cost": 978.98034
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-07-31",
+   "Hours": 67.05,
+   "Cost": 1209.21808
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-01",
+   "Hours": 65.74,
+   "Cost": 1158.5808
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-02",
+   "Hours": 57.96,
+   "Cost": 1488.6712
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-03",
+   "Hours": 56.91,
+   "Cost": 1029.3642
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-04",
+   "Hours": 45.23,
+   "Cost": 834.41228
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-05",
+   "Hours": 52.46,
+   "Cost": 954.48692
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-06",
+   "Hours": 55.62,
+   "Cost": 1017.97564
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-07",
+   "Hours": 61.6,
+   "Cost": 1120.86496
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-08",
+   "Hours": 54.9,
+   "Cost": 967.6056
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-09",
+   "Hours": 46.12,
+   "Cost": 811.4288
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-10",
+   "Hours": 57.55,
+   "Cost": 1036.8128
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-11",
+   "Hours": 52.02,
+   "Cost": 954.37212
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-12",
+   "Hours": 61.1,
+   "Cost": 1102.20588
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-13",
+   "Hours": 58.19,
+   "Cost": 1062.6555
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-14",
+   "Hours": 67.17,
+   "Cost": 1216.69584
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-15",
+   "Hours": 55.17,
+   "Cost": 971.0584
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-16",
+   "Hours": 41.99,
+   "Cost": 822.6224
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-17",
+   "Hours": 54.67,
+   "Cost": 995.0684
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-18",
+   "Hours": 50.86,
+   "Cost": 933.06512
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-19",
+   "Hours": 59.02,
+   "Cost": 1071.4388
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-20",
+   "Hours": 54.54,
+   "Cost": 989.41354
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-21",
+   "Hours": 62.8,
+   "Cost": 1132.04256
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-22",
+   "Hours": 60.05,
+   "Cost": 1057.7216
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-23",
+   "Hours": 42.31,
+   "Cost": 744.6712
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-24",
+   "Hours": 55.6,
+   "Cost": 1010.52272
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-25",
+   "Hours": 43.27,
+   "Cost": 767.108
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-26",
+   "Hours": 51.14,
+   "Cost": 921.03476
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-27",
+   "Hours": 54.5,
+   "Cost": 991.58422
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-28",
+   "Hours": 69.23,
+   "Cost": 1270.62622
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-29",
+   "Hours": 50.42,
+   "Cost": 888.2224
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-30",
+   "Hours": 42.18,
+   "Cost": 855.2932
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-08-31",
+   "Hours": 55.01,
+   "Cost": 1000.76524
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-09-01",
+   "Hours": 54.71,
+   "Cost": 995.94628
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-09-02",
+   "Hours": 51.42,
+   "Cost": 937.3816
+  },
+  {
+   "Location_Name": "Barrington",
+   "Date": "2026-09-03",
+   "Hours": 25.48,
+   "Cost": 478.42592
+  },
+  {
    "Location_Name": "Burnside",
    "Date": "2026-07-30",
-   "Hours": 103.19,
-   "Cost": 1972.5472
+   "Hours": 54.86,
+   "Cost": 1048.0808
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-07-31",
+   "Hours": 48.33,
+   "Cost": 924.4664
   },
   {
    "Location_Name": "Burnside",
    "Date": "2026-08-01",
-   "Hours": 71.34,
-   "Cost": 1246.4296
+   "Hours": 33.27,
+   "Cost": 581.6512
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-02",
+   "Hours": 38.07,
+   "Cost": 664.7784
   },
   {
    "Location_Name": "Burnside",
    "Date": "2026-08-03",
-   "Hours": 86.81,
-   "Cost": 1641.224
+   "Hours": 31.21,
+   "Cost": 580.32
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-04",
+   "Hours": 55.6,
+   "Cost": 1060.904
   },
   {
    "Location_Name": "Burnside",
    "Date": "2026-08-05",
-   "Hours": 112.21,
-   "Cost": 2148.5464
+   "Hours": 54.13,
+   "Cost": 1036.36
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-06",
+   "Hours": 58.08,
+   "Cost": 1112.1864
   },
   {
    "Location_Name": "Burnside",
    "Date": "2026-08-07",
-   "Hours": 83.19,
-   "Cost": 1538.056
+   "Hours": 52.78,
+   "Cost": 1006.7096
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-08",
+   "Hours": 30.41,
+   "Cost": 531.3464
   },
   {
    "Location_Name": "Burnside",
    "Date": "2026-08-09",
-   "Hours": 80.43,
-   "Cost": 1503.2472
+   "Hours": 27.54,
+   "Cost": 481.3224
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-10",
+   "Hours": 52.89,
+   "Cost": 1021.9248
   },
   {
    "Location_Name": "Burnside",
    "Date": "2026-08-11",
-   "Hours": 115.87,
-   "Cost": 2233.4416
+   "Hours": 54.08,
+   "Cost": 1046.9056
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-12",
+   "Hours": 61.79,
+   "Cost": 1186.536
   },
   {
    "Location_Name": "Burnside",
    "Date": "2026-08-13",
-   "Hours": 114.37,
-   "Cost": 2192.0704
+   "Hours": 59.29,
+   "Cost": 1137.6456
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-14",
+   "Hours": 55.08,
+   "Cost": 1054.4248
   },
   {
    "Location_Name": "Burnside",
    "Date": "2026-08-15",
-   "Hours": 55.94,
-   "Cost": 998.5872
+   "Hours": 28.58,
+   "Cost": 520.1456
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-16",
+   "Hours": 27.36,
+   "Cost": 478.4416
   },
   {
    "Location_Name": "Burnside",
    "Date": "2026-08-17",
-   "Hours": 118.83,
-   "Cost": 2302.3728
+   "Hours": 55.6,
+   "Cost": 1080.8304
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-18",
+   "Hours": 63.23,
+   "Cost": 1221.5424
   },
   {
    "Location_Name": "Burnside",
    "Date": "2026-08-19",
-   "Hours": 124.64,
-   "Cost": 2390.7832
+   "Hours": 65.87,
+   "Cost": 1263.6
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-20",
+   "Hours": 58.77,
+   "Cost": 1127.1832
   },
   {
    "Location_Name": "Burnside",
    "Date": "2026-08-21",
-   "Hours": 87.27,
-   "Cost": 1630.9904
+   "Hours": 58.28,
+   "Cost": 1120.8808
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-22",
+   "Hours": 28.99,
+   "Cost": 510.1096
   },
   {
    "Location_Name": "Burnside",
    "Date": "2026-08-23",
-   "Hours": 77.8,
-   "Cost": 1452.9736
+   "Hours": 27.37,
+   "Cost": 476.788
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-24",
+   "Hours": 50.43,
+   "Cost": 976.1856
   },
   {
    "Location_Name": "Burnside",
    "Date": "2026-08-25",
-   "Hours": 116.36,
-   "Cost": 2248.584
+   "Hours": 55.86,
+   "Cost": 1080.6224
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-26",
+   "Hours": 60.5,
+   "Cost": 1167.9616
   },
   {
    "Location_Name": "Burnside",
    "Date": "2026-08-27",
-   "Hours": 123.22,
-   "Cost": 2379.3744
+   "Hours": 63.4,
+   "Cost": 1222.8632
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-28",
+   "Hours": 59.82,
+   "Cost": 1156.5112
   },
   {
    "Location_Name": "Burnside",
    "Date": "2026-08-29",
-   "Hours": 65.29,
-   "Cost": 1315.3712
+   "Hours": 36.98,
+   "Cost": 695.2608
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-08-30",
+   "Hours": 28.31,
+   "Cost": 620.1104
   },
   {
    "Location_Name": "Burnside",
    "Date": "2026-08-31",
-   "Hours": 126.63,
-   "Cost": 2431.0416
+   "Hours": 62.22,
+   "Cost": 1191.268
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-09-01",
+   "Hours": 64.41,
+   "Cost": 1239.7736
   },
   {
    "Location_Name": "Burnside",
    "Date": "2026-09-02",
-   "Hours": 90.38,
-   "Cost": 1738.4536
+   "Hours": 61.86,
+   "Cost": 1197.7056
+  },
+  {
+   "Location_Name": "Burnside",
+   "Date": "2026-09-03",
+   "Hours": 28.52,
+   "Cost": 540.748
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-07-30",
+   "Hours": 31.32,
+   "Cost": 565.0944
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-07-31",
+   "Hours": 32.35,
+   "Cost": 610.9896
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-01",
+   "Hours": 27.02,
+   "Cost": 518.8664
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-02",
+   "Hours": 27.07,
+   "Cost": 499.5328
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-03",
+   "Hours": 31.43,
+   "Cost": 588.224
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-04",
+   "Hours": 31.86,
+   "Cost": 590.1584
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-05",
+   "Hours": 35.06,
+   "Cost": 643.136
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-06",
+   "Hours": 30.51,
+   "Cost": 566.1448
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-07",
+   "Hours": 42.31,
+   "Cost": 770.3904
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-08",
+   "Hours": 34.57,
+   "Cost": 645.6736
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-09",
+   "Hours": 32.54,
+   "Cost": 580.9544
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-10",
+   "Hours": 33.63,
+   "Cost": 628.6488
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-11",
+   "Hours": 32.1,
+   "Cost": 594.152
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-12",
+   "Hours": 36.9,
+   "Cost": 680.3056
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-13",
+   "Hours": 36.29,
+   "Cost": 673.3896
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-14",
+   "Hours": 36.61,
+   "Cost": 673.816
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-15",
+   "Hours": 31.1,
+   "Cost": 559.832
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-16",
+   "Hours": 26.31,
+   "Cost": 478.92
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-17",
+   "Hours": 32.82,
+   "Cost": 615.056
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-18",
+   "Hours": 29.91,
+   "Cost": 559.4472
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-19",
+   "Hours": 28.29,
+   "Cost": 524.3784
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-20",
+   "Hours": 29.04,
+   "Cost": 537.0352
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-21",
+   "Hours": 33.52,
+   "Cost": 623.8024
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-22",
+   "Hours": 29.43,
+   "Cost": 530.1712
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-23",
+   "Hours": 28.36,
+   "Cost": 515.6008
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-24",
+   "Hours": 27.48,
+   "Cost": 525.876
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-25",
+   "Hours": 28.73,
+   "Cost": 540.1344
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-26",
+   "Hours": 26.52,
+   "Cost": 508.5496
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-27",
+   "Hours": 27.43,
+   "Cost": 509.9744
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-28",
+   "Hours": 33.94,
+   "Cost": 629.252
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-29",
+   "Hours": 26.81,
+   "Cost": 484.2032
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-30",
+   "Hours": 21.08,
+   "Cost": 423.9768
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-08-31",
+   "Hours": 30.51,
+   "Cost": 572.728
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-09-01",
+   "Hours": 28.16,
+   "Cost": 523.4736
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-09-02",
+   "Hours": 24.51,
+   "Cost": 464.776
+  },
+  {
+   "Location_Name": "Charlottetown",
+   "Date": "2026-09-03",
+   "Hours": 17.12,
+   "Cost": 323.6064
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-07-30",
+   "Hours": 66.134285714286,
+   "Cost": 1302.1676285714
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-07-31",
+   "Hours": 63.994285714286,
+   "Cost": 1170.0716285714
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-01",
+   "Hours": 58.274285714285995,
+   "Cost": 1094.02202857143
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-02",
+   "Hours": 63.194285714286,
+   "Cost": 1257.0866285714
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-03",
+   "Hours": 56.564285714286,
+   "Cost": 1022.2604285714
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-04",
+   "Hours": 54.544285714286,
+   "Cost": 965.1840285714301
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-05",
+   "Hours": 58.054285714286,
+   "Cost": 1041.8910285714
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-06",
+   "Hours": 66.864285714286,
+   "Cost": 1280.1092285713999
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-07",
+   "Hours": 66.314285714286,
+   "Cost": 1242.6252285714
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-08",
+   "Hours": 58.114285714286,
+   "Cost": 1097.12922857143
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-09",
+   "Hours": 56.404285714286,
+   "Cost": 1079.6340285714
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-10",
+   "Hours": 63.914285714286,
+   "Cost": 1222.1460285714
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-11",
+   "Hours": 65.184285714286,
+   "Cost": 1216.4918285714
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-12",
+   "Hours": 65.534285714286,
+   "Cost": 1243.8028285714
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-13",
+   "Hours": 64.384285714286,
+   "Cost": 1227.4540285714002
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-14",
+   "Hours": 65.534285714286,
+   "Cost": 1249.2114285714
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-15",
+   "Hours": 58.524285714286,
+   "Cost": 1119.6146285714
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-16",
+   "Hours": 51.964285714286,
+   "Cost": 1247.0538285714
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-17",
+   "Hours": 65.174285714286,
+   "Cost": 1240.6186285714
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-18",
+   "Hours": 58.454285714286,
+   "Cost": 1111.7916285714
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-19",
+   "Hours": 59.694285714286,
+   "Cost": 1145.8036285714
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-20",
+   "Hours": 63.444285714286,
+   "Cost": 1218.0766285714
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-21",
+   "Hours": 64.254285714286,
+   "Cost": 1229.4220285714
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-22",
+   "Hours": 59.414285714286,
+   "Cost": 1124.6026285714
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-23",
+   "Hours": 54.684285714286,
+   "Cost": 1041.2850285714
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-24",
+   "Hours": 64.834285714286,
+   "Cost": 1243.8628285714
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-25",
+   "Hours": 58.014285714286,
+   "Cost": 1099.6612285714
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-26",
+   "Hours": 59.844285714286,
+   "Cost": 1129.3404285714
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-27",
+   "Hours": 61.444285714286,
+   "Cost": 1172.3414285714
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-28",
+   "Hours": 60.194285714286,
+   "Cost": 1154.6990285714
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-29",
+   "Hours": 57.074285714286,
+   "Cost": 1092.7294285714
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-30",
+   "Hours": 55.184285714286,
+   "Cost": 1733.5774285714
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-08-31",
+   "Hours": 51.984285714286,
+   "Cost": 985.27122857143
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-09-01",
+   "Hours": 59.054285714286,
+   "Cost": 1110.59562857143
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-09-02",
+   "Hours": 56.484285714286,
+   "Cost": 1073.0140285714
+  },
+  {
+   "Location_Name": "Clayton Park",
+   "Date": "2026-09-03",
+   "Hours": 32.174285714286,
+   "Cost": 646.12142857143
   },
   {
    "Location_Name": "Halifax Shopping Centre",
    "Date": "2026-07-30",
-   "Hours": 113.09857142857,
-   "Cost": 2117.7568
+   "Hours": 54.7042857142857,
+   "Cost": 1029.436
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-07-31",
+   "Hours": 58.3942857142857,
+   "Cost": 1088.3208
   },
   {
    "Location_Name": "Halifax Shopping Centre",
    "Date": "2026-08-01",
-   "Hours": 87.808571428571,
-   "Cost": 2074.3064
+   "Hours": 59.3942857142857,
+   "Cost": 1111.128
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-02",
+   "Hours": 28.4142857142857,
+   "Cost": 963.1784
   },
   {
    "Location_Name": "Halifax Shopping Centre",
    "Date": "2026-08-03",
-   "Hours": 90.788571428571,
-   "Cost": 1725.3232
+   "Hours": 34.8442857142857,
+   "Cost": 677.9472
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-04",
+   "Hours": 55.9442857142857,
+   "Cost": 1047.376
   },
   {
    "Location_Name": "Halifax Shopping Centre",
    "Date": "2026-08-05",
-   "Hours": 113.00857142857,
-   "Cost": 2111.9432
+   "Hours": 54.5142857142857,
+   "Cost": 1023.7368
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-06",
+   "Hours": 58.4942857142857,
+   "Cost": 1088.2064
   },
   {
    "Location_Name": "Halifax Shopping Centre",
    "Date": "2026-08-07",
-   "Hours": 120.80857142857,
-   "Cost": 2251.2512
+   "Hours": 60.304285714285705,
+   "Cost": 1124.6792
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-08",
+   "Hours": 60.5042857142857,
+   "Cost": 1126.5720000000001
   },
   {
    "Location_Name": "Halifax Shopping Centre",
    "Date": "2026-08-09",
-   "Hours": 79.038571428571,
-   "Cost": 1443.484
+   "Hours": 29.1942857142857,
+   "Cost": 568.7368
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-10",
+   "Hours": 49.844285714285704,
+   "Cost": 874.7472
   },
   {
    "Location_Name": "Halifax Shopping Centre",
    "Date": "2026-08-11",
-   "Hours": 101.12857142857,
-   "Cost": 1767.4032
+   "Hours": 51.4442857142857,
+   "Cost": 897.5856
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-12",
+   "Hours": 49.6842857142857,
+   "Cost": 869.8176
   },
   {
    "Location_Name": "Halifax Shopping Centre",
    "Date": "2026-08-13",
-   "Hours": 118.27857142857,
-   "Cost": 2207.2904
+   "Hours": 59.5742857142857,
+   "Cost": 1112.2824
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-14",
+   "Hours": 58.7042857142857,
+   "Cost": 1095.008
   },
   {
    "Location_Name": "Halifax Shopping Centre",
    "Date": "2026-08-15",
-   "Hours": 89.888571428571,
-   "Cost": 1762.0144
+   "Hours": 61.3742857142857,
+   "Cost": 1149.2648
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-16",
+   "Hours": 28.514285714285702,
+   "Cost": 612.7496
   },
   {
    "Location_Name": "Halifax Shopping Centre",
    "Date": "2026-08-17",
-   "Hours": 124.50857142857,
-   "Cost": 2359.536
+   "Hours": 64.5742857142857,
+   "Cost": 1221.3888000000002
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-18",
+   "Hours": 59.9342857142857,
+   "Cost": 1138.1472
   },
   {
    "Location_Name": "Halifax Shopping Centre",
    "Date": "2026-08-19",
-   "Hours": 127.23857142857,
-   "Cost": 2407.584
+   "Hours": 63.3542857142857,
+   "Cost": 1199.2472
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-20",
+   "Hours": 63.8842857142857,
+   "Cost": 1208.3368
   },
   {
    "Location_Name": "Halifax Shopping Centre",
    "Date": "2026-08-21",
-   "Hours": 129.06857142857,
-   "Cost": 2441.488
+   "Hours": 64.5842857142857,
+   "Cost": 1217.7800000000002
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-22",
+   "Hours": 64.4842857142857,
+   "Cost": 1223.708
   },
   {
    "Location_Name": "Halifax Shopping Centre",
    "Date": "2026-08-23",
-   "Hours": 103.52857142857,
-   "Cost": 1967.4768
+   "Hours": 32.6142857142857,
+   "Cost": 634.7456
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-24",
+   "Hours": 70.9142857142857,
+   "Cost": 1332.7312000000002
   },
   {
    "Location_Name": "Halifax Shopping Centre",
    "Date": "2026-08-25",
-   "Hours": 117.35857142857,
-   "Cost": 2271.7496
+   "Hours": 60.5642857142857,
+   "Cost": 1162.1816000000001
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-26",
+   "Hours": 56.7942857142857,
+   "Cost": 1109.568
   },
   {
    "Location_Name": "Halifax Shopping Centre",
    "Date": "2026-08-27",
-   "Hours": 132.81857142857,
-   "Cost": 2589.6256
+   "Hours": 61.0442857142857,
+   "Cost": 1206.4128
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-28",
+   "Hours": 71.7742857142857,
+   "Cost": 1383.2128
   },
   {
    "Location_Name": "Halifax Shopping Centre",
    "Date": "2026-08-29",
-   "Hours": 106.10857142857,
-   "Cost": 3067.1204
+   "Hours": 69.84428571428569,
+   "Cost": 1362.3296
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-08-30",
+   "Hours": 36.2642857142857,
+   "Cost": 1704.7908
   },
   {
    "Location_Name": "Halifax Shopping Centre",
    "Date": "2026-08-31",
-   "Hours": 75.948571428571,
-   "Cost": 1479.124
+   "Hours": 11.444285714285702,
+   "Cost": 251.1936
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-09-01",
+   "Hours": 64.5042857142857,
+   "Cost": 1227.9304000000002
   },
   {
    "Location_Name": "Halifax Shopping Centre",
    "Date": "2026-09-02",
-   "Hours": 82.938571428571,
-   "Cost": 1657.276
+   "Hours": 50.2442857142857,
+   "Cost": 993.7224
+  },
+  {
+   "Location_Name": "Halifax Shopping Centre",
+   "Date": "2026-09-03",
+   "Hours": 32.6942857142857,
+   "Cost": 663.5536
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-07-30",
+   "Hours": 30.29,
+   "Cost": 534.2064
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-07-31",
+   "Hours": 33.75,
+   "Cost": 612.8304
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-01",
+   "Hours": 29.75,
+   "Cost": 546.676
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-02",
+   "Hours": 99,
+   "Cost": 2146.4768
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-03",
+   "Hours": 35.08,
+   "Cost": 701.4176
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-04",
+   "Hours": 25.39,
+   "Cost": 477.7136
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-05",
+   "Hours": 33.12,
+   "Cost": 691.6624
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-06",
+   "Hours": 27.6,
+   "Cost": 523.6296
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-07",
+   "Hours": 34.3,
+   "Cost": 686.9304
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-08",
+   "Hours": 27.91,
+   "Cost": 563.576
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-09",
+   "Hours": 26.93,
+   "Cost": 549.1616
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-10",
+   "Hours": 27.72,
+   "Cost": 535.184
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-11",
+   "Hours": 27.5,
+   "Cost": 568.2872
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-12",
+   "Hours": 26.46,
+   "Cost": 509.2048
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-13",
+   "Hours": 25.59,
+   "Cost": 491.2752
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-14",
+   "Hours": 32.14,
+   "Cost": 639.1944
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-15",
+   "Hours": 27.33,
+   "Cost": 557.0136
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-16",
+   "Hours": 24.38,
+   "Cost": 483.236
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-17",
+   "Hours": 27.96,
+   "Cost": 538.5536
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-18",
+   "Hours": 28.56,
+   "Cost": 557.1592
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-19",
+   "Hours": 30.1,
+   "Cost": 622.492
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-20",
+   "Hours": 26.53,
+   "Cost": 508.4768
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-21",
+   "Hours": 31.47,
+   "Cost": 660.4312
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-22",
+   "Hours": 26.45,
+   "Cost": 564.2208
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-23",
+   "Hours": 25.52,
+   "Cost": 492.4296
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-24",
+   "Hours": 31.76,
+   "Cost": 664.5496
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-25",
+   "Hours": 25.78,
+   "Cost": 492.18
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-26",
+   "Hours": 27.53,
+   "Cost": 530.3688
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-27",
+   "Hours": 26.06,
+   "Cost": 496.8184
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-28",
+   "Hours": 34.84,
+   "Cost": 680.7008
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-29",
+   "Hours": 32.52,
+   "Cost": 653.0888
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-30",
+   "Hours": 24.45,
+   "Cost": 470.808
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-08-31",
+   "Hours": 31.85,
+   "Cost": 666.5464
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-09-01",
+   "Hours": 32.73,
+   "Cost": 615.7008
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-09-02",
+   "Hours": 28.17,
+   "Cost": 544.0552
+  },
+  {
+   "Location_Name": "Herring Cove (Spryfield)",
+   "Date": "2026-09-03",
+   "Hours": 5.8,
+   "Cost": 130.6552
   },
   {
    "Location_Name": "Lower Sackville",
    "Date": "2026-07-30",
-   "Hours": 79.27,
-   "Cost": 1485.2448
+   "Hours": 41.019999999999996,
+   "Cost": 761.4672
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-07-31",
+   "Hours": 38.25,
+   "Cost": 723.7776
   },
   {
    "Location_Name": "Lower Sackville",
    "Date": "2026-08-01",
-   "Hours": 61.74,
-   "Cost": 1095.0992
+   "Hours": 32.16,
+   "Cost": 570.076
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-02",
+   "Hours": 29.580000000000002,
+   "Cost": 525.0232
   },
   {
    "Location_Name": "Lower Sackville",
    "Date": "2026-08-03",
-   "Hours": 73.66,
-   "Cost": 1367.392
+   "Hours": 37.76,
+   "Cost": 696.8728
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-04",
+   "Hours": 35.9,
+   "Cost": 670.5192
   },
   {
    "Location_Name": "Lower Sackville",
    "Date": "2026-08-05",
-   "Hours": 89.09,
-   "Cost": 1640.1424
+   "Hours": 48.03,
+   "Cost": 878.3735999999999
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-06",
+   "Hours": 41.06,
+   "Cost": 761.7688
   },
   {
    "Location_Name": "Lower Sackville",
    "Date": "2026-08-07",
-   "Hours": 81.17,
-   "Cost": 1490.7256
+   "Hours": 48.09,
+   "Cost": 904.28
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-08",
+   "Hours": 33.08,
+   "Cost": 586.4456
   },
   {
    "Location_Name": "Lower Sackville",
    "Date": "2026-08-09",
-   "Hours": 69.19,
-   "Cost": 1249.2376
+   "Hours": 30.589999999999996,
+   "Cost": 542.5368
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-10",
+   "Hours": 38.599999999999994,
+   "Cost": 706.7008
   },
   {
    "Location_Name": "Lower Sackville",
    "Date": "2026-08-11",
-   "Hours": 76.71,
-   "Cost": 1409.8968
+   "Hours": 41.12,
+   "Cost": 749.892
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-12",
+   "Hours": 35.589999999999996,
+   "Cost": 660.0047999999999
   },
   {
    "Location_Name": "Lower Sackville",
    "Date": "2026-08-13",
-   "Hours": 81.98,
-   "Cost": 1509.4664
+   "Hours": 40.66,
+   "Cost": 750.8904
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-14",
+   "Hours": 41.32,
+   "Cost": 758.576
   },
   {
    "Location_Name": "Lower Sackville",
    "Date": "2026-08-15",
-   "Hours": 61.13,
-   "Cost": 1293.1152
+   "Hours": 29.909999999999997,
+   "Cost": 530.4936
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-16",
+   "Hours": 31.220000000000002,
+   "Cost": 762.6216
   },
   {
    "Location_Name": "Lower Sackville",
    "Date": "2026-08-17",
-   "Hours": 75.7,
-   "Cost": 1404.5824
+   "Hours": 37.9,
+   "Cost": 693.2744
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-18",
+   "Hours": 37.8,
+   "Cost": 711.308
   },
   {
    "Location_Name": "Lower Sackville",
    "Date": "2026-08-19",
-   "Hours": 78.23,
-   "Cost": 1468.5008
+   "Hours": 38.96,
+   "Cost": 727.2824
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-20",
+   "Hours": 39.269999999999996,
+   "Cost": 741.2184
   },
   {
    "Location_Name": "Lower Sackville",
    "Date": "2026-08-21",
-   "Hours": 66.9,
-   "Cost": 1216.8104
+   "Hours": 35.400000000000006,
+   "Cost": 658.3616
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-22",
+   "Hours": 31.5,
+   "Cost": 558.4488
   },
   {
    "Location_Name": "Lower Sackville",
    "Date": "2026-08-23",
-   "Hours": 62.34,
-   "Cost": 1132.1128
+   "Hours": 29.740000000000002,
+   "Cost": 527.5712
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-24",
+   "Hours": 32.6,
+   "Cost": 604.5416
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-25",
+   "Hours": 41.95,
+   "Cost": 787.852
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-26",
+   "Hours": 35.02,
+   "Cost": 666.5984000000001
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-27",
+   "Hours": 41.41,
+   "Cost": 774.8936
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-28",
+   "Hours": 32.2,
+   "Cost": 607.9528
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-29",
+   "Hours": 31.58,
+   "Cost": 555.2768
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-30",
+   "Hours": 31.630000000000003,
+   "Cost": 643.4480000000001
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-08-31",
+   "Hours": 42.86,
+   "Cost": 783.8896
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-09-01",
+   "Hours": 40.04,
+   "Cost": 756.6312
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-09-02",
+   "Hours": 36.07,
+   "Cost": 672.5472
+  },
+  {
+   "Location_Name": "Lower Sackville",
+   "Date": "2026-09-03",
+   "Hours": 15.75,
+   "Cost": 301.5584
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-07-30",
+   "Hours": 29.66,
+   "Cost": 529.5784
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-07-31",
+   "Hours": 25.1,
+   "Cost": 450.6528
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-08-01",
+   "Hours": 19.2,
+   "Cost": 336.9808
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-08-04",
+   "Hours": 34.19,
+   "Cost": 630.8016
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-08-05",
+   "Hours": 29.59,
+   "Cost": 555.5576
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-08-06",
+   "Hours": 32.05,
+   "Cost": 585.6552
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-08-07",
+   "Hours": 31.53,
+   "Cost": 589.9504
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-08-08",
+   "Hours": 18.92,
+   "Cost": 363.6776
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-08-10",
+   "Hours": 14.33,
+   "Cost": 268.3512
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-08-11",
+   "Hours": 34.38,
+   "Cost": 628.836
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-08-12",
+   "Hours": 29.07,
+   "Cost": 537.108
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-08-13",
+   "Hours": 31.12,
+   "Cost": 554.0808
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-08-14",
+   "Hours": 27.72,
+   "Cost": 518.2008
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-08-15",
+   "Hours": 18.35,
+   "Cost": 349.5024
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-08-17",
+   "Hours": 35.9,
+   "Cost": 660.8264
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-08-18",
+   "Hours": 32.22,
+   "Cost": 573.3
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-08-19",
+   "Hours": 29.4,
+   "Cost": 537.9712
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-08-20",
+   "Hours": 33.25,
+   "Cost": 620.2872
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-08-21",
+   "Hours": 27.11,
+   "Cost": 510.276
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-08-22",
+   "Hours": 18.56,
+   "Cost": 325.728
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-08-24",
+   "Hours": 32.85,
+   "Cost": 604.136
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-08-25",
+   "Hours": 28.15,
+   "Cost": 513.344
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-08-26",
+   "Hours": 30.78,
+   "Cost": 575.3384
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-08-27",
+   "Hours": 28.78,
+   "Cost": 535.756
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-08-28",
+   "Hours": 30.1,
+   "Cost": 551.3976
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-08-29",
+   "Hours": 18.4,
+   "Cost": 322.9616
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-08-31",
+   "Hours": 28.99,
+   "Cost": 535.8184
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-09-01",
+   "Hours": 31.21,
+   "Cost": 568.2352
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-09-02",
+   "Hours": 29.08,
+   "Cost": 540.6024
+  },
+  {
+   "Location_Name": "Scotia Square",
+   "Date": "2026-09-03",
+   "Hours": 22.82,
+   "Cost": 408.0128
   }
  ],
  "mapped_locations": {
@@ -384,357 +1786,6 @@
   "29923": "Mount Pearl"
  },
  "known_gaps": [],
- "errors": [
-  {
-   "company": "25556",
-   "location": "Lower Sackville",
-   "from": "2026-08-25",
-   "to": "2026-08-26",
-   "error": "/analytics/summary/labour-actuals?company=25556&start=2026-08-25&end=2026-08-26 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25556",
-   "location": "Lower Sackville",
-   "from": "2026-08-27",
-   "to": "2026-08-28",
-   "error": "/analytics/summary/labour-actuals?company=25556&start=2026-08-27&end=2026-08-28 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25556",
-   "location": "Lower Sackville",
-   "from": "2026-08-29",
-   "to": "2026-08-30",
-   "error": "/analytics/summary/labour-actuals?company=25556&start=2026-08-29&end=2026-08-30 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25556",
-   "location": "Lower Sackville",
-   "from": "2026-08-31",
-   "to": "2026-09-01",
-   "error": "/analytics/summary/labour-actuals?company=25556&start=2026-08-31&end=2026-09-01 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25556",
-   "location": "Lower Sackville",
-   "from": "2026-09-02",
-   "to": "2026-09-03",
-   "error": "/analytics/summary/labour-actuals?company=25556&start=2026-09-02&end=2026-09-03 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25557",
-   "location": "Scotia Square",
-   "from": "2026-07-30",
-   "to": "2026-07-31",
-   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-07-30&end=2026-07-31 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25557",
-   "location": "Scotia Square",
-   "from": "2026-08-01",
-   "to": "2026-08-02",
-   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-01&end=2026-08-02 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25557",
-   "location": "Scotia Square",
-   "from": "2026-08-03",
-   "to": "2026-08-04",
-   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-03&end=2026-08-04 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25557",
-   "location": "Scotia Square",
-   "from": "2026-08-05",
-   "to": "2026-08-06",
-   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-05&end=2026-08-06 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25557",
-   "location": "Scotia Square",
-   "from": "2026-08-07",
-   "to": "2026-08-08",
-   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-07&end=2026-08-08 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25557",
-   "location": "Scotia Square",
-   "from": "2026-08-09",
-   "to": "2026-08-10",
-   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-09&end=2026-08-10 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25557",
-   "location": "Scotia Square",
-   "from": "2026-08-11",
-   "to": "2026-08-12",
-   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-11&end=2026-08-12 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25557",
-   "location": "Scotia Square",
-   "from": "2026-08-13",
-   "to": "2026-08-14",
-   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-13&end=2026-08-14 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25557",
-   "location": "Scotia Square",
-   "from": "2026-08-15",
-   "to": "2026-08-16",
-   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-15&end=2026-08-16 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25557",
-   "location": "Scotia Square",
-   "from": "2026-08-17",
-   "to": "2026-08-18",
-   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-17&end=2026-08-18 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25557",
-   "location": "Scotia Square",
-   "from": "2026-08-19",
-   "to": "2026-08-20",
-   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-19&end=2026-08-20 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25557",
-   "location": "Scotia Square",
-   "from": "2026-08-21",
-   "to": "2026-08-22",
-   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-21&end=2026-08-22 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25557",
-   "location": "Scotia Square",
-   "from": "2026-08-23",
-   "to": "2026-08-24",
-   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-23&end=2026-08-24 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25557",
-   "location": "Scotia Square",
-   "from": "2026-08-25",
-   "to": "2026-08-26",
-   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-25&end=2026-08-26 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25557",
-   "location": "Scotia Square",
-   "from": "2026-08-27",
-   "to": "2026-08-28",
-   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-27&end=2026-08-28 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25557",
-   "location": "Scotia Square",
-   "from": "2026-08-29",
-   "to": "2026-08-30",
-   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-29&end=2026-08-30 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25557",
-   "location": "Scotia Square",
-   "from": "2026-08-31",
-   "to": "2026-09-01",
-   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-08-31&end=2026-09-01 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25557",
-   "location": "Scotia Square",
-   "from": "2026-09-02",
-   "to": "2026-09-03",
-   "error": "/analytics/summary/labour-actuals?company=25557&start=2026-09-02&end=2026-09-03 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25558",
-   "location": "Herring Cove (Spryfield)",
-   "from": "2026-07-30",
-   "to": "2026-07-31",
-   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-07-30&end=2026-07-31 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25558",
-   "location": "Herring Cove (Spryfield)",
-   "from": "2026-08-01",
-   "to": "2026-08-02",
-   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-01&end=2026-08-02 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25558",
-   "location": "Herring Cove (Spryfield)",
-   "from": "2026-08-03",
-   "to": "2026-08-04",
-   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-03&end=2026-08-04 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25558",
-   "location": "Herring Cove (Spryfield)",
-   "from": "2026-08-05",
-   "to": "2026-08-06",
-   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-05&end=2026-08-06 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25558",
-   "location": "Herring Cove (Spryfield)",
-   "from": "2026-08-07",
-   "to": "2026-08-08",
-   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-07&end=2026-08-08 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25558",
-   "location": "Herring Cove (Spryfield)",
-   "from": "2026-08-09",
-   "to": "2026-08-10",
-   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-09&end=2026-08-10 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25558",
-   "location": "Herring Cove (Spryfield)",
-   "from": "2026-08-11",
-   "to": "2026-08-12",
-   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-11&end=2026-08-12 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25558",
-   "location": "Herring Cove (Spryfield)",
-   "from": "2026-08-13",
-   "to": "2026-08-14",
-   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-13&end=2026-08-14 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25558",
-   "location": "Herring Cove (Spryfield)",
-   "from": "2026-08-15",
-   "to": "2026-08-16",
-   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-15&end=2026-08-16 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25558",
-   "location": "Herring Cove (Spryfield)",
-   "from": "2026-08-17",
-   "to": "2026-08-18",
-   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-17&end=2026-08-18 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25558",
-   "location": "Herring Cove (Spryfield)",
-   "from": "2026-08-19",
-   "to": "2026-08-20",
-   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-19&end=2026-08-20 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25558",
-   "location": "Herring Cove (Spryfield)",
-   "from": "2026-08-21",
-   "to": "2026-08-22",
-   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-21&end=2026-08-22 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25558",
-   "location": "Herring Cove (Spryfield)",
-   "from": "2026-08-23",
-   "to": "2026-08-24",
-   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-23&end=2026-08-24 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25558",
-   "location": "Herring Cove (Spryfield)",
-   "from": "2026-08-25",
-   "to": "2026-08-26",
-   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-25&end=2026-08-26 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25558",
-   "location": "Herring Cove (Spryfield)",
-   "from": "2026-08-27",
-   "to": "2026-08-28",
-   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-27&end=2026-08-28 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25558",
-   "location": "Herring Cove (Spryfield)",
-   "from": "2026-08-29",
-   "to": "2026-08-30",
-   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-29&end=2026-08-30 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25558",
-   "location": "Herring Cove (Spryfield)",
-   "from": "2026-08-31",
-   "to": "2026-09-01",
-   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-08-31&end=2026-09-01 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25558",
-   "location": "Herring Cove (Spryfield)",
-   "from": "2026-09-02",
-   "to": "2026-09-03",
-   "error": "/analytics/summary/labour-actuals?company=25558&start=2026-09-02&end=2026-09-03 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25633",
-   "location": "Clayton Park",
-   "from": "2026-07-30",
-   "to": "2026-07-31",
-   "error": "/analytics/summary/labour-actuals?company=25633&start=2026-07-30&end=2026-07-31 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25633",
-   "location": "Clayton Park",
-   "from": "2026-08-01",
-   "to": "2026-08-02",
-   "error": "/analytics/summary/labour-actuals?company=25633&start=2026-08-01&end=2026-08-02 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25633",
-   "location": "Clayton Park",
-   "from": "2026-08-03",
-   "to": "2026-08-04",
-   "error": "/analytics/summary/labour-actuals?company=25633&start=2026-08-03&end=2026-08-04 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25633",
-   "location": "Clayton Park",
-   "from": "2026-08-05",
-   "to": "2026-08-06",
-   "error": "/analytics/summary/labour-actuals?company=25633&start=2026-08-05&end=2026-08-06 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25633",
-   "location": "Clayton Park",
-   "from": "2026-08-07",
-   "to": "2026-08-08",
-   "error": "/analytics/summary/labour-actuals?company=25633&start=2026-08-07&end=2026-08-08 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25633",
-   "location": "Clayton Park",
-   "from": "2026-08-09",
-   "to": "2026-08-10",
-   "error": "/analytics/summary/labour-actuals?company=25633&start=2026-08-09&end=2026-08-10 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25633",
-   "location": "Clayton Park",
-   "from": "2026-08-11",
-   "to": "2026-08-12",
-   "error": "/analytics/summary/labour-actuals?company=25633&start=2026-08-11&end=2026-08-12 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25633",
-   "location": "Clayton Park",
-   "from": "2026-08-13",
-   "to": "2026-08-14",
-   "error": "/analytics/summary/labour-actuals?company=25633&start=2026-08-13&end=2026-08-14 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  },
-  {
-   "company": "25633",
-   "location": "Clayton Park",
-   "from": "2026-08-15",
-   "to": "2026-08-16",
-   "error": "/analytics/summary/labour-actuals?company=25633&start=2026-08-15&end=2026-08-16 -> 429 {\"errors\":\"Rate limit exceeded\"}"
-  }
- ],
- "error_count": 95
+ "errors": [],
+ "error_count": 0
 }
