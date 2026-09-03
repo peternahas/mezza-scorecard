@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-03T18:40:04.719Z",
+ "generated_at": "2026-09-03T23:17:12.696Z",
  "source": "push-operations",
  "schema_version": 1,
  "window_days": 35,
@@ -26,7 +26,7 @@
  "totals_mismatches": [],
  "totals_mismatch_count": 0,
  "fallback_walk_used": 0,
- "rate_limit_retries": 7,
+ "rate_limit_retries": 8,
  "companies_seen": [
   {
    "id": 25154,
@@ -288,8 +288,8 @@
   {
    "Location_Name": "Barrington",
    "Date": "2026-09-03",
-   "Hours": 25.48,
-   "Cost": 478.42592
+   "Hours": 34.56,
+   "Cost": 638.70032
   },
   {
    "Location_Name": "Burnside",
@@ -504,8 +504,8 @@
   {
    "Location_Name": "Burnside",
    "Date": "2026-09-03",
-   "Hours": 28.52,
-   "Cost": 540.748
+   "Hours": 39.84,
+   "Cost": 742.3104
   },
   {
    "Location_Name": "Charlottetown",
@@ -720,8 +720,8 @@
   {
    "Location_Name": "Charlottetown",
    "Date": "2026-09-03",
-   "Hours": 17.12,
-   "Cost": 323.6064
+   "Hours": 25.06,
+   "Cost": 470.3296
   },
   {
    "Location_Name": "Clayton Park",
@@ -936,8 +936,8 @@
   {
    "Location_Name": "Clayton Park",
    "Date": "2026-09-03",
-   "Hours": 32.174285714286,
-   "Cost": 646.12142857143
+   "Hours": 44.774285714286,
+   "Cost": 871.7506285714301
   },
   {
    "Location_Name": "Halifax Shopping Centre",
@@ -1152,8 +1152,8 @@
   {
    "Location_Name": "Halifax Shopping Centre",
    "Date": "2026-09-03",
-   "Hours": 32.6942857142857,
-   "Cost": 663.5536
+   "Hours": 52.3242857142857,
+   "Cost": 1038.64
   },
   {
    "Location_Name": "Herring Cove (Spryfield)",
@@ -1368,8 +1368,8 @@
   {
    "Location_Name": "Herring Cove (Spryfield)",
    "Date": "2026-09-03",
-   "Hours": 5.8,
-   "Cost": 130.6552
+   "Hours": 19.59,
+   "Cost": 382.8448
   },
   {
    "Location_Name": "Lower Sackville",
@@ -1584,8 +1584,8 @@
   {
    "Location_Name": "Lower Sackville",
    "Date": "2026-09-03",
-   "Hours": 15.75,
-   "Cost": 301.5584
+   "Hours": 28.1,
+   "Cost": 522.0176
   },
   {
    "Location_Name": "Scotia Square",
@@ -1764,10 +1764,23 @@
   {
    "Location_Name": "Scotia Square",
    "Date": "2026-09-03",
-   "Hours": 22.82,
-   "Cost": 408.0128
+   "Hours": 26.86,
+   "Cost": 478.92
   }
  ],
+ "labour_targets": {
+  "Barrington": 24,
+  "Burnside": 24,
+  "Charlottetown": 26,
+  "Clayton Park": 22,
+  "Halifax Shopping Centre": 21,
+  "Herring Cove (Spryfield)": 25,
+  "Lower Sackville": 24,
+  "Mount Pearl": 31,
+  "Scotia Square": 25
+ },
+ "labour_target_network": null,
+ "labour_targets_unset": [],
  "mapped_locations": {
   "25154": "Burnside",
   "25554": "Halifax Shopping Centre",
