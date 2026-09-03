@@ -1,0 +1,7 @@
+{
+ "source": "push-operations",
+ "status": "not_configured",
+ "status_detail": "PUSH_BEARER_TOKEN is not set as a repository secret, so no labour call was attempted. This is not a reading of zero labour. Settings -> Secrets and variables -> Actions -> New repository secret, name PUSH_BEARER_TOKEN, then re-run 'Sync labour and lead data'. Push (Christian) enabled the department endpoint on 2026-09-03, so the entitlement side is done.",
+ "days": [],
+ "generated_at": "2026-09-03T18:07:26.804Z"
+}
