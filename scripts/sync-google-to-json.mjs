@@ -381,6 +381,15 @@ async function main() {
         Google_Location_Id: shortId,
         Account: acct.name,
         Locality: loc.storefrontAddress?.locality || "",
+        // The street address is what every other system keys on -- Push
+        // labels its companies by address, and the Givex feed uses store
+        // names that match nothing. Carrying it here makes the mapping
+        // auditable without a live API call, which is what made
+        // confirming a location for Push a guessing exercise.
+        Address: [(loc.storefrontAddress?.addressLines || []).join(", "),
+                  loc.storefrontAddress?.locality,
+                  loc.storefrontAddress?.administrativeArea]
+                 .filter(Boolean).join(", "),
         // Google's published lifetime rating and count — what a customer
         // sees on Maps. Use these for the headline number.
         Rating: googleAverage != null ? Math.round(googleAverage * 100) / 100 : (stars.length ? Math.round((stars.reduce((a, b) => a + b, 0) / stars.length) * 100) / 100 : null),
