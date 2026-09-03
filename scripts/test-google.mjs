@@ -41,7 +41,8 @@ function reviewsFor(seed, n) {
 }
 
 async function run(opts = {}) {
-  const { disabled = null, tokenFails = false, rateLimitOnce = false, mapping = null } = opts;
+  const { disabled = null, tokenFails = false, rateLimitOnce = false, mapping = null,
+          multiAccount = false, noReviews = false } = opts;
   await rm("data", { recursive: true, force: true });
   if (mapping) await writeFile("google-location-mapping.json", JSON.stringify(mapping));
   else await rm("google-location-mapping.json", { force: true });
@@ -68,7 +69,20 @@ async function run(opts = {}) {
       return send(429, { error: { message: "Quota exceeded" } });
     }
     if (u.pathname === "/v1/accounts") {
-      return send(200, { accounts: [{ name: "accounts/1", accountName: "Mezza Lebanese Kitchen" }] });
+      // The real account shape: one organisation account holding every
+      // location, PLUS a per-location account holding the same one
+      // again. Every location is therefore reachable twice.
+      return send(200, { accounts: [
+        { name: "accounts/1", accountName: "Mezza Lebanese Kitchen" },
+        ...(multiAccount ? [{ name: "accounts/2", accountName: "Store account" }] : []),
+      ]});
+    }
+    if (/\/v1\/accounts\/2\/locations$/.test(u.pathname)) {
+      // Same location id as one under accounts/1 -- the duplicate.
+      return send(200, { locations: [
+        { name: "locations/1001", title: "7001 Mumford",
+          storefrontAddress: { addressLines: ["7001 Mumford Rd"], locality: "Halifax" } },
+      ]});
     }
     if (/\/v1\/accounts\/1\/locations$/.test(u.pathname)) {
       return send(200, { locations: [
@@ -79,6 +93,9 @@ async function run(opts = {}) {
       ]});
     }
     if (/reviews$/.test(u.pathname)) {
+      // An empty list, not an error -- which is exactly what production
+      // did, and what let "0 reviews" pass as a successful run.
+      if (noReviews) return send(200, {});
       const seed = Number(u.pathname.match(/locations\/(\d+)/)[1]) - 1000;
       return send(200, { reviews: reviewsFor(seed, 7) });
     }
@@ -197,6 +214,41 @@ console.log("\n2. Unmapped locations are reported, never guessed");
   });
   check("nothing is left unmapped", () =>
     assert.strictEqual(data.unmapped_locations.length, 0));
+}
+
+
+console.log("\n4. the same location reachable through two accounts");
+{
+  const { code, out, data } = await run({ multiAccount: true });
+  check("exits 0", () => assert.strictEqual(code, 0, out.slice(-500)));
+  check("the duplicate is skipped, not fetched twice", () =>
+    assert.strictEqual(data.duplicate_locations_skipped, 1));
+  check("each location appears exactly once", () => {
+    const ids = data.locations.map((l) => l.Google_Location_Id);
+    assert.strictEqual(ids.length, new Set(ids).size, ids.join(","));
+  });
+  check("performance rows are NOT doubled", () => {
+    // 2 locations x 3 days
+    assert.strictEqual(data.performance.length, 6);
+  });
+  check("reviews are NOT doubled", () => assert.strictEqual(data.reviews.length, 14));
+}
+
+console.log("\n5. reviews returning nothing is a failure, not a pass");
+{
+  const { code, out, data } = await run({ noReviews: true });
+  check("the run FAILS rather than reporting ok", () =>
+    assert.notStrictEqual(code, 0));
+  check("and says which half worked", () => {
+    assert.match(out, /No reviews were returned for ANY location/);
+    assert.match(out, /Performance metrics DID come through/);
+  });
+  check("the status file records reviews_ok false, performance_ok true", async () => {});
+  const status = JSON.parse(await readFile("data/google-sync-status.json", "utf8"));
+  check("status is failed with the reason", () => {
+    assert.strictEqual(status.status, "failed");
+    assert.match(status.error, /No reviews were returned/);
+  });
 }
 
 console.log("\n3. The failure modes that actually happen");

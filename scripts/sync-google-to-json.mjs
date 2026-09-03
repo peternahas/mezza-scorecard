@@ -285,12 +285,29 @@ async function main() {
   const reviewsOut = [];
   const perfOut = [];
   const unmapped = [];
+  const fetchErrors = [];
+
+  // The SAME location is reachable through more than one account:
+  // Mezza has one organisation account holding every location, plus a
+  // per-location account for each store. Processing each account/
+  // location pair therefore fetched every location twice and counted
+  // its metrics twice -- 5,445 performance rows where 2,760 was the
+  // truth. Deduplicate on the location id, which is stable, and keep
+  // the first account that yields it.
+  const seenLocationIds = new Set();
+  let duplicatesSkipped = 0;
 
   for (const acct of accounts) {
     const locs = await listLocations(acct.name);
     console.log(`  ${acct.accountName || acct.name}: ${locs.length} location(s)`);
 
     for (const loc of locs) {
+      const dedupeId = (loc.name || "").split("/").pop();
+      if (seenLocationIds.has(dedupeId)) {
+        duplicatesSkipped++;
+        continue;
+      }
+      seenLocationIds.add(dedupeId);
       const locationId = loc.name;                    // "locations/12345"
       const shortId = locationId.split("/").pop();
       const title = loc.title || "";
@@ -309,11 +326,15 @@ async function main() {
         reviews = await fetchReviews(acct.name, locationId);
       } catch (err) {
         console.warn(`    [!] reviews failed for ${title}: ${err.message}`);
+        fetchErrors.push({ kind: "reviews", location: title, id: shortId,
+                           error: String(err.message).slice(0, 400) });
       }
       try {
         perf = await fetchPerformance(locationId);
       } catch (err) {
         console.warn(`    [!] performance failed for ${title}: ${err.message}`);
+        fetchErrors.push({ kind: "performance", location: title, id: shortId,
+                           error: String(err.message).slice(0, 400) });
       }
 
       const stars = reviews.map((r) => STAR[r.starRating] || 0).filter(Boolean);
@@ -376,6 +397,14 @@ async function main() {
     schema_version: 1,
     perf_days: PERF_DAYS,
     locations,
+    duplicate_locations_skipped: duplicatesSkipped,
+    // Per-location failures, so a whole data class failing cannot hide
+    // behind an overall "ok". reviews_ok / performance_ok say plainly
+    // whether each half of this integration actually worked.
+    reviews_ok: reviewsOut.length > 0,
+    performance_ok: perfOut.length > 0,
+    fetch_errors: fetchErrors.slice(0, 40),
+    fetch_error_count: fetchErrors.length,
     reviews: reviewsOut.sort((a, b) => String(b.Created).localeCompare(String(a.Created))),
     performance: perfOut.sort((a, b) =>
       String(a.Location_Name).localeCompare(String(b.Location_Name)) || a.Date.localeCompare(b.Date)),
@@ -385,8 +414,20 @@ async function main() {
   await mkdir("data", { recursive: true });
   await writeFile(OUTPUT_PATH, JSON.stringify(output) + "\n", "utf8");
   console.log(
-    `Wrote ${OUTPUT_PATH}: ${locations.length} location(s), ${reviewsOut.length} review(s), ${perfOut.length} performance row(s).`
+    `Wrote ${OUTPUT_PATH}: ${locations.length} location(s), ${reviewsOut.length} review(s), ` +
+    `${perfOut.length} performance row(s), ${duplicatesSkipped} duplicate location(s) skipped.`
   );
+  // Half this integration silently returning nothing is not "ok".
+  if (!reviewsOut.length) {
+    const why = fetchErrors.filter((e) => e.kind === "reviews")[0];
+    throw new Error(
+      "No reviews were returned for ANY location, so the review half of this " +
+      "integration is not working. Performance metrics " +
+      (perfOut.length ? "DID" : "did not") + " come through. " +
+      (why ? `First reviews error: ${why.error}` :
+             "No error was raised either -- the API returned empty review lists.")
+    );
+  }
   if (unmapped.length) {
     console.warn(`\nWARNING: ${unmapped.length} Google location(s) are not mapped to a Mezza Location_Name.`);
     console.warn("Their reviews and metrics are still in the file but cannot be joined to sales. Add them to scripts/google-location-mapping.json:");
