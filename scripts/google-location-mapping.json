@@ -1,34 +1,34 @@
 {
- "_comment": "Maps a Google Business Profile location to the Mezza Location_Name the sales feed uses. Google's own titles are almost all just 'Mezza Lebanese Kitchen' -- six of them in Halifax alone -- so the title is useless as a key and byTitle is left empty on purpose. These were matched on STREET ADDRESS, cross-checked against the Push Operations company labels (which are addresses) and store-mapping.json.",
- "_note_two_accounts": "Every location is reachable through two accounts: one organisation account holding all 23, plus a per-location account per store. The sync deduplicates on the location id; without that, every metric was counted twice.",
- "byLocationId": {
-  "3414738952777220669": "Tantallon",
-  "18401149252535103482": "Halifax Shopping Centre",
-  "3902210451972805587": "Morton Ave",
-  "14997451669377609403": "Penhorn",
-  "4948149744440370814": "Clayton Park",
-  "4246005182983439063": "Cole Harbour",
-  "66458861839778623": "Fall River",
-  "17131717201533619418": "Herring Cove (Spryfield)",
-  "8243833151289184360": "Scotia Square",
-  "2764653687450510504": "Mount Pearl",
-  "3718860110008016184": "Lower Sackville",
-  "13587339874641964018": "New Minas",
-  "18409232467089510948": "Plaza",
-  "2822321882744655293": "Barrington",
-  "17602524365848622574": "Fredericton",
-  "9627260501890787618": "Charlottetown",
-  "2729215291303734467": "Bridgewater",
-  "17322189111004576352": "Burnside",
-  "5608127480400591383": "Truro",
-  "3155239258662944739": "Antigonish",
-  "16778100159963426332": "Stratford"
- },
- "byTitle": {},
- "excludeLocationIds": {
-  "12151035443143094217": "Production Centre, 63 Jim Connors Ave -- the 15,000 sq ft plant, not a customer-facing store. Its Google listing is real but it has no sales in the POS feed, so joining it to a store row would be wrong."
- },
- "_UNRESOLVED": {
-  "7866692448696251318": "6136 University Ave, Halifax. This is the ONE location I will not guess. By arithmetic it must be 'Larry Uteck' -- that is the only Location_Name in the sales feed left unmapped, and this is the only Google location left over. But Larry Uteck Blvd is in Bedford and 6136 University Ave is in Halifax near Dalhousie, so geographically they are not the same place. Either the POS name is legacy, or Larry Uteck has no Google listing and this is a store the POS calls something else. Peter to confirm; guessing is how one store's reviews end up filed against another."
- }
+  "_comment": "Maps a Google Business Profile location to the Mezza Location_Name the sales feed uses. Google's own titles are almost all just 'Mezza Lebanese Kitchen' -- six of them in Halifax alone -- so the title is useless as a key and byTitle is left empty on purpose. These were matched on STREET ADDRESS, cross-checked against the Push Operations company labels (which are addresses) and store-mapping.json.",
+  "_note_two_accounts": "Every location is reachable through two accounts: one organisation account holding all 23, plus a per-location account per store. The sync deduplicates on the location id; without that, every metric was counted twice.",
+  "byLocationId": {
+    "3414738952777220669": "Tantallon",
+    "18401149252535103482": "Halifax Shopping Centre",
+    "3902210451972805587": "Morton Ave",
+    "14997451669377609403": "Penhorn",
+    "4948149744440370814": "Clayton Park",
+    "4246005182983439063": "Cole Harbour",
+    "66458861839778623": "Fall River",
+    "17131717201533619418": "Herring Cove (Spryfield)",
+    "8243833151289184360": "Scotia Square",
+    "2764653687450510504": "Mount Pearl",
+    "3718860110008016184": "Lower Sackville",
+    "13587339874641964018": "New Minas",
+    "18409232467089510948": "Plaza",
+    "2822321882744655293": "Barrington",
+    "17602524365848622574": "Fredericton",
+    "9627260501890787618": "Charlottetown",
+    "2729215291303734467": "Bridgewater",
+    "17322189111004576352": "Burnside",
+    "5608127480400591383": "Truro",
+    "3155239258662944739": "Antigonish",
+    "16778100159963426332": "Stratford"
+  },
+  "byTitle": {},
+  "excludeLocationIds": {
+    "12151035443143094217": "Production Centre, 63 Jim Connors Ave -- the 15,000 sq ft plant, not a customer-facing store. Its Google listing is real but it has no sales in the POS feed, so joining it to a store row would be wrong."
+  },
+  "_UNRESOLVED": {
+    "7866692448696251318": "6136 University Ave, Halifax -- the one location I will not guess. Now that reviews are flowing there is evidence rather than arithmetic. It has 25 reviews, a 2.0 Google rating, and complaints running from 2019 to 2026-03 that say things like 'never open at the scheduled time' and 'for students who need to be in class on time'. 6136 University Ave is the Dalhousie campus. So this reads as a campus outlet with restricted hours, NOT as Larry Uteck -- Larry Uteck Blvd is in Bedford, and it is implausible that a Bedford store's reviews complain about getting to class. The likelier picture is that this is a separate outlet with no rows in the POS feed, and that Larry Uteck's Google listing sits in an account this sync cannot see. Two questions for Peter: (1) is the Dalhousie outlet ours, a licensee's, or closed with a live listing; (2) who holds the Larry Uteck listing. Until then it stays unmapped, is excluded from the network rating, and is shown separately on the dashboard -- because filing one store's reviews against another is worse than leaving it unmatched."
+  }
 }
