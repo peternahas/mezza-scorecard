@@ -1,172 +1,120 @@
 {
-  "compared_at": "2026-09-02T16:35:40.727Z",
-  "live_generated_at": "2026-09-02T13:39:35.170Z",
-  "v2_generated_at": "2026-09-02T16:35:40.639Z",
-  "live_store_days": 420,
-  "v2_store_days": 436,
-  "live_total_sales": 876593.91,
-  "v2_total_sales": 893690.95,
-  "live_orders": 33733,
-  "v2_orders": 34456,
-  "still_trading_date_excluded": "2026-09-02",
-  "store_days_excluded_as_in_flight": 6,
+  "compared_at": "2026-09-03T14:11:30.453Z",
+  "live_generated_at": "2026-09-03T14:08:02.071Z",
+  "v2_generated_at": "2026-09-03T14:11:30.374Z",
+  "live_store_days": 445,
+  "v2_store_days": 449,
+  "live_total_sales": 935146.59,
+  "v2_total_sales": 935712.27,
+  "live_orders": 36010,
+  "v2_orders": 36020,
+  "still_trading_date_excluded": "2026-09-03",
+  "store_days_excluded_as_in_flight": 9,
   "only_in_live": [],
   "only_in_v2": [
-    "Antigonish|2026-09-02",
-    "Barrington|2026-09-02",
-    "Charlottetown|2026-09-02",
-    "Cole Harbour|2026-09-02",
-    "Fall River|2026-09-02",
-    "Fredericton|2026-09-02",
-    "Herring Cove (Spryfield)|2026-09-02",
-    "Larry Uteck|2026-09-02",
-    "Lower Sackville|2026-09-02",
-    "Morton Ave|2026-09-02",
-    "New Minas|2026-09-02",
-    "Penhorn|2026-09-02",
-    "Plaza|2026-09-02",
-    "Stratford|2026-09-02",
-    "Tantallon|2026-09-02",
-    "Truro|2026-09-02"
+    "Antigonish|2026-09-03",
+    "Cole Harbour|2026-09-03",
+    "Fredericton|2026-09-03",
+    "Larry Uteck|2026-09-03"
   ],
   "drift_count": 0,
   "drift": [],
-  "new_measures_present": [
-    "Gross_Sales",
-    "Tax_Total",
-    "Subtotal_Total",
-    "Marketplace_Sales",
-    "Marketplace_Orders",
-    "Online_Orders",
-    "Online_Order_Pct",
-    "Units",
-    "Units_Per_Order",
-    "Beverage_Sales",
-    "Food_Sales",
-    "Beverage_Attach_Pct",
-    "Paid_Addon_Count",
-    "Paid_Addon_Sales",
-    "Paid_Addon_Attach_Pct",
-    "Free_Addon_Count",
-    "NonSale_Lines",
-    "NonSale_Sales",
-    "Discount_Total",
-    "Coupon_Total",
-    "Discount_Pct",
-    "Tendered_Total",
-    "Tip_Pct",
-    "Guests",
-    "Table_Orders",
-    "Avg_Service_Minutes",
-    "Hour_Sales",
-    "Hour_Orders",
-    "Category_Sales",
-    "Category_Group_Sales",
-    "Subcategory_Sales",
-    "Department_Sales",
-    "Line_Types",
-    "Operator_Count",
-    "Legacy_Sales_Only"
-  ],
+  "new_measures_present": [],
   "field_coverage": {
     "bill.bill_tax": {
-      "found": 15566,
-      "missing": 252
+      "found": 17293,
+      "missing": 282
     },
     "bill.coupon_pretax": {
-      "found": 15566,
-      "missing": 252
+      "found": 17293,
+      "missing": 282
     },
     "bill.discount_pretax": {
-      "found": 15566,
-      "missing": 252
+      "found": 17293,
+      "missing": 282
     },
     "bill.num_seats": {
-      "found": 15566,
-      "missing": 252
+      "found": 17293,
+      "missing": 282
     },
     "bill.order_subtotal": {
-      "found": 15566,
-      "missing": 252
+      "found": 17293,
+      "missing": 282
     },
     "line.addons": {
-      "found": 32477,
+      "found": 36010,
       "missing": 0
     },
     "line.adj_gross_sales": {
-      "found": 32477,
+      "found": 36010,
       "missing": 0
     },
     "line.category_group_name": {
-      "found": 32477,
+      "found": 36010,
       "missing": 0
     },
     "line.category_name": {
-      "found": 32477,
+      "found": 36010,
       "missing": 0
     },
     "line.department_name": {
-      "found": 32477,
+      "found": 36010,
       "missing": 0
     },
     "line.item_name": {
-      "found": 32477,
+      "found": 36010,
       "missing": 0
     },
     "line.net_sales": {
-      "found": 32477,
+      "found": 36010,
       "missing": 0
     },
     "line.operator_name": {
-      "found": 15566,
+      "found": 17293,
       "missing": 0
     },
     "line.subcat_name": {
-      "found": 32477,
+      "found": 36010,
       "missing": 0
     },
     "line.time": {
-      "found": 32477,
+      "found": 36010,
       "missing": 0
     },
     "line.total_tax": {
-      "found": 32477,
+      "found": 36010,
       "missing": 0
     },
     "line.type": {
-      "found": 32477,
+      "found": 36010,
       "missing": 0
     },
     "line.units": {
-      "found": 32477,
+      "found": 36010,
       "missing": 0
     },
     "order.closing_time": {
-      "found": 15566,
+      "found": 17293,
       "missing": 0
     },
     "order.opening_time": {
-      "found": 15566,
+      "found": 17293,
       "missing": 0
     },
     "order.order_type": {
-      "found": 15566,
-      "missing": 0
-    },
-    "order.table_num": {
-      "found": 15566,
+      "found": 17293,
       "missing": 0
     },
     "payment.payment_method": {
-      "found": 17254,
+      "found": 19161,
       "missing": 0
     },
     "payment.payment_method_amount": {
-      "found": 17254,
+      "found": 19161,
       "missing": 0
     },
     "payment.total_tip": {
-      "found": 17254,
+      "found": 19161,
       "missing": 0
     }
   },
