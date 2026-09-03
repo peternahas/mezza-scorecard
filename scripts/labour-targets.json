@@ -1,0 +1,16 @@
+{
+  "_comment": "Budgeted labour cost as a percentage of net sales, per Corp location. Peter asked for per-store targets rather than one network number, because stores carry different fixed rotas -- a store doing $1,256 a day cannot run the same labour percentage as one doing $4,551 however well it is managed. Set each value from the budget and the scorecard measures against it; leave a value null and that store falls back to network_target, and if that is null too it falls back to the Corp average, which shows the spread but never says whether the network is where it should be.",
+  "_owner": "Ashley Gillis (CFO) supplies these from the budget. One edit to this file, no code change, and the next sync picks them up.",
+  "_units": "percent of net sales, e.g. 25.5",
+  "network_target": null,
+  "targets": {
+    "Barrington": null,
+    "Burnside": null,
+    "Charlottetown": null,
+    "Clayton Park": null,
+    "Halifax Shopping Centre": null,
+    "Herring Cove (Spryfield)": null,
+    "Lower Sackville": null,
+    "Scotia Square": null
+  }
+}

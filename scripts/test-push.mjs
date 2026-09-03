@@ -128,7 +128,8 @@ async function run({ mode = "ok", days = 5 } = {}) {
   await writeFile("push.local.mjs", src);
 
   const child = spawn(process.execPath, ["push.local.mjs"], {
-    env: { ...process.env, PUSH_BEARER_TOKEN: "tok", PUSH_DAYS: String(days), PUSH_PACE_MS: "0" },
+    env: { ...process.env, PUSH_BEARER_TOKEN: "tok", PUSH_DAYS: String(days), PUSH_PACE_MS: "0",
+           LABOUR_TARGETS_PATH: "labour-targets.json" },
     stdio: ["ignore", "pipe", "pipe"],
   });
   let out = "";
@@ -198,6 +199,37 @@ console.log("\n2. When Push opens it up");
   check("overhead companies are kept visible but out of the store rows", () => {
     assert.ok(Object.values(data.overhead_companies).includes("Production Centre"));
     assert.ok(!data.days.some((d) => d.Location_Name === "Production Centre"));
+  });
+}
+
+console.log("\n8. budgeted labour targets travel with the data");
+{
+  await writeFile("labour-targets.json", JSON.stringify({
+    network_target: 26,
+    targets: { "Burnside": 24.5, "Barrington": null, "Charlottetown": 0 },
+  }));
+  const { data, out } = await run({ mode: "real", days: 2 });
+  check("a set target is carried into the feed", () =>
+    assert.strictEqual(data.labour_targets["Burnside"], 24.5));
+  check("an unset target is NOT silently turned into zero", () => {
+    // A store with no budget must read as "no target", never as a
+    // target of 0% -- which would show it as catastrophically over.
+    assert.ok(!("Barrington" in data.labour_targets));
+    assert.ok(!("Charlottetown" in data.labour_targets));
+  });
+  check("stores without a target are named", () => {
+    assert.deepStrictEqual(data.labour_targets_unset.sort(), ["Barrington", "Charlottetown"]);
+    assert.match(out, /No labour target set for 2 location/);
+  });
+  check("the network fallback is carried too", () =>
+    assert.strictEqual(data.labour_target_network, 26));
+  await rm("labour-targets.json", { force: true });
+}
+{
+  const { data } = await run({ mode: "real", days: 2 });
+  check("no targets file at all degrades quietly", () => {
+    assert.deepStrictEqual(data.labour_targets, {});
+    assert.strictEqual(data.labour_target_network, null);
   });
 }
 

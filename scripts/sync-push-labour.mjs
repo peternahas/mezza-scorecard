@@ -45,7 +45,7 @@
  * only there — never in a file, never in this repo.
  */
 
-import { writeFile, mkdir } from "node:fs/promises";
+import { writeFile, mkdir, readFile } from "node:fs/promises";
 
 const { PUSH_BEARER_TOKEN, PUSH_DAYS, PUSH_PACE_MS } = process.env;
 // Pace between calls. Overridable so the test suite is not 144 real
@@ -54,6 +54,10 @@ const { PUSH_BEARER_TOKEN, PUSH_DAYS, PUSH_PACE_MS } = process.env;
 const PACE_MS = Number.parseInt(PUSH_PACE_MS || "400", 10);
 const BASE = "https://api.pushoperations.com/platform/api/v1";
 const OUTPUT_PATH = "data/push-labour-data.json";
+// Overridable so the tests do not have to create a scripts/ directory
+// in their scratch dir -- which the suites' own repo-guard reads as
+// "you are running inside the repo" and refuses.
+const TARGETS_PATH = process.env.LABOUR_TARGETS_PATH || "scripts/labour-targets.json";
 const DAYS = Number.parseInt(PUSH_DAYS || "35", 10);
 
 // Confirmed against a live /companies call, 2026-07-02. Corp stores
@@ -88,6 +92,38 @@ const FRANCHISEE = { 29923: "Mount Pearl" };
 const KNOWN_GAPS = [];
 
 function iso(d) { return d.toISOString().slice(0, 10); }
+
+/* Budgeted labour percentage per store. Carried through into the feed
+   so the dashboard measures against the budget rather than against the
+   network average -- an average tells you the spread but never whether
+   the network is where it should be. Absent or unset is fine and is
+   reported as such; a target nobody has set should not silently become
+   a target of zero. */
+async function loadTargets() {
+  try {
+    const t = JSON.parse(await readFile(TARGETS_PATH, "utf8"));
+    const targets = {};
+    for (const [k, v] of Object.entries(t.targets || {})) {
+      if (typeof v === "number" && Number.isFinite(v) && v > 0) targets[k] = v;
+    }
+    const network = typeof t.network_target === "number" && t.network_target > 0 ? t.network_target : null;
+    const unset = Object.keys(t.targets || {}).filter((k) => !(k in targets));
+    if (unset.length) {
+      console.log(
+        `[i] No labour target set for ${unset.length} location(s): ${unset.join(", ")}. ` +
+        (network ? `They fall back to the network target of ${network}%.` :
+                   `No network target either, so the dashboard falls back to the Corp average. ` +
+                   `Set them in ${TARGETS_PATH} -- one edit, no code change.`)
+      );
+    }
+    return { targets, network_target: network, unset };
+  } catch (err) {
+    if (err.code !== "ENOENT") throw err;
+    console.log(`No ${TARGETS_PATH} — labour will be measured against the Corp average.`);
+    return { targets: {}, network_target: null, unset: [] };
+  }
+}
+
 
 /* ── SHAPE, NOT VALUES ────────────────────────────────────────────
    The entitlement landing revealed that nobody had ever seen a real
@@ -233,6 +269,8 @@ function twoDayChunks(start, end) {
 
 async function main() {
   if (!PUSH_BEARER_TOKEN) throw new Error("Missing required environment variable: PUSH_BEARER_TOKEN");
+
+  const targets = await loadTargets();
 
   const end = new Date();
   const start = new Date(end.getTime() - DAYS * 86400000);
@@ -390,6 +428,12 @@ async function main() {
     unmapped_companies: unmappedCompanies,
     days: Object.values(days).sort((a, b) =>
       a.Location_Name.localeCompare(b.Location_Name) || a.Date.localeCompare(b.Date)),
+    // Budgeted labour % per store, from scripts/labour-targets.json.
+    // targets_unset names the stores still without one, so a missing
+    // budget reads as missing rather than as a store with no target.
+    labour_targets: targets.targets,
+    labour_target_network: targets.network_target,
+    labour_targets_unset: targets.unset,
     mapped_locations: COMPANIES,
     overhead_companies: OVERHEAD,
     franchisee_companies_not_pulled: FRANCHISEE,
