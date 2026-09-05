@@ -2,5 +2,5 @@
  "source": "hubspot",
  "status": "not_configured",
  "status_detail": "HUBSPOT_TOKEN is not set as a repository secret, so no lead call was attempted. This is not a reading of zero leads. Settings -> Secrets and variables -> Actions -> New repository secret, name HUBSPOT_TOKEN, then re-run 'Sync labour and lead data'.",
- "generated_at": "2026-09-04T15:07:29.599Z"
+ "generated_at": "2026-09-05T14:01:29.235Z"
 }
